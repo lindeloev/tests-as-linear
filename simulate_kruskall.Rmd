@@ -2,7 +2,11 @@
 title: "Kruskal-Wallis is (almost) a one-way ANOVA on ranked data"
 author: "Jonas Kristoffer Lindeløv"
 date: "September 5, 2018"
-output: html_document
+output: 
+  html_document:
+    number_sections: yes
+    self_contained: no
+    toc: yes
 ---
 
 <!-- from https://stackoverflow.com/a/37839683/1297830 -->
@@ -17,7 +21,7 @@ This document presents the close relationship between the Kruskal-Wallis test an
 # Simulate data
 Calculate statistics for different sample sizes ($N$) and differences between groups ($mu$).
 
-<div class="fold s">
+<div class="fold s o">
 ```{r simulate, message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -43,7 +47,8 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %>%
   ) %>%
   
   # Get as columns instead of lists; then remove "old" columns
-  unnest(kruskal, anova, .sep='_')
+  unnest(kruskal, anova, .sep='_') %>%
+  select(-value, -group, -kruskal_raw, -anova_raw)
 
 head(D)
 ```

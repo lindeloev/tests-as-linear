@@ -4,7 +4,9 @@ author: "Jonas Kristoffer Lindeløv"
 date: "August 31, 2018"
 output: 
   html_document:
-    df_print: paged
+    number_sections: yes
+    self_contained: no
+    toc: yes
 ---
 
 <!-- from https://stackoverflow.com/a/37839683/1297830 -->
@@ -66,7 +68,7 @@ Pretty close! But does it hold up to more scrutiny? Let's find out...
 # Simulation
 Let's do what we did above, but running a few thousand simulations for different N and means (`mu`):
 
-<div class="fold s">
+<div class="fold s o">
 ```{r simulate, cache=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -94,7 +96,8 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %>%
   ) %>%
   
   # Get as columns instead of lists; then remove "old" columns
-  unnest(mann, ttest, .sep='_')
+  unnest(mann, ttest, .sep='_') %>%
+  select(-data, -mann_raw, -ranked_value, -ttest_raw)
 
 head(D)
 ```
