@@ -1,7 +1,7 @@
 ---
 title: "Common statistical tests are linear models (or: how to teach stats)"
-author: "Jonas Kristoffer Lindeløv"
-date: "August, 2018"
+author: "Jonas Kristoffer Lindel?v"
+date: "March, 2019"
 output: 
   html_document:
     df_print: default
@@ -107,32 +107,20 @@ theme_icon = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2)) {
 ```
 
 
+This table to show the underlying linear models of common tests. Formulating all the tests in the same language highlights the many similarities between them. The rest of this document gives the background to this.
+
+Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
+
+[![](linear_tests_cheat_sheet.png)](linear_tests_cheat_sheet.pdf)
+
+# The simplicity underlying common tests
 Most of the common statistical models (t-test, correlation, ANOVA; chi-square, etc.) are special cases of linear models or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from highschool. Unfortunately, stats are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike. 
 
 This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model. 
 
 For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Concerning the teaching of non-parametric tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the parametric tests, which is a close approximation but not exact. After all, even mainstream stats are approximations from the almost-universally-used [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction) to the almost-never-perfectly satisfied parametric assumptions.
 
-Use the menu to the left to jump to your favourite section. I present this in three parts:
-
-1. A table to give an overview and to raise awareness.
-2. Actual R code and more details about these equivalences.
-3. A [course outline](#course) as inspiration for stats teachers.
-
-I hope that others will join in and refine this list as well as add further tests to it. I'm not a statistician and there are likely some inaccuracies or errors here and there.
-
-
-# Overview of tests
-This table to show the underlying linear models of common tests. Formulating all the tests in the same language also highlights similarities between them.
-<!--
-Get it [as an image](http://lindeloev.net/misc/linear_tests.png) or [as a PDF](http://lindeloev.net/misc/linear_tests.pdf).
-
-[![](linear_tests.png)](http://lindeloev.net/misc/linear_tests.pdf)
--->
-
-Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
-
-[![](linear_tests_cheat_sheet.png)](linear_tests_cheat_sheet.pdf)
+Use the menu to the left to jump to your favourite section. I hope that others will join in and refine this list as well as add further tests to it. I'm not a statistician and there are likely some inaccuracies or errors here and there.
 
 
 # Settings and toy data
@@ -247,7 +235,7 @@ As the name implies, the **Spearman rank correlation** is a **Pearson correlatio
 
 $rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0$
 
-The correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](https://rpubs.com/lindeloev/spearman_pearson). 
+The correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulate_spearman.html).
 Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:
 
 <div class="fold s">
@@ -353,7 +341,7 @@ The same is to a very close approximately true for **Wilcoxon signed-rank test**
 
 $signed\_rank(y) = \beta_0$
 
-[This approximation is appropriate when the sample size is larger than 14 and almost perfect if the sample size is larger than 50](https://rpubs.com/lindeloev/wilcoxon-ttest).
+[This approximation is good enough when the sample size is larger than 14 and almost perfect if the sample size is larger than 50](simulate_wilcoxon.html).
 
 <div class="fold s">
 ```{r fig.width=7, fig.height=5}
@@ -580,7 +568,7 @@ where $x_i$ is an indicator (0 or 1) saying whether data point $i$ was sampled f
 
 $rank(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
 
-To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](https://rpubs.com/lindeloev/mann_ttest).
+To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](simulate_mannwhitney.html).
 
 ### Theory: Dummy coding {#dummy}
 Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (red line) and $\beta_1$ is the slope between the two means (green line). Why? Because when $\Delta x = 1$ the slope equals the difference because:
@@ -795,7 +783,7 @@ The **Kruskal-Wallis** test is simply a **one-way ANOVA** on the rank-transforme
 
 $rank(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +...$
 
-Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the [Wilcoxon signed-rank test](#t1) or the [Mann-Whitney U test](#t2) respectively. 
+This approximation is [good enough for 12 or more data points](simulate_kruskall.html). Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the [Wilcoxon signed-rank test](#t1) or the [Mann-Whitney U test](#t2) respectively. 
 
 
 ### Example data

@@ -7,6 +7,8 @@ output: html_document
 
 
 ```{r}
+rnorm_fixed = function(n=1, m=0, sd=1) m + scale(rnorm(n))*sd
+
 make_data = function(N, mu, r) {
   correlated = MASS::mvrnorm(N, mu=c(0,0), Sigma=cbind(c(1, r), c(r, 1)), empirical=TRUE)
   group_means = c(rnorm_fixed(N, 0), rnorm_fixed(N, mu/2), rnorm_fixed(N, mu))
@@ -39,10 +41,10 @@ library(tidyverse)
 
 # Parameters
 #Ns = c(seq(from=6, to=20, by=2), 30, 50, 80)
-Ns = c(6, 10, 15, 20, 50)
-mus = c(0, 0.5, 1)  # Means
-rs = c(0, 0.5, 0.95)
-PERMUTATIONS = 1:20
+Ns = c(6, 10, 20, 50)
+mus = c(0, 1)  # Means
+rs = c(0, 0.95)
+PERMUTATIONS = 1:50
 
 # Run it
 D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns, r=rs) %>%
@@ -84,11 +86,13 @@ ggplot(D, aes(x=aov_group_p.value, y=lgr_p.value - aov_group_p.value, color=fact
 # Why is it so perfect!!??
 ```{r}
 D1 = D$data[[1]]
-tidy(aov(value ~ group + age, D1))
+broom::tidy(aov(value ~ group + age, D1))
+
+# LRT
 full = lm(value ~ age + group, D1)
 null_group = lm(value ~ age, D1)
 null_age = lm(value ~ group, D1)
-tidy(anova(null_group, full))
-anova(null_age, full)
-```
+broom::tidy(anova(null_group, full))
+broom::tidy(anova(null_age, full))
 
+```
