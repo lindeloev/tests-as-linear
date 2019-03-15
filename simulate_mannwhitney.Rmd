@@ -4,6 +4,7 @@ author: "Jonas Kristoffer Lindeløv"
 date: "August 31, 2018"
 output: 
   html_document:
+    df_print: paged
     number_sections: yes
     self_contained: no
     toc: yes
@@ -37,7 +38,6 @@ hist(weird_data, breaks=200, xlim=c(-4, 10))
 
 ... and then compute p-values using Wilcoxon and "ranked t-test" respectively:
 
-<div class="fold s">
 ```{r}
 # Test differences between these two datasets
 x = sample(weird_data, 50)
@@ -59,7 +59,6 @@ summary(lm(ranks ~ I(rep(c('x', 'y'), each=50))))
 rbind(wilcoxon = wilcox$p.value, 
       ttest = ttest$p.value)
 ```
-</div>
 
 Pretty close! But does it hold up to more scrutiny? Let's find out...
 
@@ -68,7 +67,6 @@ Pretty close! But does it hold up to more scrutiny? Let's find out...
 # Simulation
 Let's do what we did above, but running a few thousand simulations for different N and means (`mu`):
 
-<div class="fold s o">
 ```{r simulate, cache=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -101,7 +99,6 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %>%
 
 head(D)
 ```
-</div>
 
 
 ## Inspect p-values

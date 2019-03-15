@@ -4,6 +4,7 @@ author: "Jonas Kristoffer Lindeløv"
 date: "September 5, 2018"
 output: 
   html_document:
+    df_print: paged
     number_sections: yes
     self_contained: no
     toc: yes
@@ -21,7 +22,6 @@ This document presents the close relationship between the Kruskal-Wallis test an
 # Simulate data
 Calculate statistics for different sample sizes ($N$) and differences between groups ($mu$).
 
-<div class="fold s o">
 ```{r simulate, message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -52,7 +52,7 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %>%
 
 head(D)
 ```
-</div>
+
 
 # Show results
 I have found that the effect size ($mu$) makes no difference, so I collapse the analyses below across $mu$.

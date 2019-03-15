@@ -4,6 +4,7 @@ author: "Jonas Kristoffer Lindeløv"
 date: "August 23, 2018"
 output: 
   html_document:
+    df_print: paged
     number_sections: yes
     self_contained: no
     toc: yes
@@ -59,7 +60,6 @@ The code below does the following:
 2. Compute coefficients and p-values for Spearman correlation test and Pearson correlation on the ranked values, many times for each combination.
 3. Calculate the number of errors.
 
-<div class='fold s o'>
 ```{r simulate, message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -95,7 +95,6 @@ D = expand.grid(set=PERMUTATIONS, r=rs, N=Ns) %>%  # Combinations of N and r
 
 head(D)
 ```
-</div>
 
 
 ### Inspect correlation coefficients

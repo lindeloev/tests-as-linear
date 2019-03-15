@@ -24,6 +24,8 @@
 <script src="simulate_spearman_files/navigation-1.1/tabsets.js"></script>
 <link href="simulate_spearman_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="simulate_spearman_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="simulate_spearman_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="simulate_spearman_files/pagedtable-1.1/js/pagedtable.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -239,14 +241,14 @@ rbind(spearman=spearman$p.value,
       ranked_linear=linear$coefficients[8])</code></pre>
 <pre><code>## [1] &quot;coefficient rho is exactly identical:&quot;
 ##                      rho
-## spearman       0.6523409
-## ranked_pearson 0.6523409
-## ranked_linear  0.6523409
+## spearman       0.4278031
+## ranked_pearson 0.4278031
+## ranked_linear  0.4278031
 ## [1] &quot;p is approximately identical:&quot;
-##                        [,1]
-## spearman       6.347107e-07
-## ranked_pearson 2.855031e-07
-## ranked_linear  2.855031e-07</code></pre>
+##                       [,1]
+## spearman       0.002120255
+## ranked_pearson 0.001941906
+## ranked_linear  0.001941906</code></pre>
 </div>
 <p>The correlation coefficients are exact. And the p-values are quite close! But maybe we were just lucky? Let’s put it to the test:</p>
 </div>
@@ -258,7 +260,6 @@ rbind(spearman=spearman$p.value,
 <li>Compute coefficients and p-values for Spearman correlation test and Pearson correlation on the ranked values, many times for each combination.</li>
 <li>Calculate the number of errors.</li>
 </ol>
-<div class="fold s o">
 <pre class="r"><code>library(tidyverse)
 
 # Settings for data simulation
@@ -292,41 +293,10 @@ D = expand.grid(set=PERMUTATIONS, r=rs, N=Ns) %&gt;%  # Combinations of N and r
   #unnest(p.perm)
 
 head(D)</code></pre>
-<pre><code>##   set r N pearson_estimate pearson_statistic pearson_p.value
-## 1   1 0 6       0.25714286         0.5321812       0.6227872
-## 2   2 0 6       0.48571429         1.1113248       0.3287230
-## 3   3 0 6       0.08571429         0.1720618       0.8717434
-## 4   4 0 6       0.14285714         0.2886751       0.7871720
-## 5   5 0 6      -0.42857143        -0.9486833       0.3965015
-## 6   6 0 6      -0.14285714        -0.2886751       0.7871720
-##   pearson_parameter pearson_conf.low pearson_conf.high
-## 1                 4       -0.7006312         0.8841859
-## 2                 4       -0.5378672         0.9304890
-## 3                 4       -0.7801136         0.8389184
-## 4                 4       -0.7563990         0.8552617
-## 5                 4       -0.9201081         0.5872384
-## 6                 4       -0.8552617         0.7563990
-##                         pearson_method pearson_alternative
-## 1 Pearson&#39;s product-moment correlation           two.sided
-## 2 Pearson&#39;s product-moment correlation           two.sided
-## 3 Pearson&#39;s product-moment correlation           two.sided
-## 4 Pearson&#39;s product-moment correlation           two.sided
-## 5 Pearson&#39;s product-moment correlation           two.sided
-## 6 Pearson&#39;s product-moment correlation           two.sided
-##   spearman_estimate spearman_statistic spearman_p.value
-## 1        0.25714286                 26        0.6583333
-## 2        0.48571429                 18        0.3555556
-## 3        0.08571429                 32        0.9194444
-## 4        0.14285714                 30        0.8027778
-## 5       -0.42857143                 50        0.4194444
-## 6       -0.14285714                 40        0.8027778
-##                   spearman_method spearman_alternative
-## 1 Spearman&#39;s rank correlation rho            two.sided
-## 2 Spearman&#39;s rank correlation rho            two.sided
-## 3 Spearman&#39;s rank correlation rho            two.sided
-## 4 Spearman&#39;s rank correlation rho            two.sided
-## 5 Spearman&#39;s rank correlation rho            two.sided
-## 6 Spearman&#39;s rank correlation rho            two.sided</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["set"],"name":[1],"type":["int"],"align":["right"]},{"label":["r"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["N"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["pearson_estimate"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pearson_statistic"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["pearson_p.value"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["pearson_parameter"],"name":[7],"type":["int"],"align":["right"]},{"label":["pearson_conf.low"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["pearson_conf.high"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["pearson_method"],"name":[10],"type":["chr"],"align":["left"]},{"label":["pearson_alternative"],"name":[11],"type":["chr"],"align":["left"]},{"label":["spearman_estimate"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["spearman_statistic"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["spearman_p.value"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["spearman_method"],"name":[15],"type":["chr"],"align":["left"]},{"label":["spearman_alternative"],"name":[16],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"0","3":"6","4":"0.08571429","5":"0.1720618","6":"0.8717434","7":"4","8":"-0.7801136","9":"0.8389184","10":"Pearson's product-moment correlation","11":"two.sided","12":"0.08571429","13":"32","14":"0.9194444","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"1"},{"1":"2","2":"0","3":"6","4":"-0.14285714","5":"-0.2886751","6":"0.7871720","7":"4","8":"-0.8552617","9":"0.7563990","10":"Pearson's product-moment correlation","11":"two.sided","12":"-0.14285714","13":"40","14":"0.8027778","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"2"},{"1":"3","2":"0","3":"6","4":"0.02857143","5":"0.0571662","6":"0.9571545","7":"4","8":"-0.8015764","9":"0.8210936","10":"Pearson's product-moment correlation","11":"two.sided","12":"0.02857143","13":"34","14":"1.0000000","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"3"},{"1":"4","2":"0","3":"6","4":"0.25714286","5":"0.5321812","6":"0.6227872","7":"4","8":"-0.7006312","9":"0.8841859","10":"Pearson's product-moment correlation","11":"two.sided","12":"0.25714286","13":"26","14":"0.6583333","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"4"},{"1":"5","2":"0","3":"6","4":"0.25714286","5":"0.5321812","6":"0.6227872","7":"4","8":"-0.7006312","9":"0.8841859","10":"Pearson's product-moment correlation","11":"two.sided","12":"0.25714286","13":"26","14":"0.6583333","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"5"},{"1":"6","2":"0","3":"6","4":"-0.14285714","5":"-0.2886751","6":"0.7871720","7":"4","8":"-0.8552617","9":"0.7563990","10":"Pearson's product-moment correlation","11":"two.sided","12":"-0.14285714","13":"40","14":"0.8027778","15":"Spearman's rank correlation rho","16":"two.sided","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 <div id="inspect-correlation-coefficients" class="section level3">
 <h3><span class="header-section-number">2.0.1</span> Inspect correlation coefficients</h3>

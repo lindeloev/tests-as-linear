@@ -23,6 +23,8 @@
 <script src="simulate_wilcoxon_files/navigation-1.1/tabsets.js"></script>
 <link href="simulate_wilcoxon_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="simulate_wilcoxon_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="simulate_wilcoxon_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="simulate_wilcoxon_files/pagedtable-1.1/js/pagedtable.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -220,23 +222,20 @@ TO DO:
 <pre class="r"><code>weird_data = c(rnorm(10000), exp(rnorm(10000)), runif(10000, min=-3, max=-2))
 hist(weird_data, breaks=200, xlim=c(-4, 10))</code></pre>
 <p><img src="simulate_wilcoxon_files/figure-html/example1-1.png" width="672" /></p>
-Now, comparing p-values is simple:
-<div class="fold s">
+<p>Now, comparing p-values is simple:</p>
 <pre class="r"><code>x = sample(weird_data, 50)  # Pick out a few values to get reasonable p-values
 signed_ranks = sign(x) * rank(abs(x))
 p_wilcox = wilcox.test(x)$p.value
 p_ttest = t.test(signed_ranks)$p.value
 rbind(p_wilcox, p_ttest)  # Print in rows</code></pre>
-<pre><code>##               [,1]
-## p_wilcox 0.1201420
-## p_ttest  0.1200215</code></pre>
-</div>
+<pre><code>##                [,1]
+## p_wilcox 0.03369345
+## p_ttest  0.03183350</code></pre>
 <p>OK, so they are close in this example. But was this just luck and a special case of N=50?</p>
 </div>
 <div id="simulation" class="section level1">
 <h1><span class="header-section-number">2</span> Simulation</h1>
 <p>Let’s do what we did above, but running a few thousand simulations for different N and means (<code>mu</code>):</p>
-<div class="fold s o">
 <pre class="r"><code>library(tidyverse)
 signed_rank = function(x) sign(x) * rank(abs(x))
 
@@ -265,34 +264,10 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %&gt;%
   select(-data, -wilcox_raw, -ttest_raw)
 
 head(D)</code></pre>
-<pre><code>##   set mu N wilcox_statistic wilcox_p.value             wilcox_method
-## 1   1  0 6                3        0.15625 Wilcoxon signed rank test
-## 2   2  0 6                4        0.21875 Wilcoxon signed rank test
-## 3   3  0 6                5        0.31250 Wilcoxon signed rank test
-## 4   4  0 6                7        0.56250 Wilcoxon signed rank test
-## 5   5  0 6               19        0.09375 Wilcoxon signed rank test
-## 6   6  0 6                1        0.06250 Wilcoxon signed rank test
-##   wilcox_alternative ttest_estimate ttest_statistic ttest_p.value
-## 1          two.sided      -2.500000      -1.8720772    0.12009262
-## 2          two.sided      -2.166667      -1.4971237    0.19462126
-## 3          two.sided      -1.833333      -1.1931175    0.28634594
-## 4          two.sided      -1.166667      -0.7021095    0.51394006
-## 5          two.sided       2.833333       2.3711955    0.06385795
-## 6          two.sided      -3.166667      -3.1235808    0.02614624
-##   ttest_parameter ttest_conf.low ttest_conf.high      ttest_method
-## 1               5      -5.932794       0.9327936 One Sample t-test
-## 2               5      -5.886863       1.5535296 One Sample t-test
-## 3               5      -5.783266       2.1165989 One Sample t-test
-## 4               5      -5.438097       3.1047641 One Sample t-test
-## 5               5      -0.238246       5.9049127 One Sample t-test
-## 6               5      -5.772706      -0.5606269 One Sample t-test
-##   ttest_alternative
-## 1         two.sided
-## 2         two.sided
-## 3         two.sided
-## 4         two.sided
-## 5         two.sided
-## 6         two.sided</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["set"],"name":[1],"type":["int"],"align":["right"]},{"label":["mu"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["N"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["wilcox_statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["wilcox_p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wilcox_method"],"name":[6],"type":["chr"],"align":["left"]},{"label":["wilcox_alternative"],"name":[7],"type":["chr"],"align":["left"]},{"label":["ttest_estimate"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ttest_statistic"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ttest_p.value"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ttest_parameter"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ttest_conf.low"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["ttest_conf.high"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["ttest_method"],"name":[14],"type":["chr"],"align":["left"]},{"label":["ttest_alternative"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"0","3":"6","4":"6","5":"0.43750","6":"Wilcoxon signed rank test","7":"two.sided","8":"-1.5000000","9":"-0.93325653","10":"0.393527047","11":"5","12":"-5.631632","13":"2.631632","14":"One Sample t-test","15":"two.sided","_rn_":"1"},{"1":"2","2":"0","3":"6","4":"8","5":"0.68750","6":"Wilcoxon signed rank test","7":"two.sided","8":"-0.8333333","9":"-0.48981958","10":"0.644994904","11":"5","12":"-5.206681","13":"3.540015","14":"One Sample t-test","15":"two.sided","_rn_":"2"},{"1":"3","2":"0","3":"6","4":"10","5":"1.00000","6":"Wilcoxon signed rank test","7":"two.sided","8":"-0.1666667","9":"-0.09578263","10":"0.927413684","11":"5","12":"-4.639610","13":"4.306277","14":"One Sample t-test","15":"two.sided","_rn_":"3"},{"1":"4","2":"0","3":"6","4":"15","5":"0.43750","6":"Wilcoxon signed rank test","7":"two.sided","8":"1.5000000","9":"0.93325653","10":"0.393527047","11":"5","12":"-2.631632","13":"5.631632","14":"One Sample t-test","15":"two.sided","_rn_":"4"},{"1":"5","2":"0","3":"6","4":"12","5":"0.84375","6":"Wilcoxon signed rank test","7":"two.sided","8":"0.5000000","9":"0.28948037","10":"0.783833422","11":"5","12":"-3.939993","13":"4.939993","14":"One Sample t-test","15":"two.sided","_rn_":"5"},{"1":"6","2":"0","3":"6","4":"21","5":"0.03125","6":"Wilcoxon signed rank test","7":"two.sided","8":"3.5000000","9":"4.58257569","10":"0.005933545","11":"5","12":"1.536686","13":"5.463314","14":"One Sample t-test","15":"two.sided","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 <p>Let’s take a look at how the p-values from the “ranked t-test” compare to Wilcoxon p-values:</p>
 <div class="fold s">

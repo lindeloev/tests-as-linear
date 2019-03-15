@@ -4,7 +4,7 @@ author: "Jonas Kristoffer Lindeløv"
 date: "April, 2018"
 output: 
   html_document:
-    df_print: default
+    df_print: paged
     number_sections: yes
     self_contained: no
     toc: yes
@@ -35,7 +35,6 @@ hist(weird_data, breaks=200, xlim=c(-4, 10))
 ```
 
 Now, comparing p-values is simple:
-<div class='fold s'>
 ```{r example2}
 x = sample(weird_data, 50)  # Pick out a few values to get reasonable p-values
 signed_ranks = sign(x) * rank(abs(x))
@@ -43,7 +42,6 @@ p_wilcox = wilcox.test(x)$p.value
 p_ttest = t.test(signed_ranks)$p.value
 rbind(p_wilcox, p_ttest)  # Print in rows
 ```
-</div>
 
 OK, so they are close in this example. But was this just luck and a special case of N=50?
 
@@ -51,7 +49,6 @@ OK, so they are close in this example. But was this just luck and a special case
 # Simulation
 Let's do what we did above, but running a few thousand simulations for different N and means (`mu`):
 
-<div class='fold s o'>
 ```{r simulate, message=FALSE, warning=FALSE}
 library(tidyverse)
 signed_rank = function(x) sign(x) * rank(abs(x))
@@ -82,7 +79,6 @@ D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %>%
 
 head(D)
 ```
-</div>
 
 
 Let's take a look at how the p-values from the "ranked t-test" compare to Wilcoxon p-values:
