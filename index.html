@@ -9,31 +9,31 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Jonas Kristoffer Lindeløv" />
+<meta name="author" content="Jonas Kristoffer LindelÃ¸v" />
 
 
 <title>Common statistical tests are linear models (or: how to teach stats)</title>
 
-<script src="linear_tests_files/jquery-1.12.4/jquery.min.js"></script>
+<script src="index_files/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="linear_tests_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="linear_tests_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="linear_tests_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="linear_tests_files/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="linear_tests_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="linear_tests_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="linear_tests_files/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="linear_tests_files/navigation-1.1/tabsets.js"></script>
-<link href="linear_tests_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="linear_tests_files/highlightjs-9.12.0/highlight.js"></script>
-<script src="linear_tests_files/htmlwidgets-1.3/htmlwidgets.js"></script>
-<link href="linear_tests_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="linear_tests_files/datatables-binding-0.5/datatables.js"></script>
-<link href="linear_tests_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="linear_tests_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="linear_tests_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
-<link href="linear_tests_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="linear_tests_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="index_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="index_files/navigation-1.1/tabsets.js"></script>
+<link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="index_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="index_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="index_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="index_files/datatables-binding-0.5/datatables.js"></script>
+<link href="index_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="index_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="index_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="index_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="index_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -303,7 +303,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Common statistical tests are linear models (or: how to teach stats)</h1>
-<h4 class="author">Jonas Kristoffer Lindeløv</h4>
+<h4 class="author">Jonas Kristoffer LindelÃ¸v</h4>
 <h4 class="date">August, 2018</h4>
 
 </div>
@@ -474,10 +474,10 @@ P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
   geom_segment(x=-100, xend=100, 
                y=intercept_pearson, yend=intercept_pearson, 
                lwd=2, aes(color=&quot;beta_0&quot;)) + 
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;), labels=c(bquote(β[0]*&quot; (intercept)&quot;), bquote(β[1]*&quot; (slope)&quot;)))
+  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;), labels=c(bquote(Î²[0]*&quot; (intercept)&quot;), bquote(Î²[1]*&quot; (slope)&quot;)))
   
 theme_axis(P_pearson, legend.position=c(0.4, 0.9))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>This is often simply called a <strong>regression</strong> model which can be extended to <strong>multiple regression</strong> where there are several <span class="math inline">\(\beta\)</span>s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#t1">one-sample t-test</a> to <a href="#anova2">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
 <p>As the name implies, the <strong>Spearman rank correlation</strong> is a <strong>Pearson correlation</strong> on rank-transformed <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>:</p>
@@ -494,11 +494,11 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
   geom_segment(x=-100, xend=100, 
                y=intercept_spearman, yend=intercept_spearman, 
                lwd=2, aes(color=&#39;beta_0&#39;)) + 
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;), labels=c(bquote(β[0]*&quot; (intercept)&quot;), bquote(β[1]*&quot; (slope)&quot;)))
+  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;), labels=c(bquote(Î²[0]*&quot; (intercept)&quot;), bquote(Î²[1]*&quot; (slope)&quot;)))
 
 # Stich together using patchwork
 (theme_axis(P_pearson, legend.position=c(0.5, 0.1)) + geom_text(aes(label=label_num), nudge_y=0.1, size=3, color=&#39;dark gray&#39;) + labs(title=&#39;         Pearson&#39;)) + (theme_axis(P_spearman, xlim=c(-7.5, 30), ylim=c(-7.5, 30), legend.position=c(0.5, 0.1)) + labs(title=&#39;         Spearman&#39;))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="r-code-pearson-correlation" class="section level3">
@@ -618,7 +618,7 @@ D_t1 = data.frame(y=rnorm_fixed(20, 0.5, 0.6),
 
 P_t1 = ggplot(D_t1, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;beta_0&#39;), lwd=2) +
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(β[0]*&quot; (intercept)&quot;))) +
+  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(Î²[0]*&quot; (intercept)&quot;))) +
   
   geom_text(aes(label=round(y, 1)), nudge_x = 0.2, size=3, color=&#39;dark gray&#39;) + 
   labs(title=&#39;         T-test&#39;)
@@ -628,7 +628,7 @@ D_t1_rank = data.frame(y = signed_rank(D_t1$y))
 
 P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;beta_0&#39;), lwd=2) +
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(β[0]*&quot; (intercept)&quot;))) +
+  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(Î²[0]*&quot; (intercept)&quot;))) +
 
   geom_text(aes(label=y), nudge_x=0.2, size=3, color=&#39;dark gray&#39;) + 
   labs(title=&#39;         Wilcoxon&#39;)
@@ -637,7 +637,7 @@ P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) +
 # Stich together using patchwork
 theme_axis(P_t1, ylim=c(-1, 2), legend.position=c(0.6, 0.1)) + 
   theme_axis(P_t1_rank, ylim=NULL,  legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <p>One interesting implication is that <em>many “non-parametric tests” are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data</em>.</p>
 </div>
@@ -750,7 +750,7 @@ P_tpaired = ggplot(D_tpaired, aes(x=x, y=y)) +
 
 # Use patchwork to put them side-by-side
 theme_axis(P_tpaired) + theme_axis(P_t1, legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <p>Similarly, the <strong>Wilcoxon matched pairs</strong> only differ from <strong>Wilcoxon signed-rank</strong> in that it’s testing the signed ranks of the pairwise <span class="math inline">\(y-x\)</span> differences.</p>
 <p><span class="math inline">\(signed\_rank(y_2-y_1) = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0\)</span></p>
@@ -874,11 +874,11 @@ P_t2 = ggplot(D_t2, aes(x=x, y=y)) +
   geom_segment(x=-10, xend=10, y=0.3, yend=0.3, lwd=2, aes(color=&#39;beta_0&#39;)) + 
   geom_segment(x=0, xend=1, y=0.3, yend=1.3, lwd=2, aes(color=&#39;beta_1&#39;)) + 
   
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), labels=c(bquote(β[0]*&quot; (group 1 mean)&quot;), bquote(β[1]*&quot; (slope = difference)&quot;), bquote(β[0]+β[1]%.%1*&quot; (group 2 mean)&quot;)))
+  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), labels=c(bquote(Î²[0]*&quot; (group 1 mean)&quot;), bquote(Î²[1]*&quot; (slope = difference)&quot;), bquote(Î²[0]+Î²[1]%.%1*&quot; (group 2 mean)&quot;)))
   #scale_x_discrete(breaks=c(0.5, 1.5), labels=c(&#39;1&#39;, &#39;2&#39;))
 
 theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>If you feel like you get dummy coding now, just skip ahead to the next section. Here is a more elaborate explanation of dummy coding:</p>
 <p>If a data point was sampled from the first group, i.e., when <span class="math inline">\(x_i = 0\)</span>, the model simply becomes <span class="math inline">\(y = \beta_0\)</span>. In other words, the model predicts that that data point is <span class="math inline">\(beta_0\)</span>. It turns out that the <span class="math inline">\(\beta\)</span> which best describes a set of data points is the <em>mean</em> of those data points, so <span class="math inline">\(\beta_0\)</span> is the mean of group 1.</p>
@@ -1075,15 +1075,15 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
   scale_color_manual(
     name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), 
     labels=c(
-      bquote(β[0]*&quot; (group 1 mean)&quot;), 
-      bquote(β[1]*&quot;, &quot;*β[2]*&quot;,  etc. (slopes/differences to &quot;*β[0]*&quot;)&quot;),
-      bquote(β[0]*&quot;+&quot;*β[1]*&quot;, &quot;*β[0]*&quot;+&quot;*β[2]*&quot;, etc. (absolute intercepts)&quot;)
+      bquote(Î²[0]*&quot; (group 1 mean)&quot;), 
+      bquote(Î²[1]*&quot;, &quot;*Î²[2]*&quot;,  etc. (slopes/differences to &quot;*Î²[0]*&quot;)&quot;),
+      bquote(Î²[0]*&quot;+&quot;*Î²[1]*&quot;, &quot;*Î²[0]*&quot;+&quot;*Î²[2]*&quot;, etc. (absolute intercepts)&quot;)
     )
   )
   
 
 theme_axis(P_anova1, xlim=c(-0.5, 4), legend.position=c(0.7, 0.1))</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>A one-way ANOVA has a log-linear counterpart called <a href="#goodness">goodness-of-fit</a> test which we’ll return to. By the way, since we now regress on more than one <span class="math inline">\(x\)</span>, the one-way ANOVA is a <strong>multiple regression</strong> model.</p>
 <p>The <strong>Kruskal-Wallis</strong> test is simply a <strong>one-way ANOVA</strong> on the rank-transformed <span class="math inline">\(y\)</span> (<code>value</code>):</p>
@@ -1224,7 +1224,7 @@ P_anova2 = ggplot(D, aes(x=group, y=value, color=mood)) +
   geom_segment(x=-10, xend=100, y=means[1], yend=0.5, col=&#39;blue&#39;, lwd=2) +
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..),  lwd=2)
 theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="r-code-two-way-anova" class="section level3">
@@ -1330,7 +1330,7 @@ P_ancova = ggplot(D, aes(x=age, y=value, color=group, shape=group)) +
 
 # Theme it
 theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(axis.title=element_text())</code></pre>
-<p><img src="linear_tests_files/figure-html/unnamed-chunk-55-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-55-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>And now some R code to run the one-way ANCOVA as a linear model:</p>
 <pre class="r"><code># Built-in ANCOVA. The order of factors matter in pure-aov (type-I variance).
@@ -1671,7 +1671,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <!--
 # Visualization of models (in progress)
 These will eventually be included under the respective headers and in the infographic.
-<img src="linear_tests_files/figure-html/unnamed-chunk-70-1.png" width="192" style="display: block; margin: auto;" /><img src="linear_tests_files/figure-html/unnamed-chunk-70-2.png" width="192" style="display: block; margin: auto;" /><img src="linear_tests_files/figure-html/unnamed-chunk-70-3.png" width="192" style="display: block; margin: auto;" /><img src="linear_tests_files/figure-html/unnamed-chunk-70-4.png" width="192" style="display: block; margin: auto;" /><img src="linear_tests_files/figure-html/unnamed-chunk-70-5.png" width="192" style="display: block; margin: auto;" /><img src="linear_tests_files/figure-html/unnamed-chunk-70-6.png" width="192" style="display: block; margin: auto;" />
+<img src="index_files/figure-html/unnamed-chunk-70-1.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-2.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-3.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-4.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-5.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-6.png" width="192" style="display: block; margin: auto;" />
 -->
 </div>
 
