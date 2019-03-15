@@ -1,7 +1,6 @@
 ---
 title: "Wilcoxon is (almost) a one-sample t-test on signed ranks"
 author: "Jonas Kristoffer Lindeløv"
-date: "April, 2018"
 output: 
   html_document:
     df_print: paged

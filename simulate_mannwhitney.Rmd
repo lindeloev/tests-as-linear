@@ -1,7 +1,6 @@
 ---
 title: "Mann-Whitney is (almost) an independent-sample t-test on ranks"
 author: "Jonas Kristoffer Lindeløv"
-date: "August 31, 2018"
 output: 
   html_document:
     df_print: paged

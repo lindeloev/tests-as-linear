@@ -11,7 +11,6 @@
 
 <meta name="author" content="Jonas Kristoffer Lindeløv" />
 
-<meta name="date" content="2018-08-31" />
 
 <title>Mann-Whitney is (almost) an independent-sample t-test on ranks</title>
 
@@ -194,7 +193,6 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Mann-Whitney is (almost) an independent-sample t-test on ranks</h1>
 <h4 class="author">Jonas Kristoffer Lindeløv</h4>
-<h4 class="date">August 31, 2018</h4>
 
 </div>
 
@@ -248,24 +246,24 @@ summary(lm(ranks ~ I(rep(c(&#39;x&#39;, &#39;y&#39;), each=50))))</code></pre>
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -50.54 -23.77   1.00  24.79  48.46 
+## -52.26 -24.99  -4.26  26.87  56.26 
 ## 
 ## Coefficients:
 ##                                 Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                       51.540      4.121  12.507   &lt;2e-16 ***
-## I(rep(c(&quot;x&quot;, &quot;y&quot;), each = 50))y   -2.080      5.828  -0.357    0.722    
+## (Intercept)                       43.740      4.009  10.910   &lt;2e-16 ***
+## I(rep(c(&quot;x&quot;, &quot;y&quot;), each = 50))y   13.520      5.670   2.385    0.019 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.14 on 98 degrees of freedom
-## Multiple R-squared:  0.001298,   Adjusted R-squared:  -0.008893 
-## F-statistic: 0.1274 on 1 and 98 DF,  p-value: 0.7219</code></pre>
+## Residual standard error: 28.35 on 98 degrees of freedom
+## Multiple R-squared:  0.05484,    Adjusted R-squared:  0.0452 
+## F-statistic: 5.686 on 1 and 98 DF,  p-value: 0.01902</code></pre>
 <pre class="r"><code># Compare p-values
 rbind(wilcoxon = wilcox$p.value, 
       ttest = ttest$p.value)</code></pre>
-<pre><code>##               [,1]
-## wilcoxon 0.7225658
-## ttest    0.7220176</code></pre>
+<pre><code>##                [,1]
+## wilcoxon 0.01998314
+## ttest    0.01923397</code></pre>
 <p>Pretty close! But does it hold up to more scrutiny? Let’s find out…</p>
 </div>
 <div id="simulation" class="section level1">

@@ -1,7 +1,6 @@
 ---
 title: 'Spearman is (almost) a Pearson on ranks'
 author: "Jonas Kristoffer Lindeløv"
-date: "August 23, 2018"
 output: 
   html_document:
     df_print: paged

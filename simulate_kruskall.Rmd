@@ -1,7 +1,6 @@
 ---
 title: "Kruskal-Wallis is (almost) a one-way ANOVA on ranked data"
 author: "Jonas Kristoffer Lindeløv"
-date: "September 5, 2018"
 output: 
   html_document:
     df_print: paged
