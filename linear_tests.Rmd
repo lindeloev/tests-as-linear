@@ -1,0 +1,1360 @@
+---
+title: "Common statistical tests are linear models (or: how to teach stats)"
+author: "Jonas Kristoffer Lindeløv"
+date: "August, 2018"
+output: 
+  html_document:
+    df_print: default
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+---
+
+<style type="text/css">
+
+  body {
+    font-size: 17px;
+  }
+  
+  /* HEADING 1 */
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 20px;
+  }
+  
+  /* HEADING 2 */
+  h2 {
+    font-size: 24px;
+    padding: 0px;
+    padding-top: 20px;
+  }
+  
+  /* First h2 in section */
+  .level1 > .level2:nth-child(3) > h2 {
+    padding-top: 0px;
+  }
+  
+  /* HEADING 3 */
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 20px;
+  }
+  
+  /* First h3 in section */
+  .level2 > .level3:nth-child(3) > h3 {
+    padding-top: 0px;
+  }
+
+</style>
+
+
+<!-- from https://stackoverflow.com/a/37839683/1297830 -->
+<link rel="stylesheet" type="text/css" href="hideOutput.css">
+<script src="hideOutput.js"></script>
+
+<!-- Makes links work on RPubs (in an iframe) -->
+<base target="_top"/>
+
+<!--
+DO NOW:
+ * Move to GitHub and link to it in intro?
+ * Update cheat sheet
+ * Link properly to PDF and image
+ * Make tabbed or a website?
+
+NOT NOW:
+ * LATER: Figures: Two-way ANOVA + Chi-Square
+ * LATER: Annotate ANCOVA legend with intercepts?
+-->
+
+```{r echo=FALSE}
+# Options for building this document
+knitr::opts_chunk$set(fig.height=4, 
+                      fig.width=6, 
+                      fig.align='center',
+                      message=FALSE,
+                      warning=FALSE)
+
+
+# Delete this?
+# Plot style for icons in table
+theme_icon = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2)) {
+  P = P + theme_bw(15) + 
+  coord_cartesian(xlim=xlim, ylim=ylim) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        title = element_blank(),
+        text = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = 'none',
+        legend.key=element_blank())
+  
+    # Return jittered or non-jittered plot?
+  if(jitter) {
+    P + geom_jitter(width=0.1, size=2)
+  }
+  else {
+    P + geom_point(size=2)
+  }
+}
+```
+
+
+Most of the common statistical models (t-test, correlation, ANOVA; chi-square, etc.) are special cases of linear models or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to $y = a \cdot x + b$ which most students know from highschool. Unfortunately, stats are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike. 
+
+This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model. 
+
+For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Concerning the teaching of non-parametric tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the parametric tests, which is a close approximation but not exact. After all, even mainstream stats are approximations from the almost-universally-used [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction) to the almost-never-perfectly satisfied parametric assumptions.
+
+Use the menu to the left to jump to your favourite section. I present this in three parts:
+
+1. A table to give an overview and to raise awareness.
+2. Actual R code and more details about these equivalences.
+3. A [course outline](#course) as inspiration for stats teachers.
+
+I hope that others will join in and refine this list as well as add further tests to it. I'm not a statistician and there are likely some inaccuracies or errors here and there.
+
+
+# Overview of tests
+This table to show the underlying linear models of common tests. Formulating all the tests in the same language also highlights similarities between them.
+
+Get it [as an image](http://lindeloev.net/misc/linear_tests.png) or [as a PDF](http://lindeloev.net/misc/linear_tests.pdf).
+
+[![](linear_tests.png)](http://lindeloev.net/misc/linear_tests.pdf)
+
+
+# Settings and toy data
+Unfold this if you want to see functions and other settings for this notebook:
+<div class='fold s'>
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# Load packages for data handling and plotting
+library(tidyverse)
+library(patchwork)
+library(broom)
+
+# Reproducible "random" results
+set.seed(40)
+
+# To show tables. Rounds
+print_df = function(D, decimals=4, navigate=FALSE) {
+  DT::datatable(mutate_if(D, is.numeric, round, decimals), 
+    rownames = FALSE,
+    options = list(
+      searching=FALSE, 
+      lengthChange=FALSE, 
+      ordering=FALSE, 
+      autoWidth=TRUE, 
+      bPaginate=navigate, 
+      bInfo=navigate, 
+      paging=navigate
+    )
+  )
+}
+
+# Generate normal data with known parameters
+rnorm_fixed = function(N, mu=0, sd=1) scale(rnorm(N))*sd + mu
+
+# Plot style.
+theme_axis = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2), legend.position=NULL) {
+  P = P + theme_bw(15) + 
+  geom_segment(x=-1000, xend=1000, y=0, yend=0, lty=2, color='dark gray', lwd=0.5) +
+  geom_segment(x=0, xend=0, y=-1000, yend=1000, lty=2, color='dark gray', lwd=0.5) +
+  coord_cartesian(xlim=xlim, ylim=ylim) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = legend.position)
+  
+  # Return jittered or non-jittered plot?
+  if(jitter) {
+    P + geom_jitter(width=0.1, size=2)
+  }
+  else {
+    P + geom_point(size=2)
+  }
+}
+```
+</div>
+
+For a start, we'll keep it simple and play with three standard normals in wide (`a`, `b`, `c`) and long format (`value`, `group`):
+```{r}
+# Wide format (sort of)
+y = rnorm_fixed(50, mu=0.3, sd=2)  # Almost zero mean
+x = rnorm_fixed(50, mu=0, sd=1)  # Used in correlation where this is on x-axis
+y2 = rnorm_fixed(50, mu=0.5, sd=1.5)  # Used in two means
+
+# Long format data with indicator
+value = c(y, y2)
+group = rep(c('y1', 'y2'), each = 50)
+
+# We'll need the signed rank function for a lot of the "non-parametric" tests
+signed_rank = function(x) sign(x) * rank(abs(x))
+```
+
+
+# Pearson and Spearman correlation {#correlation}
+### Theory: As linear models
+Model: the recipe for $y$ is a slope ($\beta_1$) times $x$ plus an intercept ($\beta_0$, aka a straight line).
+
+$y = \beta_0 + \beta_1 x \qquad \mathcal{H}_0: \beta_1 = 0$
+
+... which is a math-y way of writing the good old $y = ax + b$ (here ordered as $y = b + ax$). In R we are lazy and write `y ~ 1 + x` which R reads like `y = 1*number + x*othernumber` and the task of t-tests, lm, etc., is simply to find the numbers that best predict $y$.
+
+Either way you write it, it's an intercept ($\beta_0$) and a slope ($\beta_1$) yielding a straight line:
+
+<div class="fold s">
+```{r}
+# Fixed correlation
+D_correlation = data.frame(MASS::mvrnorm(30, mu=c(0.9, 0.9), Sigma=matrix(c(1, 0.8, 1, 0.8), ncol=2), empirical=TRUE))  # Correlated data
+
+# Add labels (for next plot)
+D_correlation$label_num = sprintf('(%.1f,%.1f)', D_correlation$X1, D_correlation$X2)
+D_correlation$label_rank = sprintf('(%i,%i)', rank(D_correlation$X1), rank(D_correlation$X2))
+
+# Plot it
+fit = lm(I(X2*0.5+0.4) ~ I(X1*0.5+0.2), D_correlation)
+intercept_pearson = coefficients(fit)[1]
+
+P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
+  geom_smooth(method=lm, se=FALSE, lwd=2, aes(colour='beta_1')) + 
+  geom_segment(x=-100, xend=100, 
+               y=intercept_pearson, yend=intercept_pearson, 
+               lwd=2, aes(color="beta_0")) + 
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(β[0]*" (intercept)"), bquote(β[1]*" (slope)")))
+  
+theme_axis(P_pearson, legend.position=c(0.4, 0.9))
+```
+</div>
+
+
+This is often simply called a **regression** model which can be extended to **multiple regression** where there are several $\beta$s and on the right-hand side multiplied with the predictors. Everything below, from [one-sample t-test](#t1) to [two-way ANOVA](#anova2) are just special cases of this system. Nothing more, nothing less.
+
+As the name implies, the **Spearman rank correlation** is a **Pearson correlation** on rank-transformed $x$ and $y$:
+
+$rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0$
+
+The correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](https://rpubs.com/lindeloev/spearman_pearson). 
+Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:
+
+<div class="fold s">
+```{r, fig.width=8, figh.height=7}
+# Spearman intercept
+intercept_spearman = coefficients(lm(rank(X2) ~ rank(X1), D_correlation))[1]
+
+# Spearman plot
+P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
+  geom_smooth(method=lm, se=FALSE, lwd=2, aes(color='beta_1')) + 
+  geom_text(aes(label=label_rank), nudge_y=1, size=3, color='dark gray') + 
+  geom_segment(x=-100, xend=100, 
+               y=intercept_spearman, yend=intercept_spearman, 
+               lwd=2, aes(color='beta_0')) + 
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(β[0]*" (intercept)"), bquote(β[1]*" (slope)")))
+
+# Stich together using patchwork
+(theme_axis(P_pearson, legend.position=c(0.5, 0.1)) + geom_text(aes(label=label_num), nudge_y=0.1, size=3, color='dark gray') + labs(title='         Pearson')) + (theme_axis(P_spearman, xlim=c(-7.5, 30), ylim=c(-7.5, 30), legend.position=c(0.5, 0.1)) + labs(title='         Spearman'))
+
+```
+</div>
+
+
+### R code: Pearson correlation
+It couldn't be much simpler to run these models in R. They yield identical `p` and `t`, but there's a catch: `lm` gives you the *slope* and even though that is usually much more interpretable and informative than the *correlation coefficient* *r*, you may still want *r*. Luckily, the slope becomes `r` if `x` and `y` have a standard deviation of exactly 1. You can do this using `scale(x)` or `I(x/sd(x))`:
+
+
+```{r}
+a = cor.test(y, x, method = "pearson") # Built-in
+b = lm(y ~ 1 + x) # Equivalent linear model: y = Beta0*1 + Beta1*x
+c = lm(scale(y) ~ 1 + scale(x))  # On scaled vars to recover r
+```
+
+Results:
+```{r, echo=FALSE}
+at = tidy(a)
+bt = tidy(b)[2, ]  # Only slope
+bt$conf.low = confint(b)[2,1]
+bt$conf.high = confint(b)[2,2]
+
+ct = tidy(c)[2, ]  # Only slope
+ct$conf.low = confint(c)[2,1]
+ct$conf.high = confint(c)[2,2]
+
+# Merge and print nicely
+df = bind_rows(at, bt, ct) %>%
+  mutate(model = c('cor.test', 'lm', 'lm scaled')) %>%
+  rename(t = statistic, 
+         r = estimate) %>%
+  select(model, r, p.value, t, conf.low, conf.high)
+
+print_df(df)
+```
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+summary(c)
+```
+</div>
+
+The CIs are not exactly identical, but very close.
+
+
+### R code: Spearman correlation
+Note that we can interpret the slope which is the number of ranks $y$ change for each rank on $x$. I think that this is a pretty interesting number. However, the intercept is less interpretable since it lies at $rank(x) = 0$ which is impossible since x starts at 1.
+
+See the identical `r` (now "rho") and `p`:
+
+```{r, results='hold'}
+# Spearman correlation
+a = cor.test(y, x, method = "spearman") # Built-in
+b = lm(rank(y) ~ 1 + rank(x)) # Equivalent linear model
+```
+
+Let's look at the results:
+```{r, echo=FALSE}
+bt = tidy(b)[2, ]  # Only slope
+df = data.frame(model = c('cor.test', 'lm'), 
+               p.value = c(a$p.value, bt$p.value),
+               rho = c(a$estimate, bt$estimate))
+
+print_df(df)
+```
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+# One mean
+## One sample t-test and Wilcoxon signed-rank {#t1}
+### Theory: As linear models
+**t-test** model: A single number predicts $y$.
+
+$y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$
+
+In other words, it's our good old $y = \beta_0 + \beta_1*x$ where the last term is gone since there is no $x$ (essentially $x=0$, see left figure below).
+
+The same is to a very close approximately true for **Wilcoxon signed-rank test**, just with the signed ranks of $y$ instead of $y$ itself (see right panel below and caveat in the end of this section):
+
+$signed\_rank(y) = \beta_0$
+
+[This approximation is appropriate when the sample size is larger than 14 and almost perfect if the sample size is larger than 50](https://rpubs.com/lindeloev/wilcoxon-ttest).
+
+<div class="fold s">
+```{r fig.width=7, fig.height=5}
+# T-test
+D_t1 = data.frame(y=rnorm_fixed(20, 0.5, 0.6),
+                  x=runif(20, 0.93, 1.07))  # Fix mean and SD
+
+P_t1 = ggplot(D_t1, aes(y=y, x=0)) + 
+  stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(β[0]*" (intercept)"))) +
+  
+  geom_text(aes(label=round(y, 1)), nudge_x = 0.2, size=3, color='dark gray') + 
+  labs(title='         T-test')
+
+# Wilcoxon
+D_t1_rank = data.frame(y = signed_rank(D_t1$y))
+
+P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) + 
+  stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(β[0]*" (intercept)"))) +
+
+  geom_text(aes(label=y), nudge_x=0.2, size=3, color='dark gray') + 
+  labs(title='         Wilcoxon')
+
+
+# Stich together using patchwork
+theme_axis(P_t1, ylim=c(-1, 2), legend.position=c(0.6, 0.1)) + 
+  theme_axis(P_t1_rank, ylim=NULL,  legend.position=c(0.6, 0.1))
+```
+</div>
+
+One interesting implication is that *many "non-parametric tests" are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data*.
+
+### R code: One-sample t-test
+Try running the R code below and see that the linear model (`lm`) produces the same $t$, $p$, and $r$ as the built-in `t.test`. The confidence interval is not presented in the output of `lm` but is also identical if you use `confint(lm(...))`:
+
+```{r}
+# Built-in t-test
+a = t.test(y)
+
+# Equivalent linear model: intercept-only
+b = lm(y ~ 1)
+```
+
+Results:
+
+```{r, echo=FALSE}
+at = tidy(a)
+at$df = at$parameter
+bt = tidy(b)
+bt$conf.low = confint(b)[1]
+bt$conf.high = confint(b)[2]
+bt$df = b$df.residual
+
+df = bind_rows(at, bt) %>%
+  mutate(model = c('t.test', 'lm')) %>%
+  rename(mean = estimate,
+         t = statistic) %>%
+  select(model, mean, p.value, t, df, conf.low, conf.high)
+print_df(df)
+```
+
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+
+### R code: Wilcoxon signed-rank test
+In addition to matching `p`-values, `lm` also gives us the mean signed rank, which I find to be an informative number.
+
+```{r, results='hold'}
+# Built-in
+a = wilcox.test(y)
+
+# Equivalent linear model
+b = lm(signed_rank(y) ~ 1)  # See? Same as above, just on signed ranks
+
+# Bonus: of course also works for one-sample t-test
+c = t.test(signed_rank(y))
+```
+
+Results:
+
+```{r, echo=FALSE}
+bt = tidy(b)
+df = data.frame(model=c('wilcox.test', 'lm', 't.test'),
+               p.value=c(a$p.value, bt$p.value, c$p.value),
+               mean_rank = c(NA, bt$estimate, c$estimate))
+print_df(df)
+```
+
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+c
+```
+</div>
+
+
+
+## Paired samples t-test and Wilcoxon matched pairs {#tpair}
+### Theory: As linear models
+**t-test** model: a single number (intercept) predicts the pairwise differences.
+
+$y_2-y_1 = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$
+
+This means that there is just one $y = y_2 - y_1$ to predict and it becomes a [one-sample t-test](#t1) on the pairwise differences. The visualization is therefore also the same as for the one-sample t-test. At the risk of overcomplicating a simple substraction, you can think of these pairwise differences as slopes (see left panel of the figure), which we can represent as y-offsets (see right panel of the figure):
+
+<div class="fold s">
+```{r, fig.width=7, fig.height=3}
+# Data for plot
+N = nrow(D_t1)
+start = rnorm_fixed(N, 0.2, 0.3)
+D_tpaired = data.frame(x = rep(c(0, 1), each=N), y = c(start, start + D_t1$y), id=1:N)
+
+# Plot
+P_tpaired = ggplot(D_tpaired, aes(x=x, y=y)) + 
+  geom_line(aes(group=id)) + 
+  labs(title='          Pairs')
+
+# Use patchwork to put them side-by-side
+theme_axis(P_tpaired) + theme_axis(P_t1, legend.position=c(0.6, 0.1))
+```
+</div>
+
+
+Similarly, the **Wilcoxon matched pairs** only differ from **Wilcoxon signed-rank** in that it's testing the signed ranks of the pairwise $y-x$ differences.
+
+$signed\_rank(y_2-y_1) = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$
+
+
+### R code: Paired sample t-test
+```{r, results='hold'}
+a = t.test(y, y2, paired = TRUE) # Built-in paired t-test
+b = lm(y - y2 ~ 1) # Equivalent linear model
+```
+
+Results:
+
+```{r, echo=FALSE}
+at = tidy(a)
+at$df = at$parameter
+bt = tidy(b)
+bt$conf.low = confint(b)[1]
+bt$conf.high = confint(b)[2]
+bt$df = b$df.residual
+
+df = bind_rows(at, bt) %>%
+  rename(
+    mean = estimate,
+    t = statistic
+  ) %>%
+  mutate(model = c('t.test', 'lm')) %>%
+  select(model, mean, p.value, df, t, conf.low, conf.high)
+print_df(df)
+```
+
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+### R code: Wilcoxon matched pairs
+Again, we do the signed-ranks trick. This is still an approximation, but a close one:
+
+```{r, results='hold'}
+# Built-in Wilcoxon matched pairs
+a = wilcox.test(y, y2, paired = TRUE)
+
+# Equivalent linear model:
+b = lm(signed_rank(y - y2) ~ 1)
+
+# Bonus: identical to one-sample t-test ong signed ranks
+c = t.test(signed_rank(y - y2))
+```
+
+Results:
+
+```{r, echo=FALSE}
+# Tidy data for individual tests
+at = tidy(a)
+bt = tidy(b)
+bt$mean_rank_diff = bt$estimate
+ct = tidy(c)
+ct$mean_rank_diff = ct$estimate
+
+# Print nicely
+df = bind_rows(at, bt, ct) %>%
+  mutate(model=c('wilcox.test', 'lm', 't.test')) %>%
+  select(model, p.value, mean_rank_diff)
+print_df(df)
+```
+
+<div class="fold o">
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+c
+```
+</div>
+
+For large sample sizes (N >> 100), this approaches the **sign test** to a reasonable degree, but this approximation is too inaccurate to flesh out here.
+
+
+# Two means
+
+## Independent t-test and Mann-Whitney U {#t2}
+### Theory: As linear models
+Independent t-test model: two means predict $y$.
+
+$y_i = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
+
+where $x_i$ is an indicator (0 or 1) saying whether data point $i$ was sampled from one or the other group. [Indicator variables (also called "dummy coding")](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)) underly a lot of linear models and we'll take an aside to see how it works in a minute.
+
+**Mann-Whitney U** (also known as **Wilcoxon signed-rank test** for two independent groups) is the same model to a very close approximation, just on the ranks of $x$ and $y$ instead of the actual values:
+
+$rank(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
+
+To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](https://rpubs.com/lindeloev/mann_ttest).
+
+### Theory: Dummy coding {#dummy}
+Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (red line) and $\beta_1$ is the slope between the two means (green line). Why? Because when $\Delta x = 1$ the slope equals the difference because:
+
+$slope = \Delta y / \Delta x = \Delta y / 1 = \Delta y = difference$
+
+Magic! Even categorical differences can be modelled using linear models! It's a true Swizz army knife.
+
+<div class="fold s">
+```{r}
+# Data
+N = 20  # Number of data points per group
+D_t2 = data.frame(
+  x = rep(c(0, 1), each=N),
+  y = c(rnorm_fixed(N, 0.3, 0.3), rnorm_fixed(N, 1.3, 0.3))
+)
+
+# Plot
+P_t2 = ggplot(D_t2, aes(x=x, y=y)) + 
+  stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='something'), lwd=2) +
+  geom_segment(x=-10, xend=10, y=0.3, yend=0.3, lwd=2, aes(color='beta_0')) + 
+  geom_segment(x=0, xend=1, y=0.3, yend=1.3, lwd=2, aes(color='beta_1')) + 
+  
+  scale_color_manual(name=NULL, values=c("blue", "red", "darkblue"), labels=c(bquote(β[0]*" (group 1 mean)"), bquote(β[1]*" (slope = difference)"), bquote(β[0]+β[1]%.%1*" (group 2 mean)")))
+  #scale_x_discrete(breaks=c(0.5, 1.5), labels=c('1', '2'))
+
+theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))
+```
+</div>
+
+If you feel like you get dummy coding now, just skip ahead to the next section. Here is a more elaborate explanation of dummy coding:
+
+If a data point was sampled from the first group, i.e., when $x_i = 0$, the model simply becomes $y = \beta_0$. In other words, the model predicts that that data point is $beta_0$. It turns out that the $\beta$ which best describes a set of data points is the *mean* of those data points, so $\beta_0$ is the mean of group 1.
+
+On the other hand, data points sampled from the second group would have $x_i = 1$ so the model becomes $y_i = \beta_0 + \beta_1$. In other words, we add $\beta_1$ to "shift" from the mean of the first group to the mean of the second group. Thus $\beta_1$ becomes the *difference* between the groups. 
+
+As an example, say group 1 is 25 years old ($\beta_0 = 25$) and group 2 is 28 years old ($\beta_1 = 3$), then the model for a person in group 1 is $y = 25 + 3 \cdot 0 = 25$ and the model for a person in group 2 is: $y = 25 + 3 \cdot 1 = 28$. Hooray, it works! For first-timers it takes a few moments to understand dummy coding, but you only need to know addition and multiplication to get there!
+
+
+### R code: independent t-test
+As a reminder, when we write `y ~ 1 + x` in R, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and R goes on computing the $\beta$s for you. Thus $y ~ 1 + x$ is the R-way of writing $y = a \cdot x + b$.
+
+Notice the identical `t`, `df`, `p`, and estimates. We can get the confidence interval by running `confint(lm(...))`.
+
+```{r, results='hold'}
+# Built-in independent t-test on wide data
+a = t.test(y, y2, var.equal = TRUE)
+
+# Be explicit about the underlying linear model by hand-dummy-coding:
+group_y2 = ifelse(group == 'y2', 1, 0)  # 1 if group == y2, 0 otherwise
+b = lm(value ~ 1 + group_y2)  # Using our hand-made dummy regressor
+
+# Note: We could also do the dummy-coding in the model 
+# specification itself. Same result.
+c = lm(value ~ 1 + I(group=='y2'))
+```
+
+Results:
+
+```{r, echo=FALSE}
+# t.test, flip around CI order
+at = tidy(a)
+tmp = at$conf.high
+at$conf.high = -at$conf.low
+at$conf.low = -tmp
+at$estimate2 = at$estimate2 - at$estimate1  # Make it the difference
+at$df = at$parameter
+
+# lm
+bt = tidy(b)
+bt$conf.low = confint(b)[2,1]
+bt$conf.high = confint(b)[2,2]
+bt$estimate1 = bt$estimate[1]
+bt$estimate2 = bt$estimate[2]
+bt$df = b$df.residual
+
+# Print it nicely
+df = bind_rows(at, bt[2,]) %>%
+  mutate(model=c('t.test', 'lm')) %>%
+  rename(mean_y = estimate1,
+         difference = estimate2) %>%
+  select(model, mean_y, difference, p.value, df, conf.low, conf.high)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+summary(c)
+```
+</div>
+
+
+
+### R code: Mann-Whitney U
+```{r, results='hold'}
+# Wilcoxon / Mann-Whitney U
+a = wilcox.test(y, y2)
+
+# As linear model with our dummy-coded group_y2:
+b = lm(rank(value) ~ 1 + group_y2)  # compare to linear model above
+```
+
+
+```{r, echo=FALSE}
+at = tidy(a)
+bt = tidy(b)
+
+df = data.frame(
+  model = c('wilcox.test', 'lm'),
+  p.value = c(a$p.value, bt$p.value[2]),
+  rank_diff = c(NA, bt$estimate[2])
+)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+
+## Welch's t-test {#welch}
+This is identical to the (Student's) [independent t-test](#t2) above except that Student's assumes identical variances and **Welch's t-test** does not. So the linear model is the same and the trick is in the variances, which I won't go further into here.
+
+```{r, results='hold'}
+# Built-in
+a = t.test(y, y2, var.equal=FALSE)
+
+# As linear model with per-group variances
+b = nlme::gls(value ~ 1 + group_y2, weights = nlme::varIdent(form=~1|group), method="ML")
+```
+
+Results:
+
+
+```{r, echo=FALSE}
+at = tidy(a)
+bs = summary(b)
+df = data.frame(
+  model = c('t.test', 'gls'),
+  mean_y = c(at$estimate1, bs$coefficients[1]),
+  mean_diff = c(at$estimate2 - at$estimate1, bs$coefficients[2]),
+  p.value = c(at$p.value, coef(bs)[2, 4]),
+  t = c(at$statistic, -coef(bs)[2, 3]),
+  conf.low = c(at$conf.low, -confint(b)[2,2]),
+  conf.high = c(at$conf.high, -confint(b)[2,1])
+)
+print_df(df)
+```
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+# Three or more means
+ANOVAs are linear models with (only) categorical predictors so they simply extend everything we did above, relying heavily on dummy coding. Do make sure to read [the section on dummy coding](#dummy) if you haven't already.
+
+## One-way ANOVA and Kruskal-Wallis {#anova1}
+### Theory: As linear models
+Model: One mean for each group predicts $y$.
+
+$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_1$
+
+where $x_i$ are indicators ($x=0$ or $x=1$) where at most one $x_i=1$ while all others are $x_i=0$. 
+
+Notice how this is just "more of the same" of what we already did in other models above. When there are only two groups, this model is $y = \beta_0 + \beta_1*x$, i.e. the [independent t-test](#t2). If there is only one group, it is $y = \beta_0$, i.e. the [one-sample t-test](#t1). This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above, though I did omit adding green lines from the intercept (red) to the group means (blue) for visual clarity.
+
+<div class="fold s">
+```{r}
+# Figure
+N = 15
+D_anova1 = data.frame(
+  y=c(rnorm_fixed(N, 0.5, 0.3), 
+      rnorm_fixed(N, 0, 0.3), 
+      rnorm_fixed(N, 1, 0.3), 
+      rnorm_fixed(N, 0.8, 0.3)), 
+  x=rep(0:3, each=15)
+)
+ymeans = aggregate(y~x, D_anova1, mean)$y
+P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) + 
+  stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='intercepts'), lwd=2) + 
+  geom_segment(x=-10, xend=100, y=0.5, yend=0.5, lwd=2, aes(color='beta_0')) +
+  geom_segment(x=0, xend=1, y=ymeans[1], yend=ymeans[2], lwd=2, aes(color='betas')) +
+  geom_segment(x=1, xend=2, y=ymeans[1], yend=ymeans[3], lwd=2, aes(color='betas')) +
+  geom_segment(x=2, xend=3, y=ymeans[1], yend=ymeans[4], lwd=2, aes(color='betas')) +
+  
+  scale_color_manual(
+    name=NULL, values=c("blue", "red", "darkblue"), 
+    labels=c(
+      bquote(β[0]*" (group 1 mean)"), 
+      bquote(β[1]*", "*β[2]*",  etc. (slopes/differences to "*β[0]*")"),
+      bquote(β[0]*"+"*β[1]*", "*β[0]*"+"*β[2]*", etc. (absolute intercepts)")
+    )
+  )
+  
+
+theme_axis(P_anova1, xlim=c(-0.5, 4), legend.position=c(0.7, 0.1))
+```
+</div>
+
+A one-way ANOVA has a log-linear counterpart called [goodness-of-fit](#goodness) test which we'll return to. By the way, since we now regress on more than one $x$, the one-way ANOVA is a **multiple regression** model.
+
+The **Kruskal-Wallis** test is simply a **one-way ANOVA** on the rank-transformed $y$ (`value`):
+
+$rank(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +...$
+
+Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the [Wilcoxon signed-rank test](#t1) or the [Mann-Whitney U test](#t2) respectively. 
+
+
+### Example data
+We make a three-level factor with the levels `a`, `b`, and `c` so that the **one-way ANOVA** basically becomes a "three-sample t-test". Then we manually do the [dummy coding](#dummy) of the groups.
+
+```{r}
+# Three variables in "long" format
+N = 20  # Number of samples per group
+D = data.frame(
+   value = c(rnorm_fixed(N, 0), rnorm_fixed(N, 1), rnorm_fixed(N, 0.5)), 
+   group = rep(c('a', 'b', 'c'), each=N),
+   
+   # Explicitly add indicator/dummy variables
+   # Could also be done using model.matrix(~D$group)
+   group_a = rep(c(1, 0, 0), each=N),
+   group_b = rep(c(0, 1, 0), each=N),
+   group_c = rep(c(0, 0, 1), each=N))  # N of each level
+```
+```{r, echo=FALSE}
+print_df(D, navigate=TRUE)
+```
+
+See? Exactly one parameter predicts a `value` in a given row while the others are not included in the modeling of that `value`. 
+
+
+### R code: one-way ANOVA
+OK, let's see the identity between the built-in **ANOVA** (`car::Anova`) and the in-your-face linear model, `lm`. The latter returns parameter estimates as well, but look at the overall model F-statistics which are identical. Note that I do not use the `aov` function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares, but let's skip that for now.
+
+
+```{r, results='hold'}
+# Compare built-in and linear model
+a = car::Anova(aov(value ~ group, D))  # Built-in ANOVA
+b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linear model
+```
+
+Results:
+
+```{r, echo=FALSE}
+at = tidy(a)[1,]
+at$df.residual = a$Df[2]
+bt = glance(b)
+
+df = bind_rows(at, bt) %>%
+  mutate(model = c('Anova', 'lm')) %>%
+  rename(F = statistic) %>%
+  select(model, F, p.value, df, df.residual)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+```
+</div>
+
+
+### R code: Kruskal-Wallis
+```{r, results='hold'}
+a = kruskal.test(value ~ group, D)  # Built-in
+b = lm(rank(value) ~ 1 + group_a + group_b + group_c, D)  # As linear model
+c = car::Anova(aov(rank(value) ~ group, D))  # Of course the same using the built-in ANOVA, which is just a wrapper around lm
+```
+
+Results:
+
+```{r, echo=FALSE}
+df = data.frame(
+  model = c('kruskal.test', 'lm'),
+  p.value = c(a$p.value, glance(b)$p.value)
+)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+summary(b)
+c
+```
+</div>
+
+
+
+## Two-way ANOVA (plot in progress!) {#anova2}
+### Theory: As linear models
+Model: one mean per group (main effects) plus these means multiplied across factors (interaction effects). The main effects are the [one-way ANOVA](#anova1)s above, though in the context of a larger model. The interaction effect is harder to explain in the abstract even though it's just a few numbers multiplied with each other. I will leave that to the teachers to keep focus on equivalences here :-)
+
+Switching to matrix notation:
+
+$y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 \qquad \mathcal{H}_0: \beta_3 = 0$
+
+Here $\beta_i$ are vectors of betas of which only one is selected by the indicator vector $X_i$. The $\mathcal{H}_0$ shown here is the interaction effect. Note that the intercept $\beta_0$, to which all other $\beta$s are relative, is now the mean for the first level of all factors.
+
+Continuing with the dataset from the one-way ANOVA above, let's add a crossing factor `mood` so that we can test the `group:mood` interaction (a 3x2 ANOVA). We also do the [dummy coding](#dummy) of this factor needed for the linear model.
+
+```{r}
+# Crossing factor
+D$mood = c('happy', 'sad')
+
+# Dummy coding
+D$mood_happy = ifelse(D$mood == 'happy', 1, 0)  # 1 if mood==happy. 0 otherwise.
+D$mood_sad = ifelse(D$mood == 'sad', 1, 0)  # Same, but we won't be needing this
+```
+
+```{r, echo=FALSE}
+print_df(D, navigate=TRUE)
+```
+
+$\beta_0$ is now the happy guys from group a!
+
+<div class="fold s">
+```{r}
+# Add intercept line
+# Add cross...
+# Use other data?
+
+means = lm(value ~ mood * group, D)$coefficients
+
+P_anova2 = ggplot(D, aes(x=group, y=value, color=mood)) + 
+  geom_segment(x=-10, xend=100, y=means[1], yend=0.5, col='blue', lwd=2) +
+  stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),  lwd=2)
+theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())
+```
+</div>
+
+
+### R code: Two-way ANOVA
+Now let's turn to the actual modeling in R. We compare the built-in ANOVA function to the linear model using `lm`. Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a likelihood-ratio test to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). We do so using the `anova` function. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!
+
+```{r, results='hold'}
+# Built-in two-way ANOVA.
+a = car::Anova(aov(value ~ mood * group, D), type='II')  # Normal notation. "*" both multiplies and adds main effects
+b = car::Anova(aov(value ~ mood + group + mood:group, D))  # Identical but more verbose about main effects and interaction
+
+# Testing the interaction terms as linear model.
+full = lm(value ~ 1 + group_a + group_b + mood_happy + group_a:mood_happy + group_b:mood_happy, D)  # Full model
+null = lm(value ~ 1 + group_a + group_b + mood_happy, D)  # Without interaction
+c = anova(null, full)  # whoop whoop, same F, p, and Dfs
+```
+
+Results:
+
+```{r, echo=FALSE}
+at = tidy(a)[3,]
+at$res.df = tidy(a)[4, ]$df
+at$rss = tidy(a)[4, ]$sumsq
+ct = tidy(c)[2,]
+
+df = bind_rows(at, ct) %>%
+  mutate(model = c('Anova mood:group', 'lm LRT')) %>%
+  rename(
+    F = statistic,
+    res.sumsq = rss
+  ) %>%
+  select(model, F, df, p.value, sumsq, res.sumsq)
+print_df(df)
+```
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+c
+```
+</div>
+
+
+Below, I present approximate main effect models, though exact calculation of ANOVA main effects [is more involved](https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/) if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.
+
+Look at the model summary statistics to find values comparable to the `Anova`-estimated main effects above.
+
+
+```{r, results='hold'}
+# Main effect of group.
+e = lm(value ~ 1 + group_a + group_b, D)
+
+# Main effect of mood.
+f = lm(value ~ 1 + mood_happy, D)
+```
+
+
+```{r, echo=FALSE}
+et = glance(e)
+ft = glance(f)
+at = tidy(a)[1:2,]
+
+df = bind_rows(et, ft, at) %>%
+  mutate(model=c('lm', 'lm', 'Anova', 'Anova'),
+         term = c('group', 'mood', 'mood', 'group')) %>%
+  rename(F = statistic) %>%
+  select(term, model, F, p.value) %>%
+  arrange(term, model)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+summary(e)
+summary(f)
+```
+</div>
+
+
+## ANCOVA {#ancova}
+This is simply ANOVA with a continuous regressor added so that it now contains continuous and (dummy-coded) categorical predictors. For example, if we continue with the [one-way ANOVA](#anova1) example, we can add `age` and it is now called a **one-way ANCOVA**:
+
+$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_3 age$
+
+... where $x_i$ are our usual dummy-coded indicator variables. $\beta_0$ is now the mean for the first group at $age=0$. You can turn all ANOVAs into ANCOVAs this way, e.g. by adding $\beta_N \cdot age$ to our **two-way ANOVA** in the previous section. But let us go ahead with our one-way ANCOVA, starting by adding $age$ to our dataset:
+
+```{r, results='hold'}
+# Update data with a continuous covariate
+D$age = D$value + rnorm_fixed(nrow(D), sd=3)  # Correlated to value
+```
+
+This is best visualized using colors for groups instead of x-position. The $\beta$s are still the average $y$-offset of the data points, only now we model each group using a slope instead of an intercept. In other words, the one-way ANOVA is sort of [one-sample t-tests](#t1) model for each group ($y = \beta_0$) while the **one-way ANCOVA** is sort of [Pearson correlation](#correlation) model for each group ($y_i = \beta_0 + \beta_i + \beta_1 \cdot age$):
+
+
+<div class="fold s">
+```{r}
+# For linear model plot
+D$pred = predict(lm(value ~ age + group, D))
+
+# Plot
+P_ancova = ggplot(D, aes(x=age, y=value, color=group, shape=group)) + 
+  geom_line(aes(y=pred), lwd=2)
+
+# Theme it
+theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(axis.title=element_text())
+```
+</div>
+
+
+And now some R code to run the one-way ANCOVA as a linear model:
+
+```{r, results='hold'}
+# Built-in ANCOVA. The order of factors matter in pure-aov (type-I variance).
+# Use type-II or type-III instead; implemented in car::Anova
+a = car::Anova(aov(value ~ group + age, D))
+#a = aov(value ~ group + age, D)  # Predictor order matters. Not nice!
+
+# As dummy-coded linear model. 
+full = lm(value ~ 1 + group_a + group_b + age, D)
+
+# Testing main effect of age using Likelihood-ratio test
+null_age = lm(value ~ 1 + group_a + group_b, D)  # Full without age. One-way ANOVA!
+result_age = anova(null_age, full)
+
+# Testing main effect of groupusing Likelihood-ratio test
+null_group = lm(value ~ 1 + age, D)  # Full without group. Pearson correlation!
+result_group = anova(null_group, full)
+```
+
+
+Results:
+
+```{r, echo=FALSE}
+at = tidy(a)[1:2,]
+at$rss = a$`Sum Sq`[3]
+at$res.df = a$Df[3]
+groupt = tidy(result_group)[2, ]
+aget = tidy(result_age)[2,]
+
+df = bind_rows(at, groupt, aget) %>%
+  mutate(
+    model=rep(c('Anova', 'lm'), each=2),
+    term = c('group', 'age', 'group', 'age')
+  ) %>%
+  rename(
+    F = statistic,
+    res.sumsq = rss
+  ) %>%
+  select(term, model, F, df, p.value, sumsq, everything()) %>%
+  arrange(term)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+result_age
+result_group
+```
+</div>
+
+<!--
+Is there a well-known "non-parametric" ANCOVA? No, but now that we understand it as a mix of a **Pearson correlation** and **t-tests**, you can get creative and make one up. If we rank the $y$ and the $x$ we get a **Spearman correlation** ($rank(y) ~ \beta_0 + rank(x)$) and at the same time the **Wilcoxon** ($rank(y) ~ 1):
+
+$rank(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_3 rank(age)$
+
+As I noted earlier, this does not match up perfectly with the true "non-parametric" model (if that exists), but it can be very close!
+
+```{r}
+full = lm(rank(value) ~ group + rank(age), D)
+null = lm(rank(value) ~ rank(age), D)
+anova(null, full)
+sm::sm.ancova(x=D$age, y=D$value, group=D$group, display='none', model='equal')
+
+```
+-->
+
+
+# Proportions: Chi-square is a log-linear model
+Recall that when you take the logarithm, you can easily make statements about *proportions* (but not means). Therefore, if you want to model proportions, logarithms are a good choice. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See [this nice introduction](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) to Chi-Square tests as linear models.
+
+
+## Goodness of fit {#goodness}
+### Theory: As log-linear model
+Model: a single intercept predicts $log(y)$.
+
+I'll refer you to take a look at [the section on contingency tables](#contingency) which is basically a "two-way goodness of fit".
+
+<!--
+Before log-transforming, this is a one-way ANOVA:
+
+$y = \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 +... \qquad \mathcal{H}_0: y = \beta_1$
+
+We should think of these as proportions of $sum(y)$ for reasons that will be clearer in [the section on contingency tables](#contingency):
+
+$y = N\beta_1*x_1/N + N\beta_2*x_2/N + N\beta_3*x_3/N + ...$
+
+But we fit parameters on the log_transformed model (ignoring the proportion-notation for now):
+
+$log(y) = log(\beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 +...) \qquad \mathcal{H}_0: log(y) = log(\beta_1)$
+
+$log(y) = log(N\beta_1*x_1/N + N)$
+-->
+
+### Example data
+For this, we need some wide count data:
+```{r}
+# Data in long format
+D = data.frame(mood = c('happy', 'sad', 'meh'),
+               counts = c(60, 90, 70))
+
+# Dummy coding for the linear model
+D$mood_happy = ifelse(D$mood == 'happy', 1, 0)
+D$mood_sad = ifelse(D$mood == 'sad', 1, 0)
+```
+
+```{r, echo=FALSE}
+print_df(D)
+```
+
+
+### R code: Goodness of fit
+Now let's see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA:
+
+```{r, results='hold'}
+# Built-in test
+a = chisq.test(D$counts)
+
+# As log-linear model, comparing to an intercept-only model
+full = glm(counts ~ 1 + mood_happy + mood_sad, data=D, family=poisson(link='log'))
+null = glm(counts ~ 1, data=D, family=poisson(link='log'))
+b = anova(null, full, test='Rao')
+
+# Note: glm can also do the dummy coding for you:
+c = glm(counts ~ mood, data=D, family=poisson(link='log'))
+```
+
+Let's look at the results:
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+at = tidy(a)
+at$df = at$parameter
+bt = tidy(b)[2, ]  # Not intercept
+bt$statistic = bt$Rao
+
+df = bind_rows(at, bt) %>%
+  mutate(model = c('chisq.test', 'glm LRT')) %>%
+  rename(Chisq = statistic) %>%
+  select(model, Chisq, df, p.value)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+b
+```
+</div>
+
+
+Note the strange `anova(..., test='Rao')` which merely states that p-values should be computed using the (Rao) [score test](https://en.wikipedia.org/wiki/Score_test). We could also have jotted in `test='Chisq'` or `test='LRT'` which would have yielded approximate p-values. You may think that we're cheating here, sneaking in some sort of Chi-Square model post-hoc. However, `anova` only specifies how p-values are calculated whereas all the log-linear modeling happened in `glm`.
+
+By the way, if there are only two counts and a large sample size (N > 100), this model begins to approximate the **binomial test**, `binom.test`, to a reasonable degree. But this sample size is larger than most use cases, so I won't raise to a rule-of-thumb and won't dig deeper into it here.
+
+
+## Contingency tables {#contingency}
+### Theory: As log-linear model
+The theory here will be a bit more convoluted, and I mainly write it up so that you can get the *feeling* that it really is just a log-linear [two-way ANOVA model](#anova2). Let's get started...
+
+For a two-way contingency table, the model of the count variable $y$ is a modeled using the marginal proportions of a contingency table. Why this makes sense, is too involved to go into here, but [see the relevant slides by Christoph Scheepers here](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) for an excellent exposition. The model is composed of a lot of counts and the regression coefficients $A_i$ and $B_i$:
+
+$y_i = N \cdot x_i(A_i/N) \cdot z_j(B_j/N) \cdot x_{ij}/((A_i x_i)/(B_j z_j)/N)$ 
+
+What a mess!!! Here, $i$ is the row index, $j$ is the column index, $x_{something}$ is the sum of that row and/or column, $N = sum(y)$. Remember that $y$ is a count variable, so $N$ is just the total count.
+
+We can simplify the notation by defining the *proportions*: $\alpha_i = x_i(A_i/N)$, $\beta_i = x_j(B_i/N)$ and $\alpha_i\beta_j =  x_{ij}/(A_i x_i)/(B_j z_j)/N$. Let's write the model again:
+
+$y_i = N \cdot \alpha_i \cdot \beta_j \cdot \alpha_i\beta_j$
+
+Ah, much prettier. However, there is still lot's of multiplication which makes it hard to get an intuition about how the actual numbers interact. We can make it much more intelligible when we remember that $log(A \cdot B) = log(A) + log(B)$. Doing logarithms on both sides, we get:
+
+$log(y_i) = log(N) + log(\alpha_i) + log(\beta_j) + log(\alpha_i\beta_j)$
+
+Snuggly! Now we can get a better grasp on how the regression coefficients (which are proportions) independently contribute to $y$. This is why logarithms are so nice for proportions. Note that this is just [the two-way ANOVA model](#anova2) with some logarithms added, so we are back to our good old linear models - only the interpretation of the regression coefficients have changed! And we cannot use `lm` anymore in R.
+
+
+### Example data
+Here we need some long data and we need it in table format for `chisq.test`:
+
+```{r}
+# Contingency data in long format for linear model
+D = data.frame(mood = c('happy', 'happy', 'meh', 'meh', 'sad', 'sad'),
+               sex = c('male', 'female', 'male', 'female', 'male', 'female'),
+               Freq = c(100, 70, 30, 32, 110, 120))
+
+# ... and as table for chisq.test
+D_table = D %>% 
+  spread(key=mood, value=Freq) %>%  # Mood to columns
+  select(-sex) %>%  # Remove sex column
+  as.matrix()
+
+# Dummy coding of D for linear model (skipping mood=="sad" and gender=="female")
+# We could also use model.matrix(D$Freq~D$mood*D$sex)
+D$mood_happy = ifelse(D$mood == 'happy', 1, 0)
+D$mood_meh = ifelse(D$mood == 'meh', 1, 0)
+D$sex_male = ifelse(D$sex == 'male', 1, 0)
+```
+
+```{r, echo=FALSE}
+print_df(D)
+```
+
+
+### R code: Chi-square test
+Now let's show the equivalence between a chi-square model and a log-linear model. This is very similar to our [two-way ANOVA](#anova2) above:
+
+```{r, results='hold'}
+# Built-in chi-square. It requires matrix format.
+a = chisq.test(D_table)
+
+# Using glm to do a log-linear model, we get identical results when testing the interaction term:
+full = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male + mood_happy*sex_male + mood_meh*sex_male, data=D, family=poisson(link='log'))
+null = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male, data=D, family=poisson(link='log'))
+b = anova(null, full, test='Rao')  # Could also use test='LRT' or test='Chisq'
+
+# Note: let glm do the dummy coding for you
+full = glm(Freq ~ mood * sex, family=poisson(link='log'), data=D)
+c = anova(full, test='Rao')
+
+# Note: even simpler syntax using MASS:loglm ("log-linear model")
+d = MASS::loglm(Freq ~ mood + sex, D)
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+df = data.frame(
+  model = c('chisq.test', 'glm', 'loglm'),
+  Chisq = c(a$statistic, b$Rao[2], d$pearson),
+  df = c(a$parameter, b$Df[2], d$df),
+  p.value = c(a$p.value, b$`Pr(>Chi)`[2], summary(d)$tests[2,3])
+)
+print_df(df)
+```
+
+<div class='fold o'>
+```{r, echo=FALSE, results='hold'}
+a
+b
+c
+d
+
+summary(full)
+```
+</div>
+
+If you unfold the raw R output, I've included `summary(full)` so that you can see the raw regression coefficients. Being a log-linear model, these are the *percentage increase*in $y$ over and above the intercept if that category obtains.
+
+
+# A course outline {#course}
+I would spend 50% of the time on linear modeling of data (bullet 1) since this contains 70% of what students need to know. The rest of the course is just fleshing out what happens if you have one group, two groups, etc.
+
+Note that whereas hypothesis testing is usually the focus of mainstream stats courses, it is given a fairly minor role here.
+
+1. **Fundamentals of regression:**
+
+    1. Recall from high-school what $y = a \cdot x + b$ is and getting a really good intuition about slopes and intercepts. Understanding that this can be written using all variable names, e.g., `money = profit * time + starting_money` or $y = \beta_1x + \beta_2*1$ or, suppressing the coefficients, as `y ~ x + 1`. If the audience is receptive, convey the idea of these models [as a solution to differential equations](https://magesblog.com/post/modelling-change), specifying how $y$ *changes* with $x$.
+   
+    2. Extend to a few multiple regression as models. Make sure to include plenty of real-life examples and exercises at this point to make all of this really intuitive. Marvel at how briefly these models allow us to represent large datasets.
+   
+    3. Introduce the idea of rank-transforming non-metric data and try it out.
+   
+    4. Teach the three assumptions: independence of data points, normality of residuals, and homoscedasticity.
+    
+    5. Confidence/credible intervals on the parameters. Stress that the Maximum-Likelihood estimate is extremely unlikely, so intervals are more important.
+    
+    6. Briefly introduce $R^2$ and that for the simple regression models above and mention in passing that this is called [the Pearson and Spearman correlation coefficients](#correlation). 
+
+ 
+2. **Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):**
+
+    1. *One mean:** When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called [one-sample t-test and Wilcoxon Signed Rank test respectively](#t1).
+    
+    2. **Two means:** If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an [independent t-test](#t2). Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.
+    
+    3. *Paired samples:* Violates the independence assumption. After computing pairwise differences, this is equivalent to 2.1 (one intercept), though it is called the [paired t-test and Wilcoxon's matched pairs](#tpair).
+    
+3. **Special case #2: Three or more means (ANOVAs)**
+
+    1. *[Dummy coding](#dummy) of categories:* How one regression coefficient for each level of a factor models an intercept for each level when multiplied by a binary indicator. This is just extending what we did in 2.1. to make this data accessible to linear modeling.
+    
+    2. *Means of one variable:* [One-way ANOVA](#anova1).
+    
+    3. *Means of two variables:* [Two-way ANOVA](#anova2).
+    
+    
+4. **Special case #3: Three or more proportions (Chi-Square)**
+
+    1. *Logarithmic transformation:* Making multiplicative models linear using logarithms, thus modeling proportions. See [this excellent introduction](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) to the equivalence of log-linear models and Chi-Square tests as models of proportions. Also needs to introduce (log-)odds ratios. When the multiplicative model is made summative using logarithms, we just add the dummy-coding trick from 3.1, and see that the models are identical to the ANOVA models in 3.2 and 3.3, only the interpretation of the coefficients have changed.
+    
+    2. *Proportions of one variable:* [Goodness of fit](#goodness).
+    
+    3. *Proportions of two variables:* [Contingency tables](#contingency).
+
+
+5. **Hypothesis testing:** Hypothesis testing is the act of choosing between a full model and one where a parameter is set to zero (effectively excluded from the model) instead of being estimated. For example, when set one of the two means in the t-test to be zero, we study how well the remaining mean explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. Therefore, hypothesis testing is less interesting and is mostly covered as an introduction to the general literature. Mention P-values (and misconceptions about them), Bayes Factors, and cross-validation. 
+
+
+# Limitations and references
+I have made a few simplifications for clarity:
+
+1. I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.
+
+2. I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.
+
+3. I have not discussed inference. I am only comparing p-values as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do *inference* is another matter. I am personally a Bayesian, but this would be less accessible to the wider audience. Also, doing [robust models](https://en.wikipedia.org/wiki/Robust_statistics) would be preferable, but fail to show the equivalence.
+
+4. Several named tests are still missing from the list and will hopefully be added at a later time: the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on `rank(y)`, McNemar, ANCOVA, and Binomial. Feel free to submit "solutions"!
+
+
+Others have presented bits and pieces of this puzzle here and there. Notably:
+
+ * [My original exposition of the idea](https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models) at StackOverflow
+ * [An earlier question by me](https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529) about non-parametric tests and a helpful answer.
+ * [This question and replies](https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear) at StackOverflow
+ * [These slides by Christoph Scheepers here](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) on Chi-Square as log-linear.
+
+
+<!--
+# Visualization of models (in progress)
+These will eventually be included under the respective headers and in the infographic.
+```{r echo=FALSE, fig.height=1.5, fig.width=2}
+
+P_t1_icon = ggplot(D_t1, aes(y=y, x=0)) + 
+  stat_summary(fun.y=mean, geom = "errorbar", color='blue', aes(ymax = ..y.., ymin = ..y..), lwd=2)
+theme_icon(P_t1_icon, jitter=TRUE)
+
+theme_icon(P_pearson)
+#theme_icon(P_t1)
+theme_icon(P_tpaired)
+theme_icon(P_t2, jitter=TRUE)
+theme_icon(P_anova1, xlim=c(-0.5, 4), jitter=TRUE)
+theme_icon(P_ancova, xlim=NULL, ylim=NULL)
+
+```
+-->
