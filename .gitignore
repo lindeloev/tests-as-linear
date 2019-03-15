@@ -2,8 +2,8 @@
 .Rhistory
 rsconnect
 
-simmulate_mannwhitney_cache
-simmulate_mannwhitney_files
+simulate_mannwhitney_cache
+simulate_mannwhitney_files
 simulate_spearman_cache
 simulate_spearman_files
 simulate_wilcoxon_cache

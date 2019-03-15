@@ -6,6 +6,7 @@ output:
   html_document:
     df_print: default
     number_sections: yes
+    self_contained: no
     toc: yes
     toc_depth: 2
     toc_float:
@@ -123,10 +124,15 @@ I hope that others will join in and refine this list as well as add further test
 
 # Overview of tests
 This table to show the underlying linear models of common tests. Formulating all the tests in the same language also highlights similarities between them.
-
+<!--
 Get it [as an image](http://lindeloev.net/misc/linear_tests.png) or [as a PDF](http://lindeloev.net/misc/linear_tests.pdf).
 
 [![](linear_tests.png)](http://lindeloev.net/misc/linear_tests.pdf)
+-->
+
+Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
+
+[![](linear_tests_cheat_sheet.png)](linear_tests_cheat_sheet.pdf)
 
 
 # Settings and toy data
