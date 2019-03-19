@@ -1,10 +1,3 @@
 .Rproj.user
 .Rhistory
 rsconnect
-
-simulate_mannwhitney_cache
-simulate_mannwhitney_files
-simulate_spearman_cache
-simulate_spearman_files
-simulate_wilcoxon_cache
-simulate_wilcoxon_files
