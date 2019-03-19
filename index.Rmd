@@ -11,6 +11,10 @@ output:
     toc_depth: 2
     toc_float:
       collapsed: no
+    includes:
+      in_header: 
+        - twitter_card.html
+        - google_analytics_header.html
 ---
 
 <style type="text/css">
@@ -60,23 +64,25 @@ output:
 <!-- Makes links work on RPubs (in an iframe) -->
 <base target="_top"/>
 
-<!--
-DO NOW:
- * Update cheat sheet
- * Make tabbed or a website?
-
-NOT NOW:
- * LATER: Figures: Two-way ANOVA + Chi-Square
- * LATER: Annotate ANCOVA legend with intercepts?
--->
 
 ```{r echo=FALSE}
 # Options for building this document
-knitr::opts_chunk$set(fig.height=4, 
-                      fig.width=6, 
-                      fig.align='center',
-                      message=FALSE,
-                      warning=FALSE)
+knitr::opts_chunk$set(
+  fig.height=4, 
+  fig.width=6, 
+  fig.align='center',
+  message=FALSE,
+  warning=FALSE
+)
+
+#devtools::install_github("jumpingrivers/headR")
+headR::add_twitter_card(
+  card_type = "summary_large_image",
+  title = "Common statistical tests are linear models (or: how to teach stats)",
+  user = "@jonaslindeloev",
+  image = "https://lindeloev.github.io/tests-as-linear/linear_tests_cheat_sheet.png",
+  file = "twitter_card.html"
+)
 
 
 # Delete this?
@@ -121,7 +127,7 @@ This needless complexity multiplies when students try to rote learn the parametr
 
 For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Concerning the teaching of non-parametric tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the parametric tests. I have supplemented this document with links to analyses of how accurate the non-parametric-as-ranked-parametric approximation is for different sample sizes (spoiler: quite accurate for N > 15). After all, even mainstream stats are approximations, from the almost-universally-used [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction) to the never-perfectly-satisfied parametric assumptions.
 
-Use the menu to the left to jump to your favourite section. I hope that others will join in and refine this list as well as add further tests to it. I'm not a statistician and there are likely some inaccuracies or errors here and there.
+Use the menu to jump to your favourite section. I hope that you will join in suggesting improvements or submitting improvements yourself in [the Github repo to this page](https://github.com/lindeloev/tests-as-linear). Let's make it awesome!
 
 
 
@@ -224,7 +230,7 @@ P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
   geom_segment(x=-100, xend=100, 
                y=intercept_pearson, yend=intercept_pearson, 
                lwd=2, aes(color="beta_0")) + 
-  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(β[0]*" (intercept)"), bquote(β[1]*" (slope)")))
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(Î²[0]*" (intercept)"), bquote(Î²[1]*" (slope)")))
   
 theme_axis(P_pearson, legend.position=c(0.4, 0.9))
 ```
@@ -252,7 +258,7 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
   geom_segment(x=-100, xend=100, 
                y=intercept_spearman, yend=intercept_spearman, 
                lwd=2, aes(color='beta_0')) + 
-  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(β[0]*" (intercept)"), bquote(β[1]*" (slope)")))
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(Î²[0]*" (intercept)"), bquote(Î²[1]*" (slope)")))
 
 # Stich together using patchwork
 (theme_axis(P_pearson, legend.position=c(0.5, 0.1)) + geom_text(aes(label=label_num), nudge_y=0.1, size=3, color='dark gray') + labs(title='         Pearson')) + (theme_axis(P_spearman, xlim=c(-7.5, 30), ylim=c(-7.5, 30), legend.position=c(0.5, 0.1)) + labs(title='         Spearman'))
@@ -353,7 +359,7 @@ D_t1 = data.frame(y=rnorm_fixed(20, 0.5, 0.6),
 
 P_t1 = ggplot(D_t1, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
-  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(β[0]*" (intercept)"))) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(Î²[0]*" (intercept)"))) +
   
   geom_text(aes(label=round(y, 1)), nudge_x = 0.2, size=3, color='dark gray') + 
   labs(title='         T-test')
@@ -363,7 +369,7 @@ D_t1_rank = data.frame(y = signed_rank(D_t1$y))
 
 P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
-  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(β[0]*" (intercept)"))) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(Î²[0]*" (intercept)"))) +
 
   geom_text(aes(label=y), nudge_x=0.2, size=3, color='dark gray') + 
   labs(title='         Wilcoxon')
@@ -594,7 +600,7 @@ P_t2 = ggplot(D_t2, aes(x=x, y=y)) +
   geom_segment(x=-10, xend=10, y=0.3, yend=0.3, lwd=2, aes(color='beta_0')) + 
   geom_segment(x=0, xend=1, y=0.3, yend=1.3, lwd=2, aes(color='beta_1')) + 
   
-  scale_color_manual(name=NULL, values=c("blue", "red", "darkblue"), labels=c(bquote(β[0]*" (group 1 mean)"), bquote(β[1]*" (slope = difference)"), bquote(β[0]+β[1]%.%1*" (group 2 mean)")))
+  scale_color_manual(name=NULL, values=c("blue", "red", "darkblue"), labels=c(bquote(Î²[0]*" (group 1 mean)"), bquote(Î²[1]*" (slope = difference)"), bquote(Î²[0]+Î²[1]%.%1*" (group 2 mean)")))
   #scale_x_discrete(breaks=c(0.5, 1.5), labels=c('1', '2'))
 
 theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))
@@ -768,9 +774,9 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
   scale_color_manual(
     name=NULL, values=c("blue", "red", "darkblue"), 
     labels=c(
-      bquote(β[0]*" (group 1 mean)"), 
-      bquote(β[1]*", "*β[2]*",  etc. (slopes/differences to "*β[0]*")"),
-      bquote(β[0]*"+"*β[1]*", "*β[0]*"+"*β[2]*", etc. (absolute intercepts)")
+      bquote(Î²[0]*" (group 1 mean)"), 
+      bquote(Î²[1]*", "*Î²[2]*",  etc. (slopes/differences to "*Î²[0]*")"),
+      bquote(Î²[0]*"+"*Î²[1]*", "*Î²[0]*"+"*Î²[2]*", etc. (absolute intercepts)")
     )
   )
   
