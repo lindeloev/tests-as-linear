@@ -61,9 +61,10 @@ output:
 <link rel="stylesheet" type="text/css" href="hideOutput.css">
 <script src="hideOutput.js"></script>
 
-<!-- Makes links work on RPubs (in an iframe) -->
-<base target="_top"/>
+<!-- Twitter share button -->
+<a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+<p></p>
 
 ```{r echo=FALSE}
 # Options for building this document
@@ -607,13 +608,17 @@ theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))
 ```
 </div>
 
+
+### Theory: Dummy coding (continued) {#dummy2}
 If you feel like you get dummy coding now, just skip ahead to the next section. Here is a more elaborate explanation of dummy coding:
 
-If a data point was sampled from the first group, i.e., when $x_i = 0$, the model simply becomes $y = \beta_0$. In other words, the model predicts that that data point is $beta_0$. It turns out that the $\beta$ which best describes a set of data points is the *mean* of those data points, so $\beta_0$ is the mean of group 1.
+If a data point was sampled from the first group, i.e., when $x_i = 0$, the model simply becomes $y = \beta_0 + \beta_1 \cdot 0 = \beta_0$. In other words, the model predicts that that data point is $beta_0$. It turns out that the $\beta$ which best predicts a set of data points is the *mean* of those data points, so $\beta_0$ is the mean of group 1.
 
-On the other hand, data points sampled from the second group would have $x_i = 1$ so the model becomes $y_i = \beta_0 + \beta_1$. In other words, we add $\beta_1$ to "shift" from the mean of the first group to the mean of the second group. Thus $\beta_1$ becomes the *difference* between the groups. 
+On the other hand, data points sampled from the second group would have $x_i = 1$ so the model becomes $y_i = \beta_0 + \beta_1\cdot 1 = \beta_0 + \beta_1$. In other words, we add $\beta_1$ to "shift" from the mean of the first group to the mean of the second group. Thus $\beta_1$ becomes the *mean difference* between the groups.
 
-As an example, say group 1 is 25 years old ($\beta_0 = 25$) and group 2 is 28 years old ($\beta_1 = 3$), then the model for a person in group 1 is $y = 25 + 3 \cdot 0 = 25$ and the model for a person in group 2 is: $y = 25 + 3 \cdot 1 = 28$. Hooray, it works! For first-timers it takes a few moments to understand dummy coding, but you only need to know addition and multiplication to get there!
+As an example, say group 1 is 25 years old ($\beta_0 = 25$) and group 2 is 28 years old ($\beta_1 = 3$), then the model for a person in group 1 is $y = 25 + 3 \cdot 0 = 25$ and the model for a person in group 2 is $y = 25 + 3 \cdot 1 = 28$. 
+
+Hooray, it works! For first-timers it takes a few moments to understand dummy coding, but you only need to know addition and multiplication to get there!
 
 
 ### R code: independent t-test
