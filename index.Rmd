@@ -233,7 +233,7 @@ P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
   geom_segment(x=-100, xend=100, 
                y=intercept_pearson, yend=intercept_pearson, 
                lwd=2, aes(color="beta_0")) + 
-  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(Î²[0]*" (intercept)"), bquote(Î²[1]*" (slope)")))
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(beta[0]*" (intercept)"), bquote(beta[1]*" (slope)")))
   
 theme_axis(P_pearson, legend.position=c(0.4, 0.9))
 ```
@@ -261,7 +261,7 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
   geom_segment(x=-100, xend=100, 
                y=intercept_spearman, yend=intercept_spearman, 
                lwd=2, aes(color='beta_0')) + 
-  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(Î²[0]*" (intercept)"), bquote(Î²[1]*" (slope)")))
+  scale_color_manual(name=NULL, values=c("blue", "red"), labels=c(bquote(beta[0]*" (intercept)"), bquote(beta[1]*" (slope)")))
 
 # Stich together using patchwork
 (theme_axis(P_pearson, legend.position=c(0.5, 0.1)) + geom_text(aes(label=label_num), nudge_y=0.1, size=3, color='dark gray') + labs(title='         Pearson')) + (theme_axis(P_spearman, xlim=c(-7.5, 30), ylim=c(-7.5, 30), legend.position=c(0.5, 0.1)) + labs(title='         Spearman'))
@@ -362,7 +362,7 @@ D_t1 = data.frame(y=rnorm_fixed(20, 0.5, 0.6),
 
 P_t1 = ggplot(D_t1, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
-  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(Î²[0]*" (intercept)"))) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(beta[0]*" (intercept)"))) +
   
   geom_text(aes(label=round(y, 1)), nudge_x = 0.2, size=3, color='dark gray') + 
   labs(title='         T-test')
@@ -372,7 +372,7 @@ D_t1_rank = data.frame(y = signed_rank(D_t1$y))
 
 P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) + 
   stat_summary(fun.y=mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y.., color='beta_0'), lwd=2) +
-  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(Î²[0]*" (intercept)"))) +
+  scale_color_manual(name=NULL, values=c("blue"), labels=c(bquote(beta[0]*" (intercept)"))) +
 
   geom_text(aes(label=y), nudge_x=0.2, size=3, color='dark gray') + 
   labs(title='         Wilcoxon')
@@ -603,7 +603,7 @@ P_t2 = ggplot(D_t2, aes(x=x, y=y)) +
   geom_segment(x=-10, xend=10, y=0.3, yend=0.3, lwd=2, aes(color='beta_0')) + 
   geom_segment(x=0, xend=1, y=0.3, yend=1.3, lwd=2, aes(color='beta_1')) + 
   
-  scale_color_manual(name=NULL, values=c("blue", "red", "darkblue"), labels=c(bquote(Î²[0]*" (group 1 mean)"), bquote(Î²[1]*" (slope = difference)"), bquote(Î²[0]+Î²[1]%.%1*" (group 2 mean)")))
+  scale_color_manual(name=NULL, values=c("blue", "red", "darkblue"), labels=c(bquote(beta[0]*" (group 1 mean)"), bquote(beta[1]*" (slope = difference)"), bquote(beta[0]+beta[1]%.%1*" (group 2 mean)")))
   #scale_x_discrete(breaks=c(0.5, 1.5), labels=c('1', '2'))
 
 theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))
@@ -781,9 +781,9 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
   scale_color_manual(
     name=NULL, values=c("blue", "red", "darkblue"), 
     labels=c(
-      bquote(Î²[0]*" (group 1 mean)"), 
-      bquote(Î²[1]*", "*Î²[2]*",  etc. (slopes/differences to "*Î²[0]*")"),
-      bquote(Î²[0]*"+"*Î²[1]*", "*Î²[0]*"+"*Î²[2]*", etc. (absolute intercepts)")
+      bquote(beta[0]*" (group 1 mean)"), 
+      bquote(beta[1]*", "*beta[2]*",  etc. (slopes/differences to "*beta[0]*")"),
+      bquote(beta[0]*"+"*beta[1]*", "*beta[0]*"+"*beta[2]*", etc. (absolute intercepts)")
     )
   )
   
