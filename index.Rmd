@@ -128,9 +128,9 @@ This needless complexity multiplies when students try to rote learn the parametr
 
 For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I'd argue that it's better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.
 
-Concerning the teaching of *non-parametric* tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. Indeed, the Bayesian equivalents implemented in [JASP](https://jasp-stats.org) literally [does just this](https://arxiv.org/abs/1712.06941). For the non-parametric tests considered here, this approach is highly accurate for N > 15.
+Concerning the teaching of *non-parametric* tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to beleive that you can magically throw away assumptions. Indeed, the Bayesian equivalents of non-parametric tests implemented in [JASP](https://jasp-stats.org) [literally just do (latent) ranking](https://arxiv.org/abs/1712.06941) and that's it. For the frequentist non-parametric tests considered here, this approach is highly accurate for N > 15.
 
-Use the menu to jump to your favourite section. I hope that you will join in suggesting improvements or submitting improvements yourself in [the Github repo to this page](https://github.com/lindeloev/tests-as-linear). Let's make it awesome!
+Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under [sources](#links) and [teaching materials](#course). I hope that you will join in suggesting improvements or submitting improvements yourself in [the Github repo to this page](https://github.com/lindeloev/tests-as-linear). Let's make it awesome!
 
 
 # Settings and toy data
@@ -1281,15 +1281,16 @@ If you unfold the raw R output, I've included `summary(full)` so that you can se
 
 
 
-# Sources and further equivalences {links}
+# Sources and further equivalences {#links}
 Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:
 
  * [My original exposition of the idea](https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models) at StackOverflow
  * [An earlier question by me](https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529) about non-parametric tests and a helpful answer.
  * [This question and replies](https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear) on t-tests and ANOVA at StackOverflow
- * [These slides by Christoph Scheepers here](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) on Chi-Square as log-linear models.
+ * [These slides by Christoph Scheepers](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) on Chi-Square as log-linear models.
  * [This notebook by Philip M. Alday](https://rpubs.com/palday/glm-test) on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These "equivalences" are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!
  * [This article by Kristoffer Magnusson](https://rpsychologist.com/r-guide-longitudinal-lme-lmer) on RM-ANOVA and growth models using `lmer` mixed models.
+ * [This post by Thom Baguley] on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to non-parametric tests which ultimately pushed me over the edge to write up the present article.
 
 
 

@@ -376,8 +376,8 @@ div.tocify {
 <p>Most of the common statistical models (t-test, correlation, ANOVA; chi-square, etc.) are special cases of linear models or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to <span class="math inline">\(y = a \cdot x + b\)</span> which most students know from highschool. Unfortunately, stats intro courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
 <p>For this reason, I think that teaching linear models first and foremost and <em>then</em> name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing <em>understanding</em> over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I’d argue that it’s better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.</p>
-<p>Concerning the teaching of <em>non-parametric</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. Indeed, the Bayesian equivalents implemented in <a href="https://jasp-stats.org">JASP</a> literally <a href="https://arxiv.org/abs/1712.06941">does just this</a>. For the non-parametric tests considered here, this approach is highly accurate for N &gt; 15.</p>
-<p>Use the menu to jump to your favourite section. I hope that you will join in suggesting improvements or submitting improvements yourself in <a href="https://github.com/lindeloev/tests-as-linear">the Github repo to this page</a>. Let’s make it awesome!</p>
+<p>Concerning the teaching of <em>non-parametric</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think “ranks!” than to beleive that you can magically throw away assumptions. Indeed, the Bayesian equivalents of non-parametric tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that’s it. For the frequentist non-parametric tests considered here, this approach is highly accurate for N &gt; 15.</p>
+<p>Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under <a href="#links">sources</a> and <a href="#course">teaching materials</a>. I hope that you will join in suggesting improvements or submitting improvements yourself in <a href="https://github.com/lindeloev/tests-as-linear">the Github repo to this page</a>. Let’s make it awesome!</p>
 </div>
 <div id="settings-and-toy-data" class="section level1">
 <h1><span class="header-section-number">2</span> Settings and toy data</h1>
@@ -1616,16 +1616,17 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 </div>
 </div>
 </div>
-<div id="sources-and-further-equivalences-links" class="section level1">
-<h1><span class="header-section-number">8</span> Sources and further equivalences {links}</h1>
+<div id="links" class="section level1">
+<h1><span class="header-section-number">8</span> Sources and further equivalences</h1>
 <p>Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:</p>
 <ul>
 <li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at StackOverflow</li>
 <li><a href="https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529">An earlier question by me</a> about non-parametric tests and a helpful answer.</li>
 <li><a href="https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear">This question and replies</a> on t-tests and ANOVA at StackOverflow</li>
-<li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers here</a> on Chi-Square as log-linear models.</li>
+<li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers</a> on Chi-Square as log-linear models.</li>
 <li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These “equivalences” are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
 <li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lmer</code> mixed models.</li>
+<li>[This post by Thom Baguley] on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to non-parametric tests which ultimately pushed me over the edge to write up the present article.</li>
 </ul>
 </div>
 <div id="course" class="section level1">
