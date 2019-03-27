@@ -338,7 +338,7 @@ div.tocify {
   h2 {
     font-size: 24px;
     padding: 0px;
-    padding-top: 20px;
+    padding-top: 20px;d
   }
   
   /* First h2 in section */
@@ -1418,7 +1418,7 @@ sm::sm.ancova(x=D$age, y=D$value, group=D$group, display='none', model='equal')
 </div>
 <div id="proportions-chi-square-is-a-log-linear-model" class="section level1">
 <h1><span class="header-section-number">7</span> Proportions: Chi-square is a log-linear model</h1>
-<p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em> (but not means). Therefore, if you want to model proportions, logarithms are a good choice. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
+<p>Recall that when you take the logarithm, you can easily make statements about <em>proportions</em>, i.e., that for every increase in <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> increases a certain percentage. This turns out to be one of the simplest (and therefore best!) ways to make count data and contingency tables intelligible. See <a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">this nice introduction</a> to Chi-Square tests as linear models.</p>
 <div id="goodness" class="section level2">
 <h2><span class="header-section-number">7.1</span> Goodness of fit</h2>
 <div id="theory-as-log-linear-model" class="section level3">
@@ -1456,17 +1456,17 @@ D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)</code></pre>
 </div>
 <div id="r-code-goodness-of-fit" class="section level3">
 <h3><span class="header-section-number">7.1.3</span> R code: Goodness of fit</h3>
-<p>Now let’s see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA:</p>
+<p>Now let’s see that the Goodness of fit is just a log-linear equivalent to a one-way ANOVA. We set <code>family = poisson()</code> which defaults to setting a logarithmic <a href="https://en.wikipedia.org/wiki/Generalized_linear_model#Link_function">link function</a> (<code>family = poisson(link='log')</code>).</p>
 <pre class="r"><code># Built-in test
 a = chisq.test(D$counts)
 
 # As log-linear model, comparing to an intercept-only model
-full = glm(counts ~ 1 + mood_happy + mood_sad, data=D, family=poisson(link=&#39;log&#39;))
-null = glm(counts ~ 1, data=D, family=poisson(link=&#39;log&#39;))
+full = glm(counts ~ 1 + mood_happy + mood_sad, data=D, family=poisson())
+null = glm(counts ~ 1, data=D, family=poisson())
 b = anova(null, full, test=&#39;Rao&#39;)
 
 # Note: glm can also do the dummy coding for you:
-c = glm(counts ~ mood, data=D, family=poisson(link=&#39;log&#39;))</code></pre>
+c = glm(counts ~ mood, data=D, family=poisson())</code></pre>
 <p>Let’s look at the results:</p>
 <div id="htmlwidget-2df5675aded0e9696612" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2df5675aded0e9696612">{"x":{"filter":"none","data":[["chisq.test","glm LRT"],[6.3636,6.3636],[2,2],[0.0415,0.0415]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
@@ -1534,12 +1534,12 @@ D$sex_male = ifelse(D$sex == &#39;male&#39;, 1, 0)</code></pre>
 a = chisq.test(D_table)
 
 # Using glm to do a log-linear model, we get identical results when testing the interaction term:
-full = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male + mood_happy*sex_male + mood_meh*sex_male, data=D, family=poisson(link=&#39;log&#39;))
-null = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male, data=D, family=poisson(link=&#39;log&#39;))
+full = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male + mood_happy*sex_male + mood_meh*sex_male, data=D, family=poisson())
+null = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male, data=D, family=poisson())
 b = anova(null, full, test=&#39;Rao&#39;)  # Could also use test=&#39;LRT&#39; or test=&#39;Chisq&#39;
 
 # Note: let glm do the dummy coding for you
-full = glm(Freq ~ mood * sex, family=poisson(link=&#39;log&#39;), data=D)
+full = glm(Freq ~ mood * sex, family=poisson(), data=D)
 c = anova(full, test=&#39;Rao&#39;)
 
 # Note: even simpler syntax using MASS:loglm (&quot;log-linear model&quot;)
@@ -1588,8 +1588,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 ## Pearson          5.099859  2 0.07808717
 ## 
 ## Call:
-## glm(formula = Freq ~ mood * sex, family = poisson(link = &quot;log&quot;), 
-##     data = D)
+## glm(formula = Freq ~ mood * sex, family = poisson(), data = D)
 ## 
 ## Deviance Residuals: 
 ## [1]  0  0  0  0  0  0
@@ -1617,19 +1616,37 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 </div>
 </div>
 </div>
+<div id="sources-and-further-equivalences-links" class="section level1">
+<h1><span class="header-section-number">8</span> Sources and further equivalences {links}</h1>
+<p>Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:</p>
+<ul>
+<li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at StackOverflow</li>
+<li><a href="https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529">An earlier question by me</a> about non-parametric tests and a helpful answer.</li>
+<li><a href="https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear">This question and replies</a> on t-tests and ANOVA at StackOverflow</li>
+<li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers here</a> on Chi-Square as log-linear models.</li>
+<li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These “equivalences” are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
+<li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lmer</code> mixed models.</li>
+</ul>
+</div>
 <div id="course" class="section level1">
-<h1><span class="header-section-number">8</span> A course outline</h1>
-<p>I would spend 50% of the time on linear modeling of data (bullet 1) since this contains 70% of what students need to know. The rest of the course is just fleshing out what happens if you have one group, two groups, etc.</p>
-<p>Note that whereas hypothesis testing is usually the focus of mainstream stats courses, it is given a fairly minor role here.</p>
+<h1><span class="header-section-number">9</span> Teaching materials and a course outline</h1>
+<p>Most advanced stats books (and some intro-books) take the “everything is GLMM” approach as well. However, the “linear model” part often stay at the conceptual level. I wanted to make linear models the <em>tool</em> in a really concise way. Luckily, more beginnier-friendly materials have emerged lately:</p>
+<ul>
+<li>Russ Poldracks open-source book “Statistical Thinking for the 21st century” (start at <a href="http://statsthinking21.org/fitting-models-to-data.html">chapter 5 on modeling</a>)</li>
+<li><a href="https://jeffrouder.blogspot.com/2019/03/teaching-undergrad-stats-without-p-f-or.html">Jeff Rouder’s course notes</a>, introducing model comparison using just <span class="math inline">\(R^2\)</span> and BIC. It avoids all the jargon on p-values, F-values, etc. The full materials and slides <a href="https://drive.google.com/drive/folders/1CiJK--bAuO0F-ug3B5I3FvmsCdpPGZ03">are available here</a>.</li>
+</ul>
+<p>Here are my own thoughts on what I’d do. I’ve done parts of this with great success already, but not the whole lot since I’m not assigned to do a full course yet.</p>
+<p>I would spend 50% of the time on linear modeling of data (bullet 1 below) since this contains 70% of what students need to know. The rest of the course is just fleshing out what happens if you have one group, two groups, etc.</p>
+<p>Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to make way for modeling.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Fundamentals of regression:</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Recall from high-school what <span class="math inline">\(y = a \cdot x + b\)</span> is and getting a really good intuition about slopes and intercepts. Understanding that this can be written using all variable names, e.g., <code>money = profit * time + starting_money</code> or <span class="math inline">\(y = \beta_1x + \beta_2*1\)</span> or, suppressing the coefficients, as <code>y ~ x + 1</code>. If the audience is receptive, convey the idea of these models <a href="https://magesblog.com/post/modelling-change">as a solution to differential equations</a>, specifying how <span class="math inline">\(y\)</span> <em>changes</em> with <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Recall from high-school: <span class="math inline">\(y = a \cdot x + b\)</span>, and getting a really good intuition about slopes and intercepts. Understanding that this can be written using all variable names, e.g., <code>money = profit * time + starting_money</code> or <span class="math inline">\(y = \beta_1x + \beta_2*1\)</span> or, suppressing the coefficients, as <code>y ~ x + 1</code>. If the audience is receptive, convey the idea of these models <a href="https://magesblog.com/post/modelling-change">as a solution to differential equations</a>, specifying how <span class="math inline">\(y\)</span> <em>changes</em> with <span class="math inline">\(x\)</span>.</p></li>
 <li><p>Extend to a few multiple regression as models. Make sure to include plenty of real-life examples and exercises at this point to make all of this really intuitive. Marvel at how briefly these models allow us to represent large datasets.</p></li>
 <li><p>Introduce the idea of rank-transforming non-metric data and try it out.</p></li>
 <li><p>Teach the three assumptions: independence of data points, normality of residuals, and homoscedasticity.</p></li>
 <li><p>Confidence/credible intervals on the parameters. Stress that the Maximum-Likelihood estimate is extremely unlikely, so intervals are more important.</p></li>
-<li><p>Briefly introduce <span class="math inline">\(R^2\)</span> and that for the simple regression models above and mention in passing that this is called <a href="#correlation">the Pearson and Spearman correlation coefficients</a>.</p></li>
+<li><p>Briefly introduce <span class="math inline">\(R^2\)</span> for the simple regression models above. Mention in passing that this is called <a href="#correlation">the Pearson and Spearman correlation coefficients</a>.</p></li>
 </ol></li>
 <li><p><strong>Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):</strong></p>
 <ol style="list-style-type: decimal">
@@ -1652,22 +1669,15 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <li><p><strong>Hypothesis testing:</strong> Hypothesis testing is the act of choosing between a full model and one where a parameter is set to zero (effectively excluded from the model) instead of being estimated. For example, when set one of the two means in the t-test to be zero, we study how well the remaining mean explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. Therefore, hypothesis testing is less interesting and is mostly covered as an introduction to the general literature. Mention P-values (and misconceptions about them), Bayes Factors, and cross-validation.</p></li>
 </ol>
 </div>
-<div id="limitations-and-references" class="section level1">
-<h1><span class="header-section-number">9</span> Limitations and references</h1>
+<div id="limitations" class="section level1">
+<h1><span class="header-section-number">10</span> Limitations</h1>
 <p>I have made a few simplifications for clarity:</p>
 <ol style="list-style-type: decimal">
 <li><p>I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.</p></li>
 <li><p>I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.</p></li>
-<li><p>I have not discussed inference. I am only comparing p-values as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. I am personally a Bayesian, but this would be less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalence.</p></li>
-<li><p>Several named tests are still missing from the list and will hopefully be added at a later time: the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, ANCOVA, and Binomial. Feel free to submit “solutions”!</p></li>
+<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I’m a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalence.</p></li>
+<li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#links">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit “solutions” to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p></li>
 </ol>
-<p>Others have presented bits and pieces of this puzzle here and there. Notably:</p>
-<ul>
-<li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at StackOverflow</li>
-<li><a href="https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529">An earlier question by me</a> about non-parametric tests and a helpful answer.</li>
-<li><a href="https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear">This question and replies</a> at StackOverflow</li>
-<li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers here</a> on Chi-Square as log-linear.</li>
-</ul>
 <!--
 # Visualization of models (in progress)
 These will eventually be included under the respective headers and in the infographic.
