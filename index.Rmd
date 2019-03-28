@@ -824,7 +824,7 @@ See? Exactly one parameter predicts a `value` in a given row while the others ar
 
 
 ### R code: one-way ANOVA
-OK, let's see the identity between the built-in **ANOVA** (`car::Anova`) and the in-your-face linear model, `lm`. The latter returns parameter estimates as well, but look at the overall model F-statistics which are identical. Note that I do not use the `aov` function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares, but let's skip that for now.
+OK, let's see the identity between the built-in **ANOVA** (`car::Anova`) and the dummy-coded in-your-face linear model in `lm`. Actually, `car::Anova` and `aov` are just wrappers around `lm` so the identity comes as no surprise. The latter returns parameter estimates as well (bonus!), but we'll just look at the overall model statistics for now. Note that I do not use the `aov` function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares, but let's skip that for now.
 
 
 ```{r, results='hold'}

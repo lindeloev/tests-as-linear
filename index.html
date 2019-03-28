@@ -1110,7 +1110,7 @@ D = data.frame(
 </div>
 <div id="r-code-one-way-anova" class="section level3">
 <h3><span class="header-section-number">6.1.3</span> R code: one-way ANOVA</h3>
-<p>OK, let’s see the identity between the built-in <strong>ANOVA</strong> (<code>car::Anova</code>) and the in-your-face linear model, <code>lm</code>. The latter returns parameter estimates as well, but look at the overall model F-statistics which are identical. Note that I do not use the <code>aov</code> function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares, but let’s skip that for now.</p>
+<p>OK, let’s see the identity between the built-in <strong>ANOVA</strong> (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>. Actually, <code>car::Anova</code> and <code>aov</code> are just wrappers around <code>lm</code> so the identity comes as no surprise. The latter returns parameter estimates as well (bonus!), but we’ll just look at the overall model statistics for now. Note that I do not use the <code>aov</code> function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares, but let’s skip that for now.</p>
 <pre class="r"><code># Compare built-in and linear model
 a = car::Anova(aov(value ~ group, D))  # Built-in ANOVA
 b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linear model</code></pre>
