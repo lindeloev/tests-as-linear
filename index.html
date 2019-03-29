@@ -887,7 +887,7 @@ theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))</c
 </div>
 <div id="r-code-independent-t-test" class="section level3">
 <h3><span class="header-section-number">5.1.4</span> R code: independent t-test</h3>
-<p>As a reminder, when we write <code>y ~ 1 + x</code> in R, it is shorthand for <span class="math inline">\(y = \beta_0 \cdot 1 + \beta_1 \cdot x\)</span> and R goes on computing the <span class="math inline">\(\beta\)</span>s for you. Thus <span class="math inline">\(y ~ 1 + x\)</span> is the R-way of writing <span class="math inline">\(y = a \cdot x + b\)</span>.</p>
+<p>As a reminder, when we write <code>y ~ 1 + x</code> in R, it is shorthand for <span class="math inline">\(y = \beta_0 \cdot 1 + \beta_1 \cdot x\)</span> and R goes on computing the <span class="math inline">\(\beta\)</span>s for you. Thus <code>y ~ 1 + x</code> is the R-way of writing <span class="math inline">\(y = a \cdot x + b\)</span>.</p>
 <p>Notice the identical <code>t</code>, <code>df</code>, <code>p</code>, and estimates. We can get the confidence interval by running <code>confint(lm(...))</code>.</p>
 <pre class="r"><code># Built-in independent t-test on wide data
 a = t.test(y, y2, var.equal = TRUE)
