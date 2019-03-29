@@ -581,7 +581,7 @@ $rank(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
 To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](simulate_mannwhitney.html).
 
 ### Theory: Dummy coding {#dummy}
-Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (red line) and $\beta_1$ is the slope between the two means (green line). Why? Because when $\Delta x = 1$ the slope equals the difference because:
+Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (blue line) and $\beta_1$ is the slope between the two means (red line). Why? Because when $\Delta x = 1$ the slope equals the difference because:
 
 $slope = \Delta y / \Delta x = \Delta y / 1 = \Delta y = difference$
 
@@ -756,7 +756,7 @@ $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0
 
 where $x_i$ are indicators ($x=0$ or $x=1$) where at most one $x_i=1$ while all others are $x_i=0$. 
 
-Notice how this is just "more of the same" of what we already did in other models above. When there are only two groups, this model is $y = \beta_0 + \beta_1*x$, i.e. the [independent t-test](#t2). If there is only one group, it is $y = \beta_0$, i.e. the [one-sample t-test](#t1). This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above, though I did omit adding green lines from the intercept (red) to the group means (blue) for visual clarity.
+Notice how this is just "more of the same" of what we already did in other models above. When there are only two groups, this model is $y = \beta_0 + \beta_1*x$, i.e. the [independent t-test](#t2). If there is only one group, it is $y = \beta_0$, i.e. the [one-sample t-test](#t1). This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above.
 
 <div class="fold s">
 ```{r}
