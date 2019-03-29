@@ -853,7 +853,7 @@ c = t.test(signed_rank(y - y2))</code></pre>
 </div>
 <div id="dummy" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Theory: Dummy coding</h3>
-<p>Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at <span class="math inline">\(x = 0\)</span> and data points from the second group is located at <span class="math inline">\(x = 1\)</span>. Then <span class="math inline">\(\beta_0\)</span> is the intercept (red line) and <span class="math inline">\(\beta_1\)</span> is the slope between the two means (green line). Why? Because when <span class="math inline">\(\Delta x = 1\)</span> the slope equals the difference because:</p>
+<p>Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at <span class="math inline">\(x = 0\)</span> and data points from the second group is located at <span class="math inline">\(x = 1\)</span>. Then <span class="math inline">\(\beta_0\)</span> is the intercept (blue line) and <span class="math inline">\(\beta_1\)</span> is the slope between the two means (red line). Why? Because when <span class="math inline">\(\Delta x = 1\)</span> the slope equals the difference because:</p>
 <p><span class="math inline">\(slope = \Delta y / \Delta x = \Delta y / 1 = \Delta y = difference\)</span></p>
 <p>Magic! Even categorical differences can be modelled using linear models! It’s a true Swizz army knife.</p>
 <div class="fold s">
@@ -1051,9 +1051,9 @@ b = nlme::gls(value ~ 1 + group_y2, weights = nlme::varIdent(form=~1|group), met
 <div id="theory-as-linear-models-4" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> Theory: As linear models</h3>
 <p>Model: One mean for each group predicts <span class="math inline">\(y\)</span>.</p>
-<p><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_1\)</span></p>
+<p><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_0\)</span></p>
 <p>where <span class="math inline">\(x_i\)</span> are indicators (<span class="math inline">\(x=0\)</span> or <span class="math inline">\(x=1\)</span>) where at most one <span class="math inline">\(x_i=1\)</span> while all others are <span class="math inline">\(x_i=0\)</span>.</p>
-<p>Notice how this is just “more of the same” of what we already did in other models above. When there are only two groups, this model is <span class="math inline">\(y = \beta_0 + \beta_1*x\)</span>, i.e. the <a href="#t2">independent t-test</a>. If there is only one group, it is <span class="math inline">\(y = \beta_0\)</span>, i.e. the <a href="#t1">one-sample t-test</a>. This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above, though I did omit adding green lines from the intercept (red) to the group means (blue) for visual clarity.</p>
+<p>Notice how this is just “more of the same” of what we already did in other models above. When there are only two groups, this model is <span class="math inline">\(y = \beta_0 + \beta_1*x\)</span>, i.e. the <a href="#t2">independent t-test</a>. If there is only one group, it is <span class="math inline">\(y = \beta_0\)</span>, i.e. the <a href="#t1">one-sample t-test</a>. This is easy to see in the visualization below - just cover up a few groups and see that it matches the other visualizations above.</p>
 <div class="fold s">
 <pre class="r"><code># Figure
 N = 15
@@ -1620,12 +1620,12 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <h1><span class="header-section-number">8</span> Sources and further equivalences</h1>
 <p>Here are links to other sources who have exposed bits and pieces of this puzzle, including many further equivalences not covered here:</p>
 <ul>
-<li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at StackOverflow</li>
+<li><a href="https://stats.stackexchange.com/questions/303269/common-statistical-tests-as-linear-models">My original exposition of the idea</a> at Cross Validated</li>
 <li><a href="https://stats.stackexchange.com/questions/210529/are-parametric-tests-on-rank-transformed-data-equivalent-to-non-parametric-test?noredirect=1#comment399981_210529">An earlier question by me</a> about non-parametric tests and a helpful answer.</li>
 <li><a href="https://stats.stackexchange.com/questions/59047/how-are-regression-the-t-test-and-the-anova-all-versions-of-the-general-linear">This question and replies</a> on t-tests and ANOVA at StackOverflow</li>
 <li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers</a> on Chi-Square as log-linear models.</li>
 <li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These “equivalences” are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
-<li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lmer</code> mixed models.</li>
+<li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lme4::lmer</code> mixed models.</li>
 <li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to non-parametric tests which ultimately pushed me over the edge to write up the present article.</li>
 </ul>
 </div>
@@ -1638,7 +1638,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 </ul>
 <p>Here are my own thoughts on what I’d do. I’ve done parts of this with great success already, but not the whole lot since I’m not assigned to do a full course yet.</p>
 <p>I would spend 50% of the time on linear modeling of data (bullet 1 below) since this contains 70% of what students need to know. The rest of the course is just fleshing out what happens if you have one group, two groups, etc.</p>
-<p>Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to make way for modeling.</p>
+<p>Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to make build on what students already know rather than throwing a lot of conceptually novel stuff at them.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Fundamentals of regression:</strong></p>
 <ol style="list-style-type: decimal">
@@ -1667,7 +1667,9 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <li><p><em>Proportions of one variable:</em> <a href="#goodness">Goodness of fit</a>.</p></li>
 <li><p><em>Proportions of two variables:</em> <a href="#contingency">Contingency tables</a>.</p></li>
 </ol></li>
-<li><p><strong>Hypothesis testing:</strong> Hypothesis testing is the act of choosing between a full model and one where a parameter is set to zero (effectively excluded from the model) instead of being estimated. For example, when set one of the two means in the t-test to be zero, we study how well the remaining mean explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. Therefore, hypothesis testing is less interesting and is mostly covered as an introduction to the general literature. Mention P-values (and misconceptions about them), Bayes Factors, and cross-validation.</p></li>
+<li><p><strong>Hypothesis testing:</strong></p>
+<p>5.1 <em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#t2">t-test</a>, we study how well a single mean (a <a href="#t1">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
+<p>5.2 <em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you’ve got Bayes Factors. One tool, and you’re done. I’ve used LRTs in the ANOVAs above.</p></li>
 </ol>
 </div>
 <div id="limitations" class="section level1">
