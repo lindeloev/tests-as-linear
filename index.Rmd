@@ -623,7 +623,7 @@ Hooray, it works! For first-timers it takes a few moments to understand dummy co
 
 
 ### R code: independent t-test
-As a reminder, when we write `y ~ 1 + x` in R, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and R goes on computing the $\beta$s for you. Thus $y ~ 1 + x$ is the R-way of writing $y = a \cdot x + b$.
+As a reminder, when we write `y ~ 1 + x` in R, it is shorthand for $y = \beta_0 \cdot 1 + \beta_1 \cdot x$ and R goes on computing the $\beta$s for you. Thus `y ~ 1 + x` is the R-way of writing $y = a \cdot x + b$.
 
 Notice the identical `t`, `df`, `p`, and estimates. We can get the confidence interval by running `confint(lm(...))`.
 
@@ -1296,7 +1296,7 @@ Here are links to other sources who have exposed bits and pieces of this puzzle,
 
 
 # Teaching materials and a course outline {#course}
-Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stay at the conceptual level. I wanted to make linear models the *tool* in a really concise way. Luckily, more beginnier-friendly materials have emerged lately:
+Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stay at the conceptual level. I wanted to make linear models the *tool* in a really concise way. Luckily, more beginner-friendly materials have emerged lately:
 
  * Russ Poldracks open-source book "Statistical Thinking for the 21st century" (start at [chapter 5 on modeling](http://statsthinking21.org/fitting-models-to-data.html))
  * [Jeff Rouder's course notes](https://jeffrouder.blogspot.com/2019/03/teaching-undergrad-stats-without-p-f-or.html), introducing model comparison using just $R^2$ and BIC. It avoids all the jargon on p-values, F-values, etc. The full materials and slides [are available here](https://drive.google.com/drive/folders/1CiJK--bAuO0F-ug3B5I3FvmsCdpPGZ03).
@@ -1325,7 +1325,7 @@ Note that whereas the understanding of sampling and hypothesis testing is usuall
  
 2. **Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):**
 
-    1. *One mean:** When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called [one-sample t-test and Wilcoxon Signed Rank test respectively](#t1).
+    1. **One mean:** When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called [one-sample t-test and Wilcoxon Signed Rank test respectively](#t1).
     
     2. **Two means:** If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an [independent t-test](#t2). Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.
     
