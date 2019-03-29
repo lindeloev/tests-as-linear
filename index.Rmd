@@ -752,7 +752,7 @@ ANOVAs are linear models with (only) categorical predictors so they simply exten
 ### Theory: As linear models
 Model: One mean for each group predicts $y$.
 
-$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_1$
+$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +... \qquad \mathcal{H}_0: y = \beta_0$
 
 where $x_i$ are indicators ($x=0$ or $x=1$) where at most one $x_i=1$ while all others are $x_i=0$. 
 
