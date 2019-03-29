@@ -1325,7 +1325,7 @@ Note that whereas the understanding of sampling and hypothesis testing is usuall
  
 2. **Special case #1: One or two means (t-tests, Wilcoxon, Mann-Whitney):**
 
-    1. *One mean:** When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called [one-sample t-test and Wilcoxon Signed Rank test respectively](#t1).
+    1. **One mean:** When there is only one x-value, the regression model simplifies to $y = b$. If $y$ is non-metric, you can rank-transform it. Apply the assumptions (homoscedasticity doesn't apply since there is only one $x$). Mention in passing that these intercept-only models are called [one-sample t-test and Wilcoxon Signed Rank test respectively](#t1).
     
     2. **Two means:** If we put two variables 1 apart on the x-axis, the difference between the means is the slope. Great! It is accessible to our swizz army knife called linear modeling. Apply the assumption checks to see that homoscedasticity reduces to equal variance between groups. This is called an [independent t-test](#t2). Do a few worked examples and exercises, maybe adding Welch's test, and do the rank-transformed version, called Mann-Whitney U.
     
