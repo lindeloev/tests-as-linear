@@ -112,7 +112,7 @@ theme_icon = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2)) {
 ```
 
 
-This document is summarised in the table below. It shows the linear models underlying common parametric and non-parametric tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
+This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric"" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
 
 ***
 
@@ -128,7 +128,7 @@ This needless complexity multiplies when students try to rote learn the parametr
 
 For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I'd argue that it's better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.
 
-Concerning the teaching of *non-parametric* tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of non-parametric tests implemented in [JASP](https://jasp-stats.org) [literally just do (latent) ranking](https://arxiv.org/abs/1712.06941) and that's it. For the frequentist non-parametric tests considered here, this approach is highly accurate for N > 15.
+Concerning the teaching of *"non-parametric"* tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach "non-parametric"" tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of "non-parametric"" tests implemented in [JASP](https://jasp-stats.org) [literally just do (latent) ranking](https://arxiv.org/abs/1712.06941) and that's it. For the frequentist "non-parametric"" tests considered here, this approach is highly accurate for N > 15.
 
 Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under [sources](#links) and [teaching materials](#course). I hope that you will join in suggesting improvements or submitting improvements yourself in [the Github repo to this page](https://github.com/lindeloev/tests-as-linear). Let's make it awesome!
 
@@ -198,9 +198,6 @@ y2 = rnorm_fixed(50, mu=0.5, sd=1.5)  # Used in two means
 # Long format data with indicator
 value = c(y, y2)
 group = rep(c('y1', 'y2'), each = 50)
-
-# We'll need the signed rank function for a lot of the "non-parametric" tests
-signed_rank = function(x) sign(x) * rank(abs(x))
 ```
 
 
@@ -245,7 +242,8 @@ As the name implies, the **Spearman rank correlation** is a **Pearson correlatio
 
 $rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0$
 
-The correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulate_spearman.html).
+I'll introduce [ranks](#rank) in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulate_spearman.html).
+
 Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:
 
 <div class="fold s">
@@ -267,6 +265,19 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
 
 ```
 </div>
+
+
+### Theory: rank-transformation {#rank}
+
+`rank` simply takes a list of numbers and "replace" them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). So the result of the rank-transformation `rank(c(3.6, 3.4, -5.0, 8.2))` is `3, 2, 1, 4`. See that in the figure above? 
+
+A *signed* rank is the same, just where we rank according to absolute size first and then add in the sign second. So the signed rank here would be `2, 1, -3, 4`. Or in code:
+
+```{r}
+signed_rank = function(x) sign(x) * rank(abs(x))
+```
+
+I hope I don't offend anyone when I say that ranks are easy; yet it's all you need to do to convert most parametric tests into their "non-parametric" counterparts! One interesting implication is that *many "non-parametric tests" are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data*. That's why I put "non-parametric" in quotation marks
 
 
 ### R code: Pearson correlation
@@ -347,7 +358,7 @@ $y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0$
 
 In other words, it's our good old $y = \beta_0 + \beta_1*x$ where the last term is gone since there is no $x$ (essentially $x=0$, see left figure below).
 
-The same is to a very close approximately true for **Wilcoxon signed-rank test**, just with the signed ranks of $y$ instead of $y$ itself (see right panel below and caveat in the end of this section):
+The same is to a very close approximately true for **Wilcoxon signed-rank test**, just with the [signed ranks](#rank) of $y$ instead of $y$ itself (see right panel below).
 
 $signed\_rank(y) = \beta_0$
 
@@ -383,7 +394,6 @@ theme_axis(P_t1, ylim=c(-1, 2), legend.position=c(0.6, 0.1)) +
 ```
 </div>
 
-One interesting implication is that *many "non-parametric tests" are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data*.
 
 ### R code: One-sample t-test
 Try running the R code below and see that the linear model (`lm`) produces the same $t$, $p$, and $r$ as the built-in `t.test`. The confidence interval is not presented in the output of `lm` but is also identical if you use `confint(lm(...))`:
@@ -1297,7 +1307,7 @@ Here are links to other sources who have exposed bits and pieces of this puzzle,
  * [These slides by Christoph Scheepers](https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf) on Chi-Square as log-linear models.
  * [This notebook by Philip M. Alday](https://rpubs.com/palday/glm-test) on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These "equivalences" are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!
  * [This article by Kristoffer Magnusson](https://rpsychologist.com/r-guide-longitudinal-lme-lmer) on RM-ANOVA and growth models using `lme4::lmer` mixed models.
- * [This post by Thom Baguley](https://seriousstats.wordpress.com/2012/02/14/friedman/) on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to non-parametric tests which ultimately pushed me over the edge to write up the present article.
+ * [This post by Thom Baguley](https://seriousstats.wordpress.com/2012/02/14/friedman/) on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to "non-parametric"" tests which ultimately pushed me over the edge to write up the present article.
 
 
 

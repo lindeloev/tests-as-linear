@@ -367,7 +367,7 @@ div.tocify {
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>
 </p>
-<p>This document is summarised in the table below. It shows the linear models underlying common parametric and non-parametric tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
+<p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric”&quot; tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
 <hr />
 <p><a href="linear_tests_cheat_sheet.pdf"><img src="linear_tests_cheat_sheet.png" /></a></p>
 <hr />
@@ -376,7 +376,7 @@ div.tocify {
 <p>Most of the common statistical models (t-test, correlation, ANOVA; chi-square, etc.) are special cases of linear models or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to <span class="math inline">\(y = a \cdot x + b\)</span> which most students know from highschool. Unfortunately, stats intro courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
 <p>For this reason, I think that teaching linear models first and foremost and <em>then</em> name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing <em>understanding</em> over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I’d argue that it’s better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.</p>
-<p>Concerning the teaching of <em>non-parametric</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach non-parametric tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think “ranks!” than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of non-parametric tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that’s it. For the frequentist non-parametric tests considered here, this approach is highly accurate for N &gt; 15.</p>
+<p>Concerning the teaching of <em>“non-parametric”</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach “non-parametric”&quot; tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think “ranks!” than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of “non-parametric”&quot; tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that’s it. For the frequentist “non-parametric”&quot; tests considered here, this approach is highly accurate for N &gt; 15.</p>
 <p>Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under <a href="#links">sources</a> and <a href="#course">teaching materials</a>. I hope that you will join in suggesting improvements or submitting improvements yourself in <a href="https://github.com/lindeloev/tests-as-linear">the Github repo to this page</a>. Let’s make it awesome!</p>
 </div>
 <div id="settings-and-toy-data" class="section level1">
@@ -440,10 +440,7 @@ y2 = rnorm_fixed(50, mu=0.5, sd=1.5)  # Used in two means
 
 # Long format data with indicator
 value = c(y, y2)
-group = rep(c(&#39;y1&#39;, &#39;y2&#39;), each = 50)
-
-# We&#39;ll need the signed rank function for a lot of the &quot;non-parametric&quot; tests
-signed_rank = function(x) sign(x) * rank(abs(x))</code></pre>
+group = rep(c(&#39;y1&#39;, &#39;y2&#39;), each = 50)</code></pre>
 </div>
 <div id="correlation" class="section level1">
 <h1><span class="header-section-number">3</span> Pearson and Spearman correlation</h1>
@@ -478,7 +475,8 @@ theme_axis(P_pearson, legend.position=c(0.4, 0.9))</code></pre>
 <p>This is often simply called a <strong>regression</strong> model which can be extended to <strong>multiple regression</strong> where there are several <span class="math inline">\(\beta\)</span>s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#t1">one-sample t-test</a> to <a href="#anova2">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
 <p>As the name implies, the <strong>Spearman rank correlation</strong> is a <strong>Pearson correlation</strong> on rank-transformed <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>:</p>
 <p><span class="math inline">\(rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0\)</span></p>
-<p>The correlation coefficient of the linear model is identical to a “real” Pearson correlation, but p-values are an approximation which is is <a href="simulate_spearman.html">appropriate for samples greater than N=10 and almost perfect when N &gt; 20</a>. Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:</p>
+<p>I’ll introduce <a href="#rank">ranks</a> in a minute. For now, notice that the correlation coefficient of the linear model is identical to a “real” Pearson correlation, but p-values are an approximation which is is <a href="simulate_spearman.html">appropriate for samples greater than N=10 and almost perfect when N &gt; 20</a>.</p>
+<p>Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:</p>
 <div class="fold s">
 <pre class="r"><code># Spearman intercept
 intercept_spearman = coefficients(lm(rank(X2) ~ rank(X1), D_correlation))[1]
@@ -497,8 +495,15 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 </div>
+<div id="rank" class="section level3">
+<h3><span class="header-section-number">3.0.2</span> Theory: rank-transformation</h3>
+<p><code>rank</code> simply takes a list of numbers and “replace” them with the integers of their rank (1st smallest, 2nd smallest, 3rd smallest, etc.). So the result of the rank-transformation <code>rank(c(3.6, 3.4, -5.0, 8.2))</code> is <code>3, 2, 1, 4</code>. See that in the figure above?</p>
+<p>A <em>signed</em> rank is the same, just where we rank according to absolute size first and then add in the sign second. So the signed rank here would be <code>2, 1, -3, 4</code>. Or in code:</p>
+<pre class="r"><code>signed_rank = function(x) sign(x) * rank(abs(x))</code></pre>
+<p>I hope I don’t offend anyone when I say that ranks are easy; yet it’s all you need to do to convert most parametric tests into their “non-parametric” counterparts! One interesting implication is that <em>many “non-parametric tests” are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data</em>. That’s why I put “non-parametric” in quotation marks</p>
+</div>
 <div id="r-code-pearson-correlation" class="section level3">
-<h3><span class="header-section-number">3.0.2</span> R code: Pearson correlation</h3>
+<h3><span class="header-section-number">3.0.3</span> R code: Pearson correlation</h3>
 <p>It couldn’t be much simpler to run these models in R. They yield identical <code>p</code> and <code>t</code>, but there’s a catch: <code>lm</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> <em>r</em>, you may still want <em>r</em>. Luckily, the slope becomes <code>r</code> if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this using <code>scale(x)</code> or <code>I(x/sd(x))</code>:</p>
 <pre class="r"><code>a = cor.test(y, x, method = &quot;pearson&quot;) # Built-in
 b = lm(y ~ 1 + x) # Equivalent linear model: y = Beta0*1 + Beta1*x
@@ -555,7 +560,7 @@ Results: <div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto
 <p>The CIs are not exactly identical, but very close.</p>
 </div>
 <div id="r-code-spearman-correlation" class="section level3">
-<h3><span class="header-section-number">3.0.3</span> R code: Spearman correlation</h3>
+<h3><span class="header-section-number">3.0.4</span> R code: Spearman correlation</h3>
 <p>Note that we can interpret the slope which is the number of ranks <span class="math inline">\(y\)</span> change for each rank on <span class="math inline">\(x\)</span>. I think that this is a pretty interesting number. However, the intercept is less interpretable since it lies at <span class="math inline">\(rank(x) = 0\)</span> which is impossible since x starts at 1.</p>
 <p>See the identical <code>r</code> (now “rho”) and <code>p</code>:</p>
 <pre class="r"><code># Spearman correlation
@@ -604,7 +609,7 @@ Let’s look at the results: <div id="htmlwidget-18ac5bd784205e06f9a7" style="wi
 <p><strong>t-test</strong> model: A single number predicts <span class="math inline">\(y\)</span>.</p>
 <p><span class="math inline">\(y = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0\)</span></p>
 <p>In other words, it’s our good old <span class="math inline">\(y = \beta_0 + \beta_1*x\)</span> where the last term is gone since there is no <span class="math inline">\(x\)</span> (essentially <span class="math inline">\(x=0\)</span>, see left figure below).</p>
-<p>The same is to a very close approximately true for <strong>Wilcoxon signed-rank test</strong>, just with the signed ranks of <span class="math inline">\(y\)</span> instead of <span class="math inline">\(y\)</span> itself (see right panel below and caveat in the end of this section):</p>
+<p>The same is to a very close approximately true for <strong>Wilcoxon signed-rank test</strong>, just with the <a href="#rank">signed ranks</a> of <span class="math inline">\(y\)</span> instead of <span class="math inline">\(y\)</span> itself (see right panel below).</p>
 <p><span class="math inline">\(signed\_rank(y) = \beta_0\)</span></p>
 <p><a href="simulate_wilcoxon.html">This approximation is good enough when the sample size is larger than 14 and almost perfect if the sample size is larger than 50</a>.</p>
 <div class="fold s">
@@ -633,9 +638,8 @@ P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) +
 # Stich together using patchwork
 theme_axis(P_t1, ylim=c(-1, 2), legend.position=c(0.6, 0.1)) + 
   theme_axis(P_t1_rank, ylim=NULL,  legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<p>One interesting implication is that <em>many “non-parametric tests” are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data</em>.</p>
 </div>
 <div id="r-code-one-sample-t-test" class="section level3">
 <h3><span class="header-section-number">4.1.2</span> R code: One-sample t-test</h3>
@@ -746,7 +750,7 @@ P_tpaired = ggplot(D_tpaired, aes(x=x, y=y)) +
 
 # Use patchwork to put them side-by-side
 theme_axis(P_tpaired) + theme_axis(P_t1, legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <p>Similarly, the <strong>Wilcoxon matched pairs</strong> only differ from <strong>Wilcoxon signed-rank</strong> in that it’s testing the signed ranks of the pairwise <span class="math inline">\(y-x\)</span> differences.</p>
 <p><span class="math inline">\(signed\_rank(y_2-y_1) = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0\)</span></p>
@@ -874,7 +878,7 @@ P_t2 = ggplot(D_t2, aes(x=x, y=y)) +
   #scale_x_discrete(breaks=c(0.5, 1.5), labels=c(&#39;1&#39;, &#39;2&#39;))
 
 theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="dummy2" class="section level3">
@@ -1083,7 +1087,7 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
   
 
 theme_axis(P_anova1, xlim=c(-0.5, 4), legend.position=c(0.7, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>A one-way ANOVA has a log-linear counterpart called <a href="#goodness">goodness-of-fit</a> test which we’ll return to. By the way, since we now regress on more than one <span class="math inline">\(x\)</span>, the one-way ANOVA is a <strong>multiple regression</strong> model.</p>
 <p>The <strong>Kruskal-Wallis</strong> test is simply a <strong>one-way ANOVA</strong> on the rank-transformed <span class="math inline">\(y\)</span> (<code>value</code>):</p>
@@ -1225,7 +1229,7 @@ P_anova2 = ggplot(D, aes(x=group, y=value, color=mood)) +
   geom_segment(x=-10, xend=100, y=means[1], yend=0.5, col=&#39;blue&#39;, lwd=2) +
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..),  lwd=2)
 theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="r-code-two-way-anova" class="section level3">
@@ -1331,7 +1335,7 @@ P_ancova = ggplot(D, aes(x=age, y=value, color=group, shape=group)) +
 
 # Theme it
 theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(axis.title=element_text())</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-55-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-56-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>And now some R code to run the one-way ANCOVA as a linear model:</p>
 <pre class="r"><code># Built-in ANCOVA. The order of factors matter in pure-aov (type-I variance).
@@ -1627,7 +1631,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers</a> on Chi-Square as log-linear models.</li>
 <li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These “equivalences” are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
 <li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lme4::lmer</code> mixed models.</li>
-<li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to non-parametric tests which ultimately pushed me over the edge to write up the present article.</li>
+<li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to “non-parametric”&quot; tests which ultimately pushed me over the edge to write up the present article.</li>
 </ul>
 </div>
 <div id="course" class="section level1">
@@ -1685,7 +1689,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <!--
 # Visualization of models (in progress)
 These will eventually be included under the respective headers and in the infographic.
-<img src="index_files/figure-html/unnamed-chunk-70-1.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-2.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-3.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-4.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-5.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-70-6.png" width="192" style="display: block; margin: auto;" />
+<img src="index_files/figure-html/unnamed-chunk-71-1.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-71-2.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-71-3.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-71-4.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-71-5.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-71-6.png" width="192" style="display: block; margin: auto;" />
 -->
 </div>
 
