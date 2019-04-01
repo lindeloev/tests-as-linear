@@ -4,7 +4,7 @@ This is the main content:
 
  * **index.Rmd** is the Rmarkdown code which generated the post.
  * **linear_tests_cheat_sheet.odt** is a Libreoffice Writer document with the cheat sheet.
- * The other **.Rmd** files are the simulations of the accuracy of the parametric approximation to non-parametric tests.
+ * **simulations** folder are the simulations of the accuracy of the parametric approximation to non-parametric tests.
  
 Please contribute! For example:
 
