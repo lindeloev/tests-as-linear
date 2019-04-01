@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jonas Kristoffer Lindeløv" />
+
+
+<title>Wilcoxon is (almost) a one-sample t-test on signed ranks</title>
+
+<script src="simulate_wilcoxon_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="simulate_wilcoxon_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="simulate_wilcoxon_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="simulate_wilcoxon_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="simulate_wilcoxon_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="simulate_wilcoxon_files/navigation-1.1/tabsets.js"></script>
+<link href="simulate_wilcoxon_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="simulate_wilcoxon_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="simulate_wilcoxon_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="simulate_wilcoxon_files/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Wilcoxon is (almost) a one-sample t-test on signed ranks</h1>
+<h4 class="author">Jonas Kristoffer Lindeløv</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#simple-example"><span class="toc-section-number">1</span> Simple example</a></li>
+<li><a href="#simulation"><span class="toc-section-number">2</span> Simulation</a></li>
+<li><a href="#conclusion"><span class="toc-section-number">3</span> Conclusion</a></li>
+</ul>
+</div>
+
+<!-- from https://stackoverflow.com/a/37839683/1297830 -->
+<link rel="stylesheet" type="text/css" href="../include/hideOutput.css">
+<script src="../include/hideOutput.js"></script>
+<!--
+TO DO:
+ * Link to linear-model post
+ * Test permutation: coin::wilcox_test()
+
+-->
+<p>This document presents the close relationship between the p-values of the Wilcoxon signed-rank test and t-test with signed ranks as dependent variable. It is an appendix to the post “<a href="https://lindeloev.github.io/tests-as-linear">Common statistical tests as linear models</a>”. Since Wilcoxon matched pairs is just the signed-rank on difference scores, the points below apply to that as well.</p>
+<p><strong>TL;DR: I argue below that for N &gt; 14, 5the t-test is a reasonable approximation. For N &gt; 50, it is almost exact.</strong></p>
+<div id="simple-example" class="section level1">
+<h1><span class="header-section-number">1</span> Simple example</h1>
+<p>First, let’s find a way tocreate some clearly non-normal data. How about this ex-gaussian + uniform values in the negative end:</p>
+<pre class="r"><code>weird_data = c(rnorm(10000), exp(rnorm(10000)), runif(10000, min=-3, max=-2))
+hist(weird_data, breaks=200, xlim=c(-4, 10))</code></pre>
+<p><img src="simulate_wilcoxon_files/figure-html/example1-1.png" width="672" /></p>
+<p>Now, comparing p-values is simple:</p>
+<pre class="r"><code>x = sample(weird_data, 50)  # Pick out a few values to get reasonable p-values
+signed_ranks = sign(x) * rank(abs(x))
+p_wilcox = wilcox.test(x)$p.value
+p_ttest = t.test(signed_ranks)$p.value
+rbind(p_wilcox, p_ttest)  # Print in rows</code></pre>
+<pre><code>##                 [,1]
+## p_wilcox 0.004967958
+## p_ttest  0.003828408</code></pre>
+<p>OK, so they are close in this example. But was this just luck and a special case of N=50?</p>
+</div>
+<div id="simulation" class="section level1">
+<h1><span class="header-section-number">2</span> Simulation</h1>
+<p>Let’s do what we did above, but running a few thousand simulations for different N and means (<code>mu</code>):</p>
+<pre class="r"><code>library(tidyverse)
+signed_rank = function(x) sign(x) * rank(abs(x))
+
+# Parameters
+Ns = c(seq(from=6, to=20, by=2), 30, 50, 80)
+mus = c(0, 1, 2)  # Means
+PERMUTATIONS = 1:200
+
+# Run it
+D = expand.grid(set=PERMUTATIONS, mu=mus, N=Ns) %&gt;%
+  mutate(
+    # Generate data
+    data = map2(mu, N, function(mu, N) mu + sample(weird_data, N)),
+    
+    # Run tests
+    wilcox_raw = map(data, ~ wilcox.test(.x)),
+    ttest_raw = map(data, ~ t.test(signed_rank(.x))),
+    
+    # Tidy it up
+    wilcox = map(wilcox_raw, broom::tidy),
+    ttest = map(ttest_raw, broom::tidy)
+  ) %&gt;%
+  
+  # Get as columns instead of lists; then remove &quot;old&quot; columns
+  unnest(wilcox, ttest, .sep=&#39;_&#39;) %&gt;%
+  select(-data, -wilcox_raw, -ttest_raw)
+
+head(D)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["set"],"name":[1],"type":["int"],"align":["right"]},{"label":["mu"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["N"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["wilcox_statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["wilcox_p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wilcox_method"],"name":[6],"type":["chr"],"align":["left"]},{"label":["wilcox_alternative"],"name":[7],"type":["chr"],"align":["left"]},{"label":["ttest_estimate"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ttest_statistic"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ttest_p.value"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ttest_parameter"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ttest_conf.low"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["ttest_conf.high"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["ttest_method"],"name":[14],"type":["chr"],"align":["left"]},{"label":["ttest_alternative"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"0","3":"6","4":"6","5":"0.43750","6":"Wilcoxon signed rank test","7":"two.sided","8":"-1.5000000","9":"-0.93325653","10":"0.3935270","11":"5","12":"-5.631632","13":"2.631632","14":"One Sample t-test","15":"two.sided","_rn_":"1"},{"1":"2","2":"0","3":"6","4":"4","5":"0.21875","6":"Wilcoxon signed rank test","7":"two.sided","8":"-2.1666667","9":"-1.49712368","10":"0.1946213","11":"5","12":"-5.886863","13":"1.553530","14":"One Sample t-test","15":"two.sided","_rn_":"2"},{"1":"3","2":"0","3":"6","4":"13","5":"0.68750","6":"Wilcoxon signed rank test","7":"two.sided","8":"0.8333333","9":"0.48981958","10":"0.6449949","11":"5","12":"-3.540015","13":"5.206681","14":"One Sample t-test","15":"two.sided","_rn_":"3"},{"1":"4","2":"0","3":"6","4":"7","5":"0.56250","6":"Wilcoxon signed rank test","7":"two.sided","8":"-1.1666667","9":"-0.70210950","10":"0.5139401","11":"5","12":"-5.438097","13":"3.104764","14":"One Sample t-test","15":"two.sided","_rn_":"4"},{"1":"5","2":"0","3":"6","4":"10","5":"1.00000","6":"Wilcoxon signed rank test","7":"two.sided","8":"-0.1666667","9":"-0.09578263","10":"0.9274137","11":"5","12":"-4.639610","13":"4.306277","14":"One Sample t-test","15":"two.sided","_rn_":"5"},{"1":"6","2":"0","3":"6","4":"17","5":"0.21875","6":"Wilcoxon signed rank test","7":"two.sided","8":"2.1666667","9":"1.49712368","10":"0.1946213","11":"5","12":"-1.553530","13":"5.886863","14":"One Sample t-test","15":"two.sided","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Let’s take a look at how the p-values from the “ranked t-test” compare to Wilcoxon p-values:</p>
+<div class="fold s">
+<pre class="r"><code>D$N = factor(D$N)  # Make N a factor for prettier plotting
+
+library(ggplot2)
+library(patchwork)
+
+# A straight-up comparison of the p-values
+p_relative = ggplot(D, aes(x=wilcox_p.value, y=ttest_p.value, color=N)) + 
+  geom_line() + 
+  geom_vline(xintercept=0.05, lty=2) +
+  geom_hline(yintercept=0.05, lty=2) +
+  
+  labs(title=&#39;Absolute relation&#39;, x = &#39;Wilcoxon p-value&#39;, y = &#39;T-test p-value&#39;) + 
+  #coord_cartesian(xlim=c(0, 0.10), ylim=c(0, 0.11)) + 
+  theme_gray(13) + 
+  guides(color=FALSE)
+
+# Looking at the difference (error) between p-values
+p_error_all = ggplot(D, aes(x=wilcox_p.value, y=ttest_p.value-wilcox_p.value, color=N)) + 
+  geom_line() + 
+  geom_vline(xintercept=0.05, lty=2) +
+  
+  labs(title=&#39;Error&#39;, x = &#39;Wilcoxon p-value&#39;, y = &#39;T-test p-value deviation&#39;) + 
+  theme_gray(13) + 
+  guides(color=FALSE)
+
+# Same, but zoomed in around p=0.05
+p_error_zoom = ggplot(D, aes(x=wilcox_p.value, y=ttest_p.value-wilcox_p.value, color=N)) + 
+  geom_line() + 
+  geom_vline(xintercept=0.05, lty=2) +
+  
+  labs(title=&#39;Zoomed error&#39;, x = &#39;Wilcoxon p-value&#39;, y = &#39;T-test p-value deviation&#39;) + 
+  coord_cartesian(xlim=c(0, 0.10), ylim=c(-0.020, 0.000)) + 
+  theme_gray(13)
+
+# Show it. Patchwork is your friend!
+p_relative + p_error_all + p_error_zoom</code></pre>
+<p><img src="simulate_wilcoxon_files/figure-html/unnamed-chunk-1-1.png" width="960" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><span class="header-section-number">3</span> Conclusion</h1>
+<p>The “signed rank t-test”&quot; underestimates p (it is too liberal), but I would say that this deviance is acceptable for N &gt; 14, i.e. where the error is at most 0.5% in the “critical” region around p=5%. N Needs to exceed 30 before p becomes virtually identical to Wilcoxon (difference less than 0.2%).</p>
+<p>In further testing, I found that the p-value curves are not affected by simply shifting the data away from the test value, thus lowering the means. Similarly, the overall shape is similar for various crazy and non-crazy distributions. For simplicity, I have unfolded this here.</p>
+<p>It has also been <a href="http://andrewgelman.com/2015/07/13/dont-do-the-wilcoxon/#comment-226251">suggested to use Z-transforms of the ranks</a>, though I’ve found this to introduce larger differences in p-values.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

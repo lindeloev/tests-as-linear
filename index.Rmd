@@ -242,7 +242,7 @@ As the name implies, the **Spearman rank correlation** is a **Pearson correlatio
 
 $rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0$
 
-I'll introduce [ranks](#rank) in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulate_spearman.html).
+I'll introduce [ranks](#rank) in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulations/simulate_spearman.html).
 
 Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:
 
@@ -277,7 +277,7 @@ A *signed* rank is the same, just where we rank according to absolute size first
 signed_rank = function(x) sign(x) * rank(abs(x))
 ```
 
-I hope I don't offend anyone when I say that ranks are easy; yet it's all you need to do to convert most parametric tests into their "non-parametric" counterparts! One interesting implication is that *many "non-parametric tests" are precisely as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on transformed data*. That's why I put "non-parametric" in quotation marks
+I hope I don't offend anyone when I say that ranks are easy; yet it's all you need to do to convert most parametric tests into their "non-parametric" counterparts! One interesting implication is that *many "non-parametric tests" are about as parametric as their parametric counterparts with means, standard deviations, homogeneity of variance, etc. - just on rank-transformed data*. That's why I put "non-parametric" in quotation marks.
 
 
 ### R code: Pearson correlation
@@ -362,7 +362,7 @@ The same is to a very close approximately true for **Wilcoxon signed-rank test**
 
 $signed\_rank(y) = \beta_0$
 
-[This approximation is good enough when the sample size is larger than 14 and almost perfect if the sample size is larger than 50](simulate_wilcoxon.html).
+[This approximation is good enough when the sample size is larger than 14 and almost perfect if the sample size is larger than 50](simulations/simulate_wilcoxon.html).
 
 <div class="fold s">
 ```{r fig.width=7, fig.height=5}
@@ -588,7 +588,7 @@ where $x_i$ is an indicator (0 or 1) saying whether data point $i$ was sampled f
 
 $rank(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
 
-To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](simulate_mannwhitney.html).
+To me, equivalences like this make "non-parametric" statistics much easier to understand. The approximation is appropriate [when the sample size is larger than 11 in each group and virtually perfect when N > 30 in each group](simulations/simulate_mannwhitney.html).
 
 ### Theory: Dummy coding {#dummy}
 Dummy coding can be understood visually. The indicator is on the x-axis so data points from the first group are located at $x = 0$ and data points from the second group is located at $x = 1$. Then $\beta_0$ is the intercept (blue line) and $\beta_1$ is the slope between the two means (red line). Why? Because when $\Delta x = 1$ the slope equals the difference because:
@@ -807,7 +807,7 @@ The **Kruskal-Wallis** test is simply a **one-way ANOVA** on the rank-transforme
 
 $rank(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 +...$
 
-This approximation is [good enough for 12 or more data points](simulate_kruskall.html). Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the [Wilcoxon signed-rank test](#t1) or the [Mann-Whitney U test](#t2) respectively. 
+This approximation is [good enough for 12 or more data points](simulations/simulate_kruskall.html). Again, if you do this for just one or two groups, we're already acquainted with those equations, i.e. the [Wilcoxon signed-rank test](#t1) or the [Mann-Whitney U test](#t2) respectively. 
 
 
 ### Example data
@@ -830,7 +830,7 @@ D = data.frame(
 print_df(D, navigate=TRUE)
 ```
 
-With group a's intercept omni-present, see how exactly one other parameter is added to predict `value` for group b and c in a given row. Thus data points in group b never affect the estimates in group c.
+With group a's intercept omni-present, see how exactly one other parameter is added to predict `value` for group b and c in a given row (scroll to he end). Thus data points in group b never affect the estimates in group c.
 
 
 ### R code: one-way ANOVA
