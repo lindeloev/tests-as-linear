@@ -782,7 +782,7 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
     labels=c(
       bquote(beta[0]*" (group 1 mean)"), 
       bquote(beta[1]*", "*beta[2]*",  etc. (slopes/differences to "*beta[0]*")"),
-      bquote(beta[0]*"+"*beta[1]*", "*beta[0]*"+"*beta[2]*", etc. (absolute intercepts)")
+      bquote(beta[0]*"+"*beta[1]*", "*beta[0]*"+"*beta[2]*", etc. (group 2, 3, ... means)")
     )
   )
   
@@ -812,7 +812,7 @@ D = data.frame(
    
    # Explicitly add indicator/dummy variables
    # Could also be done using model.matrix(~D$group)
-   group_a = rep(c(1, 0, 0), each=N),
+   #group_a = rep(c(1, 0, 0), each=N),  # This is the intercept. No need to code
    group_b = rep(c(0, 1, 0), each=N),
    group_c = rep(c(0, 0, 1), each=N))  # N of each level
 ```
@@ -820,17 +820,17 @@ D = data.frame(
 print_df(D, navigate=TRUE)
 ```
 
-See? Exactly one parameter predicts a `value` in a given row while the others are not included in the modeling of that `value`. 
+With group a's intercept omni-present, see how exactly one other parameter is added to predict `value` for group b and c in a given row. Thus data points in group b never affect the estimates in group c.
 
 
 ### R code: one-way ANOVA
-OK, let's see the identity between the built-in **ANOVA** (`car::Anova`) and the dummy-coded in-your-face linear model in `lm`. Actually, `car::Anova` and `aov` are just wrappers around `lm` so the identity comes as no surprise. The latter returns parameter estimates as well (bonus!), but we'll just look at the overall model statistics for now. Note that I do not use the `aov` function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares, but let's skip that for now.
+OK, let's see the identity between a dedicated **ANOVA** function (`car::Anova`) and the dummy-coded in-your-face linear model in `lm`.
 
 
 ```{r, results='hold'}
 # Compare built-in and linear model
 a = car::Anova(aov(value ~ group, D))  # Built-in ANOVA
-b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linear model
+b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model
 ```
 
 Results:
@@ -843,8 +843,8 @@ bt = glance(b)
 df = bind_rows(at, bt) %>%
   mutate(model = c('Anova', 'lm')) %>%
   rename(F = statistic) %>%
-  select(model, F, p.value, df, df.residual)
-print_df(df)
+  select(model, df, df.residual, F, p.value)
+print_df(df, 5)
 ```
 
 <div class='fold o'>
@@ -854,12 +854,18 @@ summary(b)
 ```
 </div>
 
+Only degrees of freedom (df) differ. Actually, `car::Anova` and `aov` are just wrappers around `lm` so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax `y ~ factor`. Indeed, the only real reason to use aov and `car::Anova` rather than `lm` is to get a nicely formatted ANOVA table.
+
+The default output of `lm` returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because they ARE the ANOVA model, you can also get them out into the open by calling `coefficients(aov(...))` 
+
+Note that I do not use the `aov` function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares (set `car::Anova(..., type=3)`), but let's skip that for now.
+
 
 ### R code: Kruskal-Wallis
 ```{r, results='hold'}
 a = kruskal.test(value ~ group, D)  # Built-in
-b = lm(rank(value) ~ 1 + group_a + group_b + group_c, D)  # As linear model
-c = car::Anova(aov(rank(value) ~ group, D))  # Of course the same using the built-in ANOVA, which is just a wrapper around lm
+b = lm(rank(value) ~ 1 + group_b + group_c, D)  # As linear model
+c = car::Anova(aov(rank(value) ~ group, D))  # The same, using a dedicated ANOVA function. It just wraps lm.
 ```
 
 Results:
@@ -867,6 +873,7 @@ Results:
 ```{r, echo=FALSE}
 df = data.frame(
   model = c('kruskal.test', 'lm'),
+  df = c(a$parameter, b$rank),
   p.value = c(a$p.value, glance(b)$p.value)
 )
 print_df(df)
@@ -926,7 +933,7 @@ theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())
 
 
 ### R code: Two-way ANOVA
-Now let's turn to the actual modeling in R. We compare the built-in ANOVA function to the linear model using `lm`. Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a likelihood-ratio test to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). We do so using the `anova` function. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!
+Now let's turn to the actual modeling in R. We compare a dedicated ANOVA function (`car::Anova`; see [One-Way ANOVA](#anova1) why) to the linear model (`lm`). Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a [likelihood-ratio test](https://en.wikipedia.org/wiki/Likelihood-ratio_test) to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). The `anova` function does this test. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!
 
 ```{r, results='hold'}
 # Built-in two-way ANOVA.
@@ -934,8 +941,8 @@ a = car::Anova(aov(value ~ mood * group, D), type='II')  # Normal notation. "*" 
 b = car::Anova(aov(value ~ mood + group + mood:group, D))  # Identical but more verbose about main effects and interaction
 
 # Testing the interaction terms as linear model.
-full = lm(value ~ 1 + group_a + group_b + mood_happy + group_a:mood_happy + group_b:mood_happy, D)  # Full model
-null = lm(value ~ 1 + group_a + group_b + mood_happy, D)  # Without interaction
+full = lm(value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + group_c:mood_happy, D)  # Full model
+null = lm(value ~ 1 + group_b + group_c + mood_happy, D)  # Without interaction
 c = anova(null, full)  # whoop whoop, same F, p, and Dfs
 ```
 
@@ -971,7 +978,7 @@ Look at the model summary statistics to find values comparable to the `Anova`-es
 
 ```{r, results='hold'}
 # Main effect of group.
-e = lm(value ~ 1 + group_a + group_b, D)
+e = lm(value ~ 1 + group_b + group_c, D)
 
 # Main effect of mood.
 f = lm(value ~ 1 + mood_happy, D)
@@ -987,9 +994,9 @@ df = bind_rows(et, ft, at) %>%
   mutate(model=c('lm', 'lm', 'Anova', 'Anova'),
          term = c('group', 'mood', 'mood', 'group')) %>%
   rename(F = statistic) %>%
-  select(term, model, F, p.value) %>%
+  select(term, model, df, F, p.value) %>%
   arrange(term, model)
-print_df(df)
+print_df(df, 5)
 ```
 
 <div class='fold o'>
@@ -1039,10 +1046,10 @@ a = car::Anova(aov(value ~ group + age, D))
 #a = aov(value ~ group + age, D)  # Predictor order matters. Not nice!
 
 # As dummy-coded linear model. 
-full = lm(value ~ 1 + group_a + group_b + age, D)
+full = lm(value ~ 1 + group_b + group_c + age, D)
 
 # Testing main effect of age using Likelihood-ratio test
-null_age = lm(value ~ 1 + group_a + group_b, D)  # Full without age. One-way ANOVA!
+null_age = lm(value ~ 1 + group_b + group_c, D)  # Full without age. One-way ANOVA!
 result_age = anova(null_age, full)
 
 # Testing main effect of groupusing Likelihood-ratio test

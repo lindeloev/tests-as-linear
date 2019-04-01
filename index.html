@@ -1077,7 +1077,7 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
     labels=c(
       bquote(beta[0]*&quot; (group 1 mean)&quot;), 
       bquote(beta[1]*&quot;, &quot;*beta[2]*&quot;,  etc. (slopes/differences to &quot;*beta[0]*&quot;)&quot;),
-      bquote(beta[0]*&quot;+&quot;*beta[1]*&quot;, &quot;*beta[0]*&quot;+&quot;*beta[2]*&quot;, etc. (absolute intercepts)&quot;)
+      bquote(beta[0]*&quot;+&quot;*beta[1]*&quot;, &quot;*beta[0]*&quot;+&quot;*beta[2]*&quot;, etc. (group 2, 3, ... means)&quot;)
     )
   )
   
@@ -1101,22 +1101,22 @@ D = data.frame(
    
    # Explicitly add indicator/dummy variables
    # Could also be done using model.matrix(~D$group)
-   group_a = rep(c(1, 0, 0), each=N),
+   #group_a = rep(c(1, 0, 0), each=N),  # This is the intercept. No need to code
    group_b = rep(c(0, 1, 0), each=N),
    group_c = rep(c(0, 0, 1), each=N))  # N of each level</code></pre>
 <div id="htmlwidget-70a39cca644e058980b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-70a39cca644e058980b8">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_a<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<p>See? Exactly one parameter predicts a <code>value</code> in a given row while the others are not included in the modeling of that <code>value</code>.</p>
+<script type="application/json" data-for="htmlwidget-70a39cca644e058980b8">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>With group a’s intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row. Thus data points in group b never affect the estimates in group c.</p>
 </div>
 <div id="r-code-one-way-anova" class="section level3">
 <h3><span class="header-section-number">6.1.3</span> R code: one-way ANOVA</h3>
-<p>OK, let’s see the identity between the built-in <strong>ANOVA</strong> (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>. Actually, <code>car::Anova</code> and <code>aov</code> are just wrappers around <code>lm</code> so the identity comes as no surprise. The latter returns parameter estimates as well (bonus!), but we’ll just look at the overall model statistics for now. Note that I do not use the <code>aov</code> function because it computes type-I sum of squares. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares, but let’s skip that for now.</p>
+<p>OK, let’s see the identity between a dedicated <strong>ANOVA</strong> function (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>.</p>
 <pre class="r"><code># Compare built-in and linear model
 a = car::Anova(aov(value ~ group, D))  # Built-in ANOVA
-b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linear model</code></pre>
+b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model</code></pre>
 <p>Results:</p>
 <div id="htmlwidget-1ab0d000b26193e8df53" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ab0d000b26193e8df53">{"x":{"filter":"none","data":[["Anova","lm"],[5,5],[0.01,0.01],[2,3],[57,57]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1ab0d000b26193e8df53">{"x":{"filter":"none","data":[["Anova","lm"],[2,3],[57,57],[5,5],[0.00998,0.00998]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
@@ -1128,18 +1128,17 @@ b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linea
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Call:
-## lm(formula = value ~ 1 + group_a + group_b + group_c, data = D)
+## lm(formula = value ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
 ## -2.4402 -0.6427 -0.1393  0.8060  1.8574 
 ## 
-## Coefficients: (1 not defined because of singularities)
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)   0.5000     0.2236   2.236   0.0293 *
-## group_a      -0.5000     0.3162  -1.581   0.1194  
-## group_b       0.5000     0.3162   1.581   0.1194  
-## group_c           NA         NA      NA       NA  
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1.147e-16  2.236e-01   0.000  1.00000   
+## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
+## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1147,15 +1146,18 @@ b = lm(value ~ 1 + group_a + group_b + group_c, data=D)  # As in-your-face linea
 ## Multiple R-squared:  0.1493, Adjusted R-squared:  0.1194 
 ## F-statistic:     5 on 2 and 57 DF,  p-value: 0.009984</code></pre>
 </div>
+<p>Only degrees of freedom (df) differ. Actually, <code>car::Anova</code> and <code>aov</code> are just wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
+<p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because they ARE the ANOVA model, you can also get them out into the open by calling <code>coefficients(aov(...))</code></p>
+<p>Note that I do not use the <code>aov</code> function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares (set <code>car::Anova(..., type=3)</code>), but let’s skip that for now.</p>
 </div>
 <div id="r-code-kruskal-wallis" class="section level3">
 <h3><span class="header-section-number">6.1.4</span> R code: Kruskal-Wallis</h3>
 <pre class="r"><code>a = kruskal.test(value ~ group, D)  # Built-in
-b = lm(rank(value) ~ 1 + group_a + group_b + group_c, D)  # As linear model
-c = car::Anova(aov(rank(value) ~ group, D))  # Of course the same using the built-in ANOVA, which is just a wrapper around lm</code></pre>
+b = lm(rank(value) ~ 1 + group_b + group_c, D)  # As linear model
+c = car::Anova(aov(rank(value) ~ group, D))  # The same, using a dedicated ANOVA function. It just wraps lm.</code></pre>
 <p>Results:</p>
 <div id="htmlwidget-17f92ca3804c39b73546" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-17f92ca3804c39b73546">{"x":{"filter":"none","data":[["kruskal.test","lm"],[0.0355,0.0326]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-17f92ca3804c39b73546">{"x":{"filter":"none","data":[["kruskal.test","lm"],[2,3],[0.0355,0.0326]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
@@ -1165,18 +1167,17 @@ c = car::Anova(aov(rank(value) ~ group, D))  # Of course the same using the buil
 ## 
 ## 
 ## Call:
-## lm(formula = rank(value) ~ 1 + group_a + group_b + group_c, data = D)
+## lm(formula = rank(value) ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
 ## -28.950 -12.213  -0.675  15.912  26.850 
 ## 
-## Coefficients: (1 not defined because of singularities)
+## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   30.950      3.741   8.272 2.43e-11 ***
-## group_a       -7.800      5.291  -1.474    0.146    
-## group_b        6.450      5.291   1.219    0.228    
-## group_c           NA         NA      NA       NA    
+## (Intercept)   23.150      3.741   6.187 7.08e-08 ***
+## group_b       14.250      5.291   2.693  0.00928 ** 
+## group_c        7.800      5.291   1.474  0.14595    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1211,7 +1212,7 @@ D$mood = c(&#39;happy&#39;, &#39;sad&#39;)
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)  # 1 if mood==happy. 0 otherwise.
 D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)  # Same, but we won&#39;t be needing this</code></pre>
 <div id="htmlwidget-f1358fffeb3bd1d82ace" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f1358fffeb3bd1d82ace">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_a<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,4,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-f1358fffeb3bd1d82ace">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p><span class="math inline">\(\beta_0\)</span> is now the happy guys from group a!</p>
 <div class="fold s">
 <pre class="r"><code># Add intercept line
@@ -1229,14 +1230,14 @@ theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())</c
 </div>
 <div id="r-code-two-way-anova" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> R code: Two-way ANOVA</h3>
-<p>Now let’s turn to the actual modeling in R. We compare the built-in ANOVA function to the linear model using <code>lm</code>. Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can’t look at the overall model fit nor any particular parameter for the result. Therefore, I use a likelihood-ratio test to compare a full two-way ANOVA model (“saturated”) to one without the interaction effect(s). We do so using the <code>anova</code> function. Even though that looks like cheating, it’s just computing likelihoods, p-values, etc. on the models that were already fitted, so it’s legit!</p>
+<p>Now let’s turn to the actual modeling in R. We compare a dedicated ANOVA function (<code>car::Anova</code>; see <a href="#anova1">One-Way ANOVA</a> why) to the linear model (<code>lm</code>). Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can’t look at the overall model fit nor any particular parameter for the result. Therefore, I use a <a href="https://en.wikipedia.org/wiki/Likelihood-ratio_test">likelihood-ratio test</a> to compare a full two-way ANOVA model (“saturated”) to one without the interaction effect(s). The <code>anova</code> function does this test. Even though that looks like cheating, it’s just computing likelihoods, p-values, etc. on the models that were already fitted, so it’s legit!</p>
 <pre class="r"><code># Built-in two-way ANOVA.
 a = car::Anova(aov(value ~ mood * group, D), type=&#39;II&#39;)  # Normal notation. &quot;*&quot; both multiplies and adds main effects
 b = car::Anova(aov(value ~ mood + group + mood:group, D))  # Identical but more verbose about main effects and interaction
 
 # Testing the interaction terms as linear model.
-full = lm(value ~ 1 + group_a + group_b + mood_happy + group_a:mood_happy + group_b:mood_happy, D)  # Full model
-null = lm(value ~ 1 + group_a + group_b + mood_happy, D)  # Without interaction
+full = lm(value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + group_c:mood_happy, D)  # Full model
+null = lm(value ~ 1 + group_b + group_c + mood_happy, D)  # Without interaction
 c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 <p>Results:</p>
 <div id="htmlwidget-87bf6d89bc45e0caea1f" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -1254,9 +1255,9 @@ c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
-## Model 1: value ~ 1 + group_a + group_b + mood_happy
-## Model 2: value ~ 1 + group_a + group_b + mood_happy + group_a:mood_happy + 
-##     group_b:mood_happy
+## Model 1: value ~ 1 + group_b + group_c + mood_happy
+## Model 2: value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + 
+##     group_c:mood_happy
 ##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
 ## 1     56 56.342                           
 ## 2     54 56.247  2  0.095565 0.0459 0.9552</code></pre>
@@ -1264,26 +1265,26 @@ c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 <p>Below, I present approximate main effect models, though exact calculation of ANOVA main effects <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/">is more involved</a> if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.</p>
 <p>Look at the model summary statistics to find values comparable to the <code>Anova</code>-estimated main effects above.</p>
 <pre class="r"><code># Main effect of group.
-e = lm(value ~ 1 + group_a + group_b, D)
+e = lm(value ~ 1 + group_b + group_c, D)
 
 # Main effect of mood.
 f = lm(value ~ 1 + mood_happy, D)</code></pre>
 <div id="htmlwidget-ec5b7c1d5b020167d8ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec5b7c1d5b020167d8ef">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[4.8003,5,0.6314,0.575],[0.0121,0.01,0.4303,0.4514]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ec5b7c1d5b020167d8ef">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[2,3,1,2],[4.80028,5,0.63141,0.57498],[0.01206,0.00998,0.43032,0.45136]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ## Call:
-## lm(formula = value ~ 1 + group_a + group_b, data = D)
+## lm(formula = value ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
 ## -2.4402 -0.6427 -0.1393  0.8060  1.8574 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)   0.5000     0.2236   2.236   0.0293 *
-## group_a      -0.5000     0.3162  -1.581   0.1194  
-## group_b       0.5000     0.3162   1.581   0.1194  
+##              Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1.147e-16  2.236e-01   0.000  1.00000   
+## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
+## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1339,10 +1340,10 @@ a = car::Anova(aov(value ~ group + age, D))
 #a = aov(value ~ group + age, D)  # Predictor order matters. Not nice!
 
 # As dummy-coded linear model. 
-full = lm(value ~ 1 + group_a + group_b + age, D)
+full = lm(value ~ 1 + group_b + group_c + age, D)
 
 # Testing main effect of age using Likelihood-ratio test
-null_age = lm(value ~ 1 + group_a + group_b, D)  # Full without age. One-way ANOVA!
+null_age = lm(value ~ 1 + group_b + group_c, D)  # Full without age. One-way ANOVA!
 result_age = anova(null_age, full)
 
 # Testing main effect of groupusing Likelihood-ratio test
@@ -1363,8 +1364,8 @@ result_group = anova(null_group, full)</code></pre>
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
-## Model 1: value ~ 1 + group_a + group_b
-## Model 2: value ~ 1 + group_a + group_b + age
+## Model 1: value ~ 1 + group_b + group_c
+## Model 2: value ~ 1 + group_b + group_c + age
 ##   Res.Df   RSS Df Sum of Sq      F    Pr(&gt;F)    
 ## 1     57 57.00                                  
 ## 2     56 44.09  1     12.91 16.397 0.0001595 ***
@@ -1373,7 +1374,7 @@ result_group = anova(null_group, full)</code></pre>
 ## Analysis of Variance Table
 ## 
 ## Model 1: value ~ 1 + age
-## Model 2: value ~ 1 + group_a + group_b + age
+## Model 2: value ~ 1 + group_b + group_c + age
 ##   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
 ## 1     58 54.209                                
 ## 2     56 44.090  2    10.118 6.4258 0.003074 **
