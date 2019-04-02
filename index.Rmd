@@ -864,9 +864,9 @@ summary(b)
 ```
 </div>
 
-Only degrees of freedom (df) differ. Actually, `car::Anova` and `aov` are just wrappers around `lm` so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax `y ~ factor`. Indeed, the only real reason to use aov and `car::Anova` rather than `lm` is to get a nicely formatted ANOVA table.
+Only degrees of freedom (df) differ. Actually, `car::Anova` and `aov` are wrappers around `lm` so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax `y ~ factor`. Indeed, the only real reason to use aov and `car::Anova` rather than `lm` is to get a nicely formatted ANOVA table.
 
-The default output of `lm` returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because they ARE the ANOVA model, you can also get them out into the open by calling `coefficients(aov(...))` 
+The default output of `lm` returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling `coefficients(aov(...))`.
 
 Note that I do not use the `aov` function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as `car::Anova` does by default) or type-III sum of squares (set `car::Anova(..., type=3)`), but let's skip that for now.
 
