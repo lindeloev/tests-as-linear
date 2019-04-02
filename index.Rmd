@@ -1,6 +1,5 @@
 ---
 title: "Common statistical tests are linear models (or: how to teach stats)"
-author: "Jonas Kristoffer Lindeløv"
 
 output: 
   html_document:
@@ -16,55 +15,33 @@ output:
         - include/twitter_card.html
         - include/google_analytics_header.html
 ---
+<link rel="stylesheet" type="text/css" href="include/style.css">
 
-<style type="text/css">
-
-  body {
-    font-size: 17px;
-  }
-  
-  /* HEADING 1 */
-  h1 {
-    font-size: 28px;
-    font-weight: bold;
-    padding-top: 20px;
-  }
-  
-  /* HEADING 2 */
-  h2 {
-    font-size: 24px;
-    padding: 0px;
-    padding-top: 20px;d
-  }
-  
-  /* First h2 in section */
-  .level1 > .level2:nth-child(3) > h2 {
-    padding-top: 0px;
-  }
-  
-  /* HEADING 3 */
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-    padding-top: 20px;
-  }
-  
-  /* First h3 in section */
-  .level2 > .level3:nth-child(3) > h3 {
-    padding-top: 0px;
-  }
-
-</style>
-
-
-<!-- from https://stackoverflow.com/a/37839683/1297830 -->
+<!-- From https://stackoverflow.com/a/37839683/1297830 -->
 <link rel="stylesheet" type="text/css" href="include/hideOutput.css">
 <script src="include/hideOutput.js"></script>
 
-<!-- Twitter share button -->
-<a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+By Jonas Kristoffer Lindeløv ([blog](https://lindeloev.net), [profile](http://personprofil.aau.dk/117060)). Last updated: `r format(Sys.time(), '%d %B, %Y')` (See [changelog](https://github.com/lindeloev/tests-as-linear/commits/master)).
 
-<p></p>
+
+<!-- Social sharing. From simplesharebuttons.com -->
+<style type="text/css">
+  #share-buttons img {
+    width: 40px;
+    padding-right: 15px;
+    border: 0;
+    box-shadow: 0;
+    display: inline;
+    vertical-align: top;
+  }
+</style>
+
+<div id="share-buttons">
+<!-- Twitter --><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a> &nbsp;<!-- Facebook --><a href="http://www.facebook.com/sharer.php?u=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a><!-- LinkedIn --><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a><!-- Digg --><a href="http://www.digg.com/submit?url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a><!-- Reddit --><a href="http://reddit.com/submit?url=https://lindeloev.github.io/tests-as-linear/&amp;title=Common statistical tests are linear models (or: how to teach stats)" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a><!-- Email --><a href="mailto:?Subject=Common statistical tests are linear models (or: how to teach stats)&amp;https://lindeloev.github.io/tests-as-linear/"><img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" /></a>
+</div>
+
+
+<br />
 
 ```{r echo=FALSE}
 # Options for building this document
@@ -82,7 +59,7 @@ headR::add_twitter_card(
   title = "Common statistical tests are linear models (or: how to teach stats)",
   user = "@jonaslindeloev",
   image = "https://lindeloev.github.io/tests-as-linear/linear_tests_cheat_sheet.png",
-  file = "twitter_card.html"
+  file = "include/twitter_card.html"
 )
 
 
