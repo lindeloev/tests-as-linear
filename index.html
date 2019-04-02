@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Jonas Kristoffer Lindeløv" />
 
 
 <title>Common statistical tests are linear models (or: how to teach stats)</title>
@@ -316,57 +315,32 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Common statistical tests are linear models (or: how to teach stats)</h1>
-<h4 class="author">Jonas Kristoffer Lindeløv</h4>
 
 </div>
 
 
-<style type="text/css">
-
-  body {
-    font-size: 17px;
-  }
-  
-  /* HEADING 1 */
-  h1 {
-    font-size: 28px;
-    font-weight: bold;
-    padding-top: 20px;
-  }
-  
-  /* HEADING 2 */
-  h2 {
-    font-size: 24px;
-    padding: 0px;
-    padding-top: 20px;d
-  }
-  
-  /* First h2 in section */
-  .level1 > .level2:nth-child(3) > h2 {
-    padding-top: 0px;
-  }
-  
-  /* HEADING 3 */
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-    padding-top: 20px;
-  }
-  
-  /* First h3 in section */
-  .level2 > .level3:nth-child(3) > h3 {
-    padding-top: 0px;
-  }
-
-</style>
-<!-- from https://stackoverflow.com/a/37839683/1297830 -->
+<p><link rel="stylesheet" type="text/css" href="include/style.css"></p>
+<!-- From https://stackoverflow.com/a/37839683/1297830 -->
 <link rel="stylesheet" type="text/css" href="include/hideOutput.css">
 <script src="include/hideOutput.js"></script>
-<!-- Twitter share button -->
-<a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a>
+<p>By Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>). Last updated: 02 April, 2019 (See <a href="https://github.com/lindeloev/tests-as-linear/commits/master">changelog</a>).</p>
+<!-- Social sharing. From simplesharebuttons.com -->
+<style type="text/css">
+  #share-buttons img {
+    width: 40px;
+    padding-right: 15px;
+    border: 0;
+    box-shadow: 0;
+    display: inline;
+    vertical-align: top;
+  }
+</style>
+<div id="share-buttons">
+<!-- Twitter -->
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>
-</p>
+<p><a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a>  <!-- Facebook --><a href="http://www.facebook.com/sharer.php?u=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a><!-- LinkedIn --><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a><!-- Digg --><a href="http://www.digg.com/submit?url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a><!-- Reddit --><a href="http://reddit.com/submit?url=https://lindeloev.github.io/tests-as-linear/&amp;title=Common statistical tests are linear models (or: how to teach stats)" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a><!-- Email --><a href="mailto:?Subject=Common statistical tests are linear models (or: how to teach stats)&amp;https://lindeloev.github.io/tests-as-linear/"><img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" /></a></p>
+</div>
+<p><br /></p>
 <p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric”&quot; tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
 <hr />
 <p><a href="linear_tests_cheat_sheet.pdf"><img src="linear_tests_cheat_sheet.png" /></a></p>
@@ -1150,8 +1124,8 @@ b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model</c
 ## Multiple R-squared:  0.1493, Adjusted R-squared:  0.1194 
 ## F-statistic:     5 on 2 and 57 DF,  p-value: 0.009984</code></pre>
 </div>
-<p>Only degrees of freedom (df) differ. Actually, <code>car::Anova</code> and <code>aov</code> are just wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
-<p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because they ARE the ANOVA model, you can also get them out into the open by calling <code>coefficients(aov(...))</code></p>
+<p>Only degrees of freedom (df) differ. Actually, <code>car::Anova</code> and <code>aov</code> are wrappers around <code>lm</code> so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax <code>y ~ factor</code>. Indeed, the only real reason to use aov and <code>car::Anova</code> rather than <code>lm</code> is to get a nicely formatted ANOVA table.</p>
+<p>The default output of <code>lm</code> returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling <code>coefficients(aov(...))</code>.</p>
 <p>Note that I do not use the <code>aov</code> function because it computes type-I sum of squares, which is widely discouraged. There is a BIG polarized debate about whether to use type-II (as <code>car::Anova</code> does by default) or type-III sum of squares (set <code>car::Anova(..., type=3)</code>), but let’s skip that for now.</p>
 </div>
 <div id="r-code-kruskal-wallis" class="section level3">
@@ -1673,8 +1647,10 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <li><p><em>Proportions of two variables:</em> <a href="#contingency">Contingency tables</a>.</p></li>
 </ol></li>
 <li><p><strong>Hypothesis testing:</strong></p>
-<p>5.1 <em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#t2">t-test</a>, we study how well a single mean (a <a href="#t1">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p>
-<p>5.2 <em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you’ve got Bayes Factors. One tool, and you’re done. I’ve used LRTs in the ANOVAs above.</p></li>
+<ol style="list-style-type: decimal">
+<li><p><em>Hypothesis testing as model comparisons:</em> Hypothesis testing is the act of choosing between a full model and one where a parameter is fixed to a particular value (often zero, i.e., effectively excluded from the model) instead of being estimated. For example, when fixing one of the two means to zero in the <a href="#t2">t-test</a>, we study how well a single mean (a <a href="#t1">one-sample t-test</a>) explains all the data from both groups. If it does a good job, we prefer this model over the two-mean model because it is simpler. So hypothesis testing is just comparing linear models to make more qualitative statements than the truly quantitative statements which were covered in bullets 1-4 above. As tests of single parameters, hypothesis testing is therefore less informative However, when testing multiple parameters at the same time (e.g., a factor in ANOVA), model comparison becomes invaluable.</p></li>
+<li><p><em>Likelihood ratios:</em> Likelihood ratios are the swizz army knife which will do model comparison all the way from the one-sample t-test to GLMMs. BIC penalizes model complexity. Moreover, add priors and you’ve got Bayes Factors. One tool, and you’re done. I’ve used LRTs in the ANOVAs above.</p></li>
+</ol></li>
 </ol>
 </div>
 <div id="limitations" class="section level1">
@@ -1683,7 +1659,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <ol style="list-style-type: decimal">
 <li><p>I have not covered assumptions in the examples. This will be another post! But all assumptions of all tests come down to the usual three: a) independence of data points, b) normally distributed residuals, and c) homoscedasticity.</p></li>
 <li><p>I assume that all null hypotheses are the absence of an effect, but everything works the same for non-zero null hypotheses.</p></li>
-<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I’m a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalence.</p></li>
+<li><p>I have not discussed inference. I am only including p-values in the comparisons as a crude way to show the equivalences between the underlying models since people care about p-values. Parameter estimates will show the same equivalence. How to do <em>inference</em> is another matter. Personally, I’m a Bayesian, but going Bayesian here would render it less accessible to the wider audience. Also, doing <a href="https://en.wikipedia.org/wiki/Robust_statistics">robust models</a> would be preferable, but fail to show the equivalences.</p></li>
 <li><p>Several named tests are still missing from the list and may be added at a later time. This includes the Sign test (require large N to be reasonably approximated by a linear model), Friedman as RM-ANOVA on <code>rank(y)</code>, McNemar, and Binomial/Multinomial. See stuff on these in <a href="#links">the section on links to further equivalences</a>. If you think that they should be included here, feel free to submit “solutions” to <a href="https://github.com/lindeloev/tests-as-linear/">the github repo</a> of this doc!</p></li>
 </ol>
 <!--
