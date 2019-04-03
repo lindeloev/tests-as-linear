@@ -1290,17 +1290,17 @@ Here are links to other sources who have exposed bits and pieces of this puzzle,
 
 
 # Teaching materials and a course outline {#course}
-Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stay at the conceptual level. I wanted to make linear models the *tool* in a really concise way. Luckily, more beginner-friendly materials have emerged lately:
+Most advanced stats books (and some intro-books) take the "everything is GLMM" approach as well. However, the "linear model" part often stays at the conceptual level, rather than being made explicit. I wanted to make linear models the *tool* in a concise way. Luckily, more beginner-friendly materials have emerged lately:
 
- * Russ Poldracks open-source book "Statistical Thinking for the 21st century" (start at [chapter 5 on modeling](http://statsthinking21.org/fitting-models-to-data.html))
+ * Russ Poldrack's open-source book "Statistical Thinking for the 21st century" (start at [chapter 5 on modeling](http://statsthinking21.org/fitting-models-to-data.html))
  * [Jeff Rouder's course notes](https://jeffrouder.blogspot.com/2019/03/teaching-undergrad-stats-without-p-f-or.html), introducing model comparison using just $R^2$ and BIC. It avoids all the jargon on p-values, F-values, etc. The full materials and slides [are available here](https://drive.google.com/drive/folders/1CiJK--bAuO0F-ug3B5I3FvmsCdpPGZ03).
 
 
-Here are my own thoughts on what I'd do. I've done parts of this with great success already, but not the whole lot since I'm not assigned to do a full course yet.
+Here are my own thoughts on what I'd do. I've taught parts of this with great success already, but not the whole program since I'm not assigned to teach a full course yet.
 
-I would spend 50% of the time on linear modeling of data (bullet 1 below) since this contains 70% of what students need to know. The rest of the course is just fleshing out what happens if you have one group, two groups, etc.
+I would spend 50% of the time on linear modeling of data since this contains 70% of what students need to know (bullet 1 below). The rest of the course is fleshing out what happens when you have one group, two groups, etc.
 
-Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to make build on what students already know rather than throwing a lot of conceptually novel stuff at them.
+Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to build upon what students prior knowledge, rather than throwing a lot of conceptually novel material at them.
 
 1. **Fundamentals of regression:**
 
