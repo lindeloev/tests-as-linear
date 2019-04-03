@@ -21,7 +21,8 @@ output:
 <link rel="stylesheet" type="text/css" href="include/hideOutput.css">
 <script src="include/hideOutput.js"></script>
 
-By Jonas Kristoffer Lindeløv ([blog](https://lindeloev.net), [profile](http://personprofil.aau.dk/117060)).<br />Last updated: `r format(Sys.time(), '%d %B, %Y')` (See [changelog](https://github.com/lindeloev/tests-as-linear/commits/master)).
+By Jonas Kristoffer Lindeløv ([blog](https://lindeloev.net), [profile](http://personprofil.aau.dk/117060)).<br />
+Last updated: `r format(Sys.time(), '%d %B, %Y')` (See [changelog](https://github.com/lindeloev/tests-as-linear/commits/master)).
 
 
 <!-- Social sharing. From simplesharebuttons.com -->
@@ -279,11 +280,11 @@ ct$conf.low = confint(c)[2,1]
 ct$conf.high = confint(c)[2,2]
 
 # Merge and print nicely
-df = bind_rows(at, bt, ct) %>%
-  mutate(model = c('cor.test', 'lm', 'lm scaled')) %>%
+df = bind_rows(at, ct, bt) %>%
+  mutate(model = c('cor.test', 'lm scaled', 'lm')) %>%
   rename(t = statistic, 
          r = estimate) %>%
-  select(model, r, p.value, t, conf.low, conf.high)
+  select(model, p.value, t, r, conf.low, conf.high)
 
 print_df(df)
 ```
