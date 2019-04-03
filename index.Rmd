@@ -562,7 +562,7 @@ $y_i = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
 
 where $x_i$ is an indicator (0 or 1) saying whether data point $i$ was sampled from one or the other group. [Indicator variables (also called "dummy coding")](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)) underly a lot of linear models and we'll take an aside to see how it works in a minute.
 
-**Mann-Whitney U** (also known as **Wilcoxon signed-rank test** for two independent groups) is the same model to a very close approximation, just on the ranks of $x$ and $y$ instead of the actual values:
+**Mann-Whitney U** (also known as **Wilcoxon rank-sum test** for two independent groups; no *signed* rank this time) is the same model to a very close approximation, just on the ranks of $x$ and $y$ instead of the actual values:
 
 $rank(y_i) = \beta_0 + \beta_1 x_i \qquad \mathcal{H}_0: \beta_1 = 0$
 
