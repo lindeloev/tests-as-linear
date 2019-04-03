@@ -123,22 +123,6 @@ library(broom)
 # Reproducible "random" results
 set.seed(40)
 
-# To show tables. Rounds
-print_df = function(D, decimals=4, navigate=FALSE) {
-  DT::datatable(mutate_if(D, is.numeric, round, decimals), 
-    rownames = FALSE,
-    options = list(
-      searching=FALSE, 
-      lengthChange=FALSE, 
-      ordering=FALSE, 
-      autoWidth=TRUE, 
-      bPaginate=navigate, 
-      bInfo=navigate, 
-      paging=navigate
-    )
-  )
-}
-
 # Generate normal data with known parameters
 rnorm_fixed = function(N, mu=0, sd=1) scale(rnorm(N))*sd + mu
 
@@ -165,6 +149,25 @@ theme_axis = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2), legend.
 }
 ```
 </div>
+
+```{r echo=FALSE}
+# To show tables.
+print_df = function(D, decimals=4, navigate=FALSE) {
+  DT::datatable(mutate_if(D, is.numeric, round, decimals), 
+    rownames = FALSE,
+    options = list(
+      searching=FALSE, 
+      lengthChange=FALSE, 
+      ordering=FALSE, 
+      autoWidth=TRUE, 
+      bPaginate=navigate, 
+      bInfo=navigate, 
+      paging=navigate
+    )
+  )
+}
+```
+
 
 For a start, we'll keep it simple and play with three standard normals in wide (`a`, `b`, `c`) and long format (`value`, `group`):
 ```{r}
