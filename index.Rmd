@@ -1307,7 +1307,7 @@ Here are my own thoughts on what I'd do. I've taught parts of this with great su
 
 I would spend 50% of the time on linear modeling of data since this contains 70% of what students need to know (bullet 1 below). The rest of the course is fleshing out what happens when you have one group, two groups, etc.
 
-Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to build upon what students prior knowledge, rather than throwing a lot of conceptually novel material at them.
+Note that whereas the understanding of sampling and hypothesis testing is usually the first focus of mainstream stats courses, it is saved for later here to build upon students' prior knowledge, rather than throwing a lot of conceptually novel material at them.
 
 1. **Fundamentals of regression:**
 
