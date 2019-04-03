@@ -820,7 +820,7 @@ OK, let's see the identity between a dedicated **ANOVA** function (`car::Anova`)
 
 ```{r, results='hold'}
 # Compare built-in and linear model
-a = car::Anova(aov(value ~ group, D))  # Built-in ANOVA
+a = car::Anova(aov(value ~ group, D))  # Dedicated ANOVA function
 b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model
 ```
 
@@ -830,6 +830,7 @@ Results:
 at = tidy(a)[1,]
 at$df.residual = a$Df[2]
 bt = glance(b)
+bt$df = bt$df - 1 # https://github.com/tidymodels/broom/issues/273
 
 df = bind_rows(at, bt) %>%
   mutate(model = c('Anova', 'lm')) %>%
@@ -927,7 +928,7 @@ theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())
 Now let's turn to the actual modeling in R. We compare a dedicated ANOVA function (`car::Anova`; see [One-Way ANOVA](#anova1) why) to the linear model (`lm`). Notice that in ANOVA, we are testing a full factor interaction all at once which involves many parameters (two in this case), so we can't look at the overall model fit nor any particular parameter for the result. Therefore, I use a [likelihood-ratio test](https://en.wikipedia.org/wiki/Likelihood-ratio_test) to compare a full two-way ANOVA model ("saturated") to one without the interaction effect(s). The `anova` function does this test. Even though that looks like cheating, it's just computing likelihoods, p-values, etc. on the models that were already fitted, so it's legit!
 
 ```{r, results='hold'}
-# Built-in two-way ANOVA.
+# Dedicated two-way ANOVA functions
 a = car::Anova(aov(value ~ mood * group, D), type='II')  # Normal notation. "*" both multiplies and adds main effects
 b = car::Anova(aov(value ~ mood + group + mood:group, D))  # Identical but more verbose about main effects and interaction
 
@@ -1031,8 +1032,8 @@ theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(
 And now some R code to run the one-way ANCOVA as a linear model:
 
 ```{r, results='hold'}
-# Built-in ANCOVA. The order of factors matter in pure-aov (type-I variance).
-# Use type-II or type-III instead; implemented in car::Anova
+# Dedicated ANCOVA functions. The order of factors matter in pure-aov (type-I variance).
+# Use type-II (default for car::Anova) or type-III (set type=3),
 a = car::Anova(aov(value ~ group + age, D))
 #a = aov(value ~ group + age, D)  # Predictor order matters. Not nice!
 
