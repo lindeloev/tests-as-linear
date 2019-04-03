@@ -846,7 +846,7 @@ summary(b)
 ```
 </div>
 
-Only degrees of freedom (df) differ. Actually, `car::Anova` and `aov` are wrappers around `lm` so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax `y ~ factor`. Indeed, the only real reason to use aov and `car::Anova` rather than `lm` is to get a nicely formatted ANOVA table.
+Actually, `car::Anova` and `aov` are wrappers around `lm` so the identity comes as no surprise. It only shows that the dummy-coded formula, which had a direct interpretation as a linear model, is the one that underlies the shorthand notation syntax `y ~ factor`. Indeed, the only real reason to use aov and `car::Anova` rather than `lm` is to get a nicely formatted ANOVA table.
 
 The default output of `lm` returns parameter estimates as well (bonus!), which you can see if you unfold the R output above. However, because this IS the ANOVA model, you can also get parameter estimates out into the open by calling `coefficients(aov(...))`.
 
@@ -865,7 +865,7 @@ Results:
 ```{r, echo=FALSE}
 df = data.frame(
   model = c('kruskal.test', 'lm'),
-  df = c(a$parameter, b$rank),
+  df = c(a$parameter, glance(b)$df - 1), # -1? https://github.com/tidymodels/broom/issues/273
   p.value = c(a$p.value, glance(b)$p.value)
 )
 print_df(df)
@@ -940,7 +940,7 @@ c = anova(null, full)  # whoop whoop, same F, p, and Dfs
 
 Results:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 at = tidy(a)[3,]
 at$res.df = tidy(a)[4, ]$df
 at$rss = tidy(a)[4, ]$sumsq
@@ -979,7 +979,9 @@ f = lm(value ~ 1 + mood_happy, D)
 
 ```{r, echo=FALSE}
 et = glance(e)
+et$df = et$df - 1 # see https://github.com/tidymodels/broom/issues/273
 ft = glance(f)
+ft$df = ft$df - 1 # see https://github.com/tidymodels/broom/issues/273
 at = tidy(a)[1:2,]
 
 df = bind_rows(et, ft, at) %>%
