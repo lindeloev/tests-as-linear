@@ -90,7 +90,7 @@ theme_icon = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2)) {
 ```
 
 
-This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric"" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
+This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
 
 ***
 
