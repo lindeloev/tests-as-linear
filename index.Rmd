@@ -254,7 +254,7 @@ I hope I don't offend anyone when I say that ranks are easy; yet it's all you ne
 
 
 ### R code: Pearson correlation
-It couldn't be much simpler to run these models in R. They yield identical `p` and `t`, but there's a catch: `lm` gives you the *slope* and even though that is usually much more interpretable and informative than the *correlation coefficient* *r*, you may still want *r*. Luckily, the slope becomes `r` if `x` and `y` have a standard deviation of exactly 1. You can do this using `scale(x)` or `I(x/sd(x))`:
+It couldn't be much simpler to run these models in R. They yield identical `p` and `t`, but there's a catch: `lm` gives you the *slope* and even though that is usually much more interpretable and informative than the *correlation coefficient* *r*, you may still want *r*. Luckily, the slope becomes `r` if `x` and `y` have identical standard deviations. For now, we will use `scale(x)` to make $SD(x) = 1.0$ and $SD(y) = 1.0$:
 
 
 ```{r}
@@ -676,7 +676,7 @@ summary(b)
 
 
 ## Welch's t-test {#welch}
-This is identical to the (Student's) [independent t-test](#t2) above except that Student's assumes identical variances and **Welch's t-test** does not. So the linear model is the same and the trick is in the variances, which I won't go further into here.
+This is identical to the (Student's) [independent t-test](#t2) above except that Student's assumes identical variances and **Welch's t-test** does not. So the linear model is the same but we model one variance per group. We can do this using the `nlme` package ([see more details here](https://stats.stackexchange.com/questions/142685/equivalent-to-welchs-t-test-in-gls-framework)):
 
 ```{r, results='hold'}
 # Built-in
