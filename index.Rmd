@@ -22,7 +22,8 @@ output:
 <script src="include/hideOutput.js"></script>
 
 By Jonas Kristoffer Lindeløv ([blog](https://lindeloev.net), [profile](http://personprofil.aau.dk/117060)).<br />
-Last updated: `r format(Sys.time(), '%d %B, %Y')` (See [changelog](https://github.com/lindeloev/tests-as-linear/commits/master)).
+Last updated: `r format(Sys.time(), '%d %B, %Y')` (See [changelog](https://github.com/lindeloev/tests-as-linear/commits/master)).<br />
+Check out the [Python version](https://eigenfoo.xyz/tests-as-linear/) and the [Twitter summary](https://twitter.com/jonaslindeloev/status/1110907133833502721).
 
 
 <!-- Social sharing. From simplesharebuttons.com -->
