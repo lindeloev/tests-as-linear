@@ -27,7 +27,7 @@
 <script src="index_files/highlightjs-9.12.0/highlight.js"></script>
 <script src="index_files/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="index_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="index_files/datatables-binding-0.5/datatables.js"></script>
+<script src="index_files/datatables-binding-0.6/datatables.js"></script>
 <link href="index_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="index_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="index_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
@@ -323,7 +323,7 @@ div.tocify {
 <!-- From https://stackoverflow.com/a/37839683/1297830 -->
 <link rel="stylesheet" type="text/css" href="include/hideOutput.css">
 <script src="include/hideOutput.js"></script>
-<p>By Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>).<br /> Last updated: 03 April, 2019 (See <a href="https://github.com/lindeloev/tests-as-linear/commits/master">changelog</a>).</p>
+<p>By Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>).<br /> Last updated: 28 June, 2019 (See <a href="https://github.com/lindeloev/tests-as-linear/commits/master">changelog</a>).<br /> Check out the <a href="https://eigenfoo.xyz/tests-as-linear/">Python version</a> and the <a href="https://twitter.com/jonaslindeloev/status/1110907133833502721">Twitter summary</a>.</p>
 <!-- Social sharing. From simplesharebuttons.com -->
 <style type="text/css">
   #share-buttons img {
@@ -341,7 +341,7 @@ div.tocify {
 <p><a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a>    <!-- Facebook --><a href="http://www.facebook.com/sharer.php?u=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a><!-- LinkedIn --><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a><!-- Digg --><a href="http://www.digg.com/submit?url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a><!-- Reddit --><a href="http://reddit.com/submit?url=https://lindeloev.github.io/tests-as-linear/&amp;title=Common statistical tests are linear models (or: how to teach stats)" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a><!-- Email --><a href="mailto:?Subject=Common statistical tests are linear models (or: how to teach stats)&amp;Body=https://lindeloev.github.io/tests-as-linear/"><img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" /></a></p>
 </div>
 <p><br /></p>
-<p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric”&quot; tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
+<p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric” tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
 <hr />
 <p><a href="linear_tests_cheat_sheet.pdf"><img src="linear_tests_cheat_sheet.png" /></a></p>
 <hr />
@@ -350,7 +350,11 @@ div.tocify {
 <p>Most of the common statistical models (t-test, correlation, ANOVA; chi-square, etc.) are special cases of linear models or a very close approximation. This beautiful simplicity means that there is less to learn. In particular, it all comes down to <span class="math inline">\(y = a \cdot x + b\)</span> which most students know from highschool. Unfortunately, stats intro courses are usually taught as if each test is an independent tool, needlessly making life more complicated for students and teachers alike.</p>
 <p>This needless complexity multiplies when students try to rote learn the parametric assumptions underlying each test separately rather than deducing them from the linear model.</p>
 <p>For this reason, I think that teaching linear models first and foremost and <em>then</em> name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing <em>understanding</em> over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I’d argue that it’s better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.</p>
-<p>Concerning the teaching of <em>“non-parametric”</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach “non-parametric”&quot; tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think “ranks!” than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of “non-parametric”&quot; tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that’s it. For the frequentist “non-parametric”&quot; tests considered here, this approach is highly accurate for N &gt; 15.</p>
+<p>Concerning the teaching of <em>“non-parametric”</em> tests in intro-courses, I think that we can justify <a href="https://en.wikipedia.org/wiki/Lie-to-children">lying-to-children</a> and teach “non-parametric”" tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think “ranks!” than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of “non-parametric”" tests implemented in <a href="https://jasp-stats.org">JASP</a> <a href="https://arxiv.org/abs/1712.06941">literally just do (latent) ranking</a> and that’s it. For the frequentist “non-parametric”" tests considered here, this approach is highly accurate for N &gt; 15.</p>
+<center>
+<img src="https://www.picsellmedia.com/wp-content/uploads/2017/01/shutterstock_336913772.jpg" />
+</center>
+<p><br /></p>
 <p>Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under <a href="#links">sources</a> and <a href="#course">teaching materials</a>. I hope that you will join in suggesting improvements or submitting improvements yourself in <a href="https://github.com/lindeloev/tests-as-linear">the Github repo to this page</a>. Let’s make it awesome!</p>
 </div>
 <div id="settings-and-toy-data" class="section level1">
@@ -366,35 +370,51 @@ library(broom)
 set.seed(40)
 
 # Generate normal data with known parameters
-rnorm_fixed = function(N, mu=0, sd=1) scale(rnorm(N))*sd + mu
+rnorm_fixed = function(N, mu = 0, sd = 1)
+  scale(rnorm(N)) * sd + mu
 
 # Plot style.
-theme_axis = function(P, jitter=FALSE, xlim=c(-0.5, 2), ylim=c(-0.5, 2), legend.position=NULL) {
-  P = P + theme_bw(15) + 
-  geom_segment(x=-1000, xend=1000, y=0, yend=0, lty=2, color=&#39;dark gray&#39;, lwd=0.5) +
-  geom_segment(x=0, xend=0, y=-1000, yend=1000, lty=2, color=&#39;dark gray&#39;, lwd=0.5) +
-  coord_cartesian(xlim=xlim, ylim=ylim) +
-  theme(axis.title = element_blank(), 
-        axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        panel.border = element_blank(),
-        panel.grid = element_blank(),
-        legend.position = legend.position)
+theme_axis = function(P,
+                      jitter = FALSE,
+                      xlim = c(-0.5, 2),
+                      ylim = c(-0.5, 2),
+                      legend.position = NULL) {
+  P = P + theme_bw(15) +
+    geom_segment(
+      x = -1000, xend = 1000,
+      y = 0, yend = 0,
+      lty = 2, color = &#39;dark gray&#39;, lwd = 0.5
+    ) +
+    geom_segment(
+      x = 0, xend = 0,
+      y = -1000, yend = 1000,
+      lty = 2, color = &#39;dark gray&#39;, lwd = 0.5
+    ) +
+    coord_cartesian(xlim = xlim, ylim = ylim) +
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.border = element_blank(),
+      panel.grid = element_blank(),
+      legend.position = legend.position
+    )
   
   # Return jittered or non-jittered plot?
-  if(jitter) {
-    P + geom_jitter(width=0.1, size=2)
+  if (jitter) {
+    P + geom_jitter(width = 0.1, size = 2)
   }
   else {
-    P + geom_point(size=2)
+    P + geom_point(size = 2)
   }
 }</code></pre>
 </div>
 <p>For a start, we’ll keep it simple and play with three standard normals in wide (<code>a</code>, <code>b</code>, <code>c</code>) and long format (<code>value</code>, <code>group</code>):</p>
 <pre class="r"><code># Wide format (sort of)
-y = rnorm_fixed(50, mu=0.3, sd=2)  # Almost zero mean
-x = rnorm_fixed(50, mu=0, sd=1)  # Used in correlation where this is on x-axis
-y2 = rnorm_fixed(50, mu=0.5, sd=1.5)  # Used in two means
+#y = rnorm_fixed(50, mu=0.3, sd=2)  # Almost zero mean.
+y = c(rnorm(15), exp(rnorm(15)), runif(20, min = -3, max = 0))  # Almost zero mean, not normal
+x = rnorm_fixed(50, mu = 0, sd = 1)  # Used in correlation where this is on x-axis
+y2 = rnorm_fixed(50, mu = 0.5, sd = 1.5)  # Used in two means
 
 # Long format data with indicator
 value = c(y, y2)
@@ -410,14 +430,14 @@ group = rep(c(&#39;y1&#39;, &#39;y2&#39;), each = 50)</code></pre>
 <p>Either way you write it, it’s an intercept (<span class="math inline">\(\beta_0\)</span>) and a slope (<span class="math inline">\(\beta_1\)</span>) yielding a straight line:</p>
 <div class="fold s">
 <pre class="r"><code># Fixed correlation
-D_correlation = data.frame(MASS::mvrnorm(30, mu=c(0.9, 0.9), Sigma=matrix(c(1, 0.8, 1, 0.8), ncol=2), empirical=TRUE))  # Correlated data
+D_correlation = data.frame(MASS::mvrnorm(30, mu = c(0.9, 0.9), Sigma = matrix(c(1, 0.8, 1, 0.8), ncol = 2), empirical = TRUE))  # Correlated data
 
 # Add labels (for next plot)
 D_correlation$label_num = sprintf(&#39;(%.1f,%.1f)&#39;, D_correlation$X1, D_correlation$X2)
 D_correlation$label_rank = sprintf(&#39;(%i,%i)&#39;, rank(D_correlation$X1), rank(D_correlation$X2))
 
 # Plot it
-fit = lm(I(X2*0.5+0.4) ~ I(X1*0.5+0.2), D_correlation)
+fit = lm(I(X2 * 0.5 + 0.4) ~ I(X1 * 0.5 + 0.2), D_correlation)
 intercept_pearson = coefficients(fit)[1]
 
 P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
@@ -427,8 +447,8 @@ P_pearson = ggplot(D_correlation, aes(x=X1*0.5+0.2, y=X2*0.5+0.4)) +
                lwd=2, aes(color=&quot;beta_0&quot;)) + 
   scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;), labels=c(bquote(beta[0]*&quot; (intercept)&quot;), bquote(beta[1]*&quot; (slope)&quot;)))
   
-theme_axis(P_pearson, legend.position=c(0.4, 0.9))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+theme_axis(P_pearson, legend.position = c(0.4, 0.9))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>This is often simply called a <strong>regression</strong> model which can be extended to <strong>multiple regression</strong> where there are several <span class="math inline">\(\beta\)</span>s and on the right-hand side multiplied with the predictors. Everything below, from <a href="#t1">one-sample t-test</a> to <a href="#anova2">two-way ANOVA</a> are just special cases of this system. Nothing more, nothing less.</p>
 <p>As the name implies, the <strong>Spearman rank correlation</strong> is a <strong>Pearson correlation</strong> on rank-transformed <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>:</p>
@@ -450,7 +470,7 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
 
 # Stich together using patchwork
 (theme_axis(P_pearson, legend.position=c(0.5, 0.1)) + geom_text(aes(label=label_num), nudge_y=0.1, size=3, color=&#39;dark gray&#39;) + labs(title=&#39;         Pearson&#39;)) + (theme_axis(P_spearman, xlim=c(-7.5, 30), ylim=c(-7.5, 30), legend.position=c(0.5, 0.1)) + labs(title=&#39;         Spearman&#39;))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="rank" class="section level3">
@@ -462,24 +482,24 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
 </div>
 <div id="r-code-pearson-correlation" class="section level3">
 <h3><span class="header-section-number">3.0.3</span> R code: Pearson correlation</h3>
-<p>It couldn’t be much simpler to run these models in R. They yield identical <code>p</code> and <code>t</code>, but there’s a catch: <code>lm</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> <em>r</em>, you may still want <em>r</em>. Luckily, the slope becomes <code>r</code> if <code>x</code> and <code>y</code> have a standard deviation of exactly 1. You can do this using <code>scale(x)</code> or <code>I(x/sd(x))</code>:</p>
+<p>It couldn’t be much simpler to run these models in R. They yield identical <code>p</code> and <code>t</code>, but there’s a catch: <code>lm</code> gives you the <em>slope</em> and even though that is usually much more interpretable and informative than the <em>correlation coefficient</em> <em>r</em>, you may still want <em>r</em>. Luckily, the slope becomes <code>r</code> if <code>x</code> and <code>y</code> have identical standard deviations. For now, we will use <code>scale(x)</code> to make <span class="math inline">\(SD(x) = 1.0\)</span> and <span class="math inline">\(SD(y) = 1.0\)</span>:</p>
 <pre class="r"><code>a = cor.test(y, x, method = &quot;pearson&quot;) # Built-in
 b = lm(y ~ 1 + x) # Equivalent linear model: y = Beta0*1 + Beta1*x
 c = lm(scale(y) ~ 1 + scale(x))  # On scaled vars to recover r</code></pre>
-Results: <div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-58f61054e232de0dbaf9">{"x":{"filter":"none","data":[["cor.test","lm scaled","lm"],[0.1053,0.1053,0.1053],[-1.6507,-1.6507,-1.6507],[-0.2318,-0.2318,-0.4636],[-0.4792,-0.5141,-1.0282],[0.0498,0.0505,0.1011]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>r<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+Results: <div id="htmlwidget-526ecd6fc2f0b7381ee6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-526ecd6fc2f0b7381ee6">{"x":{"filter":"none","data":[["cor.test","lm scaled","lm"],[0.738,0.738,0.738],[-0.3365,-0.3365,-0.3365],[-0.0485,-0.0485,-0.0872],[-0.3225,-0.3384,-0.6081],[0.233,0.2414,0.4337]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>r<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  y and x
-## t = -1.6507, df = 48, p-value = 0.1053
+## t = -0.33651, df = 48, p-value = 0.738
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  -0.47920849  0.04978276
+##  -0.3225066  0.2329799
 ## sample estimates:
-##        cor 
-## -0.2317767 
+##         cor 
+## -0.04851394 
 ## 
 ## 
 ## Call:
@@ -487,16 +507,16 @@ Results: <div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.3393 -1.6593  0.3349  1.3629  3.5214 
+## -2.6265 -1.1753 -0.3718  0.6607  5.7109 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.3000     0.2780   1.079    0.286
-## x            -0.4636     0.2808  -1.651    0.105
+## (Intercept) -0.09522    0.25647  -0.371    0.712
+## x           -0.08718    0.25907  -0.337    0.738
 ## 
-## Residual standard error: 1.966 on 48 degrees of freedom
-## Multiple R-squared:  0.05372,    Adjusted R-squared:  0.03401 
-## F-statistic: 2.725 on 1 and 48 DF,  p-value: 0.1053
+## Residual standard error: 1.814 on 48 degrees of freedom
+## Multiple R-squared:  0.002354,   Adjusted R-squared:  -0.01843 
+## F-statistic: 0.1132 on 1 and 48 DF,  p-value: 0.738
 ## 
 ## 
 ## Call:
@@ -504,16 +524,16 @@ Results: <div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.6697 -0.8297  0.1675  0.6815  1.7607 
+## -1.4616 -0.6541 -0.2069  0.3677  3.1780 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -1.341e-17  1.390e-01   0.000    1.000
-## scale(x)    -2.318e-01  1.404e-01  -1.651    0.105
+## (Intercept)  1.722e-17  1.427e-01   0.000    1.000
+## scale(x)    -4.851e-02  1.442e-01  -0.337    0.738
 ## 
-## Residual standard error: 0.9828 on 48 degrees of freedom
-## Multiple R-squared:  0.05372,    Adjusted R-squared:  0.03401 
-## F-statistic: 2.725 on 1 and 48 DF,  p-value: 0.1053</code></pre>
+## Residual standard error: 1.009 on 48 degrees of freedom
+## Multiple R-squared:  0.002354,   Adjusted R-squared:  -0.01843 
+## F-statistic: 0.1132 on 1 and 48 DF,  p-value: 0.738</code></pre>
 </div>
 <p>The CIs are not exactly identical, but very close.</p>
 </div>
@@ -524,18 +544,18 @@ Results: <div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto
 <pre class="r"><code># Spearman correlation
 a = cor.test(y, x, method = &quot;spearman&quot;) # Built-in
 b = lm(rank(y) ~ 1 + rank(x)) # Equivalent linear model</code></pre>
-Let’s look at the results: <div id="htmlwidget-18ac5bd784205e06f9a7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-18ac5bd784205e06f9a7">{"x":{"filter":"none","data":[["cor.test","lm"],[0.1135,0.1135],[-0.2266,-0.2266]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rho<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+Let’s look at the results: <div id="htmlwidget-0ed9471d24578b65b4fa" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0ed9471d24578b65b4fa">{"x":{"filter":"none","data":[["cor.test","lm"],[0.7072,0.708],[-0.0543,-0.0543]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rho<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  y and x
-## S = 25544, p-value = 0.1135
+## S = 21956, p-value = 0.7072
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##        rho 
-## -0.2266026 
+##         rho 
+## -0.05430972 
 ## 
 ## 
 ## Call:
@@ -543,18 +563,18 @@ Let’s look at the results: <div id="htmlwidget-18ac5bd784205e06f9a7" style="wi
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -26.4655 -11.5603   0.4458  11.5628  25.6921 
+## -23.8211 -12.0056  -0.0272  12.5215  25.6677 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  31.2784     4.1191   7.593 9.11e-10 ***
-## rank(x)      -0.2266     0.1406  -1.612    0.114    
+## (Intercept) 26.88490    4.22287   6.366 6.89e-08 ***
+## rank(x)     -0.05431    0.14412  -0.377    0.708    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 14.35 on 48 degrees of freedom
-## Multiple R-squared:  0.05135,    Adjusted R-squared:  0.03159 
-## F-statistic: 2.598 on 1 and 48 DF,  p-value: 0.1135</code></pre>
+## Residual standard error: 14.71 on 48 degrees of freedom
+## Multiple R-squared:  0.00295,    Adjusted R-squared:  -0.01782 
+## F-statistic: 0.142 on 1 and 48 DF,  p-value: 0.708</code></pre>
 </div>
 </div>
 </div>
@@ -572,31 +592,31 @@ Let’s look at the results: <div id="htmlwidget-18ac5bd784205e06f9a7" style="wi
 <p><a href="simulations/simulate_wilcoxon.html">This approximation is good enough when the sample size is larger than 14 and almost perfect if the sample size is larger than 50</a>.</p>
 <div class="fold s">
 <pre class="r"><code># T-test
-D_t1 = data.frame(y=rnorm_fixed(20, 0.5, 0.6),
-                  x=runif(20, 0.93, 1.07))  # Fix mean and SD
+D_t1 = data.frame(y = rnorm_fixed(20, 0.5, 0.6),
+                  x = runif(20, 0.93, 1.07))  # Fix mean and SD
 
-P_t1 = ggplot(D_t1, aes(y=y, x=0)) + 
+P_t1 = ggplot(D_t1, aes(y = y, x = 0)) + 
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;beta_0&#39;), lwd=2) +
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(beta[0]*&quot; (intercept)&quot;))) +
+  scale_color_manual(name = NULL, values = c(&quot;blue&quot;), labels = c(bquote(beta[0] * &quot; (intercept)&quot;))) +
   
-  geom_text(aes(label=round(y, 1)), nudge_x = 0.2, size=3, color=&#39;dark gray&#39;) + 
+  geom_text(aes(label = round(y, 1)), nudge_x = 0.2, size = 3, color = &#39;dark gray&#39;) + 
   labs(title=&#39;         T-test&#39;)
 
 # Wilcoxon
 D_t1_rank = data.frame(y = signed_rank(D_t1$y))
 
-P_t1_rank = ggplot(D_t1_rank, aes(y=y, x=0)) + 
-  stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;beta_0&#39;), lwd=2) +
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;), labels=c(bquote(beta[0]*&quot; (intercept)&quot;))) +
+P_t1_rank = ggplot(D_t1_rank, aes(y = y, x = 0)) + 
+  stat_summary(fun.y = mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..,  color = &#39;beta_0&#39;), lwd = 2) +
+  scale_color_manual(name = NULL, values = c(&quot;blue&quot;), labels = c(bquote(beta[0] * &quot; (intercept)&quot;))) +
 
-  geom_text(aes(label=y), nudge_x=0.2, size=3, color=&#39;dark gray&#39;) + 
+  geom_text(aes(label = y), nudge_x = 0.2, size = 3, color = &#39;dark gray&#39;) + 
   labs(title=&#39;         Wilcoxon&#39;)
 
 
 # Stich together using patchwork
-theme_axis(P_t1, ylim=c(-1, 2), legend.position=c(0.6, 0.1)) + 
-  theme_axis(P_t1_rank, ylim=NULL,  legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+theme_axis(P_t1, ylim = c(-1, 2), legend.position = c(0.6, 0.1)) + 
+  theme_axis(P_t1_rank, ylim = NULL,  legend.position = c(0.6, 0.1))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="r-code-one-sample-t-test" class="section level3">
@@ -608,34 +628,34 @@ a = t.test(y)
 # Equivalent linear model: intercept-only
 b = lm(y ~ 1)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-635d1460ab26b7a06864" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-635d1460ab26b7a06864">{"x":{"filter":"none","data":[["t.test","lm"],[0.3,0.3],[0.294,0.294],[1.0607,1.0607],[49,49],[-0.2684,-0.2684],[0.8684,0.8684]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-58f61054e232de0dbaf9">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0952,-0.0952],[0.7095,0.7095],[-0.3747,-0.3747],[49,49],[-0.6059,-0.6059],[0.4155,0.4155]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  One Sample t-test
 ## 
 ## data:  y
-## t = 1.0607, df = 49, p-value = 0.294
+## t = -0.37466, df = 49, p-value = 0.7095
 ## alternative hypothesis: true mean is not equal to 0
 ## 95 percent confidence interval:
-##  -0.2683937  0.8683937
+##  -0.6059252  0.4154934
 ## sample estimates:
-## mean of x 
-##       0.3 
+##   mean of x 
+## -0.09521589 
 ## 
 ## 
 ## Call:
 ## lm(formula = y ~ 1)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -3.521 -1.673  0.481  1.427  3.795 
+##     Min      1Q  Median      3Q     Max 
+## -2.6877 -1.1888 -0.3123  0.5868  5.5883 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.3000     0.2828   1.061    0.294
+## (Intercept) -0.09522    0.25414  -0.375     0.71
 ## 
-## Residual standard error: 2 on 49 degrees of freedom</code></pre>
+## Residual standard error: 1.797 on 49 degrees of freedom</code></pre>
 </div>
 </div>
 <div id="r-code-wilcoxon-signed-rank-test" class="section level3">
@@ -645,19 +665,19 @@ b = lm(y ~ 1)</code></pre>
 a = wilcox.test(y)
 
 # Equivalent linear model
-b = lm(signed_rank(y) ~ 1)  # See? Same as above, just on signed ranks
+b = lm(signed_rank(y) ~ 1)  # See? Same model as above, just on signed ranks
 
 # Bonus: of course also works for one-sample t-test
 c = t.test(signed_rank(y))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-c43cb8fa604a5da8e2b7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c43cb8fa604a5da8e2b7">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.3693,0.3721,0.3721],[null,3.74,3.74]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-18ac5bd784205e06f9a7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-18ac5bd784205e06f9a7">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.213,0.2146,0.2146],[null,-5.18,-5.18]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon signed rank test with continuity correction
 ## 
 ## data:  y
-## V = 731, p-value = 0.3693
+## V = 508, p-value = 0.213
 ## alternative hypothesis: true location is not equal to 0
 ## 
 ## 
@@ -666,25 +686,25 @@ c = t.test(signed_rank(y))</code></pre>
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -49.74 -25.49   4.76  22.76  46.26 
+## -41.82 -22.57  -5.32  18.68  55.18 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)    3.740      4.151   0.901    0.372
+## (Intercept)    -5.18       4.12  -1.257    0.215
 ## 
-## Residual standard error: 29.36 on 49 degrees of freedom
+## Residual standard error: 29.13 on 49 degrees of freedom
 ## 
 ## 
 ##  One Sample t-test
 ## 
 ## data:  signed_rank(y)
-## t = 0.90088, df = 49, p-value = 0.3721
+## t = -1.2573, df = 49, p-value = 0.2146
 ## alternative hypothesis: true mean is not equal to 0
 ## 95 percent confidence interval:
-##  -4.60275 12.08275
+##  -13.459062   3.099062
 ## sample estimates:
 ## mean of x 
-##      3.74</code></pre>
+##     -5.18</code></pre>
 </div>
 </div>
 </div>
@@ -699,16 +719,20 @@ c = t.test(signed_rank(y))</code></pre>
 <pre class="r"><code># Data for plot
 N = nrow(D_t1)
 start = rnorm_fixed(N, 0.2, 0.3)
-D_tpaired = data.frame(x = rep(c(0, 1), each=N), y = c(start, start + D_t1$y), id=1:N)
+D_tpaired = data.frame(
+  x = rep(c(0, 1), each = N),
+  y = c(start, start + D_t1$y),
+  id = 1:N
+)
 
 # Plot
-P_tpaired = ggplot(D_tpaired, aes(x=x, y=y)) + 
-  geom_line(aes(group=id)) + 
-  labs(title=&#39;          Pairs&#39;)
+P_tpaired = ggplot(D_tpaired, aes(x = x, y = y)) +
+  geom_line(aes(group = id)) +
+  labs(title = &#39;          Pairs&#39;)
 
 # Use patchwork to put them side-by-side
-theme_axis(P_tpaired) + theme_axis(P_t1, legend.position=c(0.6, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+theme_axis(P_tpaired) + theme_axis(P_t1, legend.position = c(0.6, 0.1))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <p>Similarly, the <strong>Wilcoxon matched pairs</strong> only differ from <strong>Wilcoxon signed-rank</strong> in that it’s testing the signed ranks of the pairwise <span class="math inline">\(y-x\)</span> differences.</p>
 <p><span class="math inline">\(signed\_rank(y_2-y_1) = \beta_0 \qquad \mathcal{H}_0: \beta_0 = 0\)</span></p>
@@ -718,20 +742,20 @@ theme_axis(P_tpaired) + theme_axis(P_t1, legend.position=c(0.6, 0.1))</code></pr
 <pre class="r"><code>a = t.test(y, y2, paired = TRUE) # Built-in paired t-test
 b = lm(y - y2 ~ 1) # Equivalent linear model</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-77cd519bd4f19792ec4e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-77cd519bd4f19792ec4e">{"x":{"filter":"none","data":[["t.test","lm"],[-0.2,-0.2],[0.601,0.601],[49,49],[-0.5264,-0.5264],[-0.9635,-0.9635],[0.5635,0.5635]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-635d1460ab26b7a06864" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-635d1460ab26b7a06864">{"x":{"filter":"none","data":[["t.test","lm"],[-0.5952,-0.5952],[0.0934,0.0934],[49,49],[-1.7108,-1.7108],[-1.2944,-1.2944],[0.104,0.104]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  y and y2
-## t = -0.52642, df = 49, p-value = 0.601
+## t = -1.7108, df = 49, p-value = 0.09345
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.9634894  0.5634894
+##  -1.2943926  0.1039608
 ## sample estimates:
 ## mean of the differences 
-##                    -0.2 
+##              -0.5952159 
 ## 
 ## 
 ## Call:
@@ -739,13 +763,15 @@ b = lm(y - y2 ~ 1) # Equivalent linear model</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.5253 -1.5642 -0.0844  1.9715  5.0361 
+## -5.9699 -1.4071 -0.0062  1.0771  7.2116 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  -0.2000     0.3799  -0.526    0.601
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  -0.5952     0.3479  -1.711   0.0934 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.686 on 49 degrees of freedom</code></pre>
+## Residual standard error: 2.46 on 49 degrees of freedom</code></pre>
 </div>
 </div>
 <div id="r-code-wilcoxon-matched-pairs" class="section level3">
@@ -760,14 +786,14 @@ b = lm(signed_rank(y - y2) ~ 1)
 # Bonus: identical to one-sample t-test ong signed ranks
 c = t.test(signed_rank(y - y2))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-73383d6f3c53896f5ef8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-73383d6f3c53896f5ef8">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.8243,0.8232,0.8232],[null,-0.94,-0.94]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c43cb8fa604a5da8e2b7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c43cb8fa604a5da8e2b7">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.0447,0.0429,0.0429],[null,-8.34,-8.34]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon signed rank test with continuity correction
 ## 
 ## data:  y and y2
-## V = 614, p-value = 0.8243
+## V = 429, p-value = 0.04466
 ## alternative hypothesis: true location shift is not equal to 0
 ## 
 ## 
@@ -776,25 +802,27 @@ c = t.test(signed_rank(y - y2))</code></pre>
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -49.06 -23.81  -2.56  26.19  46.94 
+## -40.66 -23.16  -4.66  20.84  58.34 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   -0.940      4.184  -0.225    0.823
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)   -8.340      4.013  -2.078   0.0429 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.58 on 49 degrees of freedom
+## Residual standard error: 28.37 on 49 degrees of freedom
 ## 
 ## 
 ##  One Sample t-test
 ## 
 ## data:  signed_rank(y - y2)
-## t = -0.22469, df = 49, p-value = 0.8232
+## t = -2.0785, df = 49, p-value = 0.04293
 ## alternative hypothesis: true mean is not equal to 0
 ## 95 percent confidence interval:
-##  -9.347227  7.467227
+##  -16.4036084  -0.2763916
 ## sample estimates:
 ## mean of x 
-##     -0.94</code></pre>
+##     -8.34</code></pre>
 </div>
 <p>For large sample sizes (N &gt;&gt; 100), this approaches the <strong>sign test</strong> to a reasonable degree, but this approximation is too inaccurate to flesh out here.</p>
 </div>
@@ -828,15 +856,15 @@ D_t2 = data.frame(
 
 # Plot
 P_t2 = ggplot(D_t2, aes(x=x, y=y)) + 
-  stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;something&#39;), lwd=2) +
-  geom_segment(x=-10, xend=10, y=0.3, yend=0.3, lwd=2, aes(color=&#39;beta_0&#39;)) + 
-  geom_segment(x=0, xend=1, y=0.3, yend=1.3, lwd=2, aes(color=&#39;beta_1&#39;)) + 
+  stat_summary(fun.y = mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..,  color = &#39;something&#39;), lwd = 2) +
+  geom_segment(x = -10, xend = 10, y = 0.3, yend = 0.3, lwd = 2, aes(color = &#39;beta_0&#39;)) + 
+  geom_segment(x = 0, xend = 1, y = 0.3, yend = 1.3, lwd = 2, aes(color = &#39;beta_1&#39;)) + 
   
-  scale_color_manual(name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), labels=c(bquote(beta[0]*&quot; (group 1 mean)&quot;), bquote(beta[1]*&quot; (slope = difference)&quot;), bquote(beta[0]+beta[1]%.%1*&quot; (group 2 mean)&quot;)))
+  scale_color_manual(name = NULL, values = c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), labels=c(bquote(beta[0]*&quot; (group 1 mean)&quot;), bquote(beta[1]*&quot; (slope = difference)&quot;), bquote(beta[0]+beta[1]%.%1*&quot; (group 2 mean)&quot;)))
   #scale_x_discrete(breaks=c(0.5, 1.5), labels=c(&#39;1&#39;, &#39;2&#39;))
 
-theme_axis(P_t2, jitter=TRUE, xlim=c(-0.3, 2), legend.position=c(0.53, 0.08))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
+theme_axis(P_t2, jitter = TRUE, xlim = c(-0.3, 2), legend.position = c(0.53, 0.08))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="dummy2" class="section level3">
@@ -858,24 +886,24 @@ a = t.test(y, y2, var.equal = TRUE)
 group_y2 = ifelse(group == &#39;y2&#39;, 1, 0)  # 1 if group == y2, 0 otherwise
 b = lm(value ~ 1 + group_y2)  # Using our hand-made dummy regressor
 
-# Note: We could also do the dummy-coding in the model 
+# Note: We could also do the dummy-coding in the model
 # specification itself. Same result.
-c = lm(value ~ 1 + I(group==&#39;y2&#39;))</code></pre>
+c = lm(value ~ 1 + I(group == &#39;y2&#39;))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-53b434c497272bb7da0e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-53b434c497272bb7da0e">{"x":{"filter":"none","data":[["t.test","lm"],[0.3,0.3],[0.2,0.2],[0.5729,0.5729],[98,98],[-0.5016,-0.5016],[0.9016,0.9016]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>difference<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-77cd519bd4f19792ec4e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-77cd519bd4f19792ec4e">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0872,-0.0872],[null,null],[0.738,null],[48,98],[-0.233,-0.0617],[0.3225,1.2521]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>difference<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  y and y2
-## t = -0.56569, df = 98, p-value = 0.5729
+## t = -1.798, df = 98, p-value = 0.07525
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.9016152  0.5016152
+##  -1.25214980  0.06171803
 ## sample estimates:
-## mean of x mean of y 
-##       0.3       0.5 
+##   mean of x   mean of y 
+## -0.09521589  0.50000000 
 ## 
 ## 
 ## Call:
@@ -883,16 +911,18 @@ c = lm(value ~ 1 + I(group==&#39;y2&#39;))</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.5211 -1.1259 -0.2124  0.9151  4.9268 
+## -2.6877 -1.0311 -0.2435  0.6106  5.5883 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.3000     0.2500   1.200    0.233
-## group_y2      0.2000     0.3536   0.566    0.573
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) -0.09522    0.23408  -0.407   0.6851  
+## group_y2     0.59522    0.33104   1.798   0.0753 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.768 on 98 degrees of freedom
-## Multiple R-squared:  0.003255,   Adjusted R-squared:  -0.006916 
-## F-statistic:  0.32 on 1 and 98 DF,  p-value: 0.5729
+## Residual standard error: 1.655 on 98 degrees of freedom
+## Multiple R-squared:  0.03194,    Adjusted R-squared:  0.02206 
+## F-statistic: 3.233 on 1 and 98 DF,  p-value: 0.07525
 ## 
 ## 
 ## Call:
@@ -900,16 +930,18 @@ c = lm(value ~ 1 + I(group==&#39;y2&#39;))</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.5211 -1.1259 -0.2124  0.9151  4.9268 
+## -2.6877 -1.0311 -0.2435  0.6106  5.5883 
 ## 
 ## Coefficients:
-##                      Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)            0.3000     0.2500   1.200    0.233
-## I(group == &quot;y2&quot;)TRUE   0.2000     0.3536   0.566    0.573
+##                      Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)          -0.09522    0.23408  -0.407   0.6851  
+## I(group == &quot;y2&quot;)TRUE  0.59522    0.33104   1.798   0.0753 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.768 on 98 degrees of freedom
-## Multiple R-squared:  0.003255,   Adjusted R-squared:  -0.006916 
-## F-statistic:  0.32 on 1 and 98 DF,  p-value: 0.5729</code></pre>
+## Residual standard error: 1.655 on 98 degrees of freedom
+## Multiple R-squared:  0.03194,    Adjusted R-squared:  0.02206 
+## F-statistic: 3.233 on 1 and 98 DF,  p-value: 0.07525</code></pre>
 </div>
 </div>
 <div id="r-code-mann-whitney-u" class="section level3">
@@ -919,14 +951,14 @@ a = wilcox.test(y, y2)
 
 # As linear model with our dummy-coded group_y2:
 b = lm(rank(value) ~ 1 + group_y2)  # compare to linear model above</code></pre>
-<div id="htmlwidget-0b05f5a4b604340b9f1a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0b05f5a4b604340b9f1a">{"x":{"filter":"none","data":[["wilcox.test","lm"],[0.7907,0.7896],[null,1.56]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-73383d6f3c53896f5ef8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-73383d6f3c53896f5ef8">{"x":{"filter":"none","data":[["wilcox.test","lm"],[0.0248,0.0238],[null,13.04]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
 ## 
 ## data:  y and y2
-## W = 1211, p-value = 0.7907
+## W = 924, p-value = 0.02484
 ## alternative hypothesis: true location shift is not equal to 0
 ## 
 ## 
@@ -935,72 +967,72 @@ b = lm(rank(value) ~ 1 + group_y2)  # compare to linear model above</code></pre>
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -48.72 -24.64  -0.78  24.22  48.72 
+## -49.02 -22.26  -1.50  23.27  56.02 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   49.720      4.122  12.061   &lt;2e-16 ***
-## group_y2       1.560      5.830   0.268     0.79    
+## (Intercept)   43.980      4.017  10.948   &lt;2e-16 ***
+## group_y2      13.040      5.681   2.295   0.0238 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.15 on 98 degrees of freedom
-## Multiple R-squared:  0.0007302,  Adjusted R-squared:  -0.009466 
-## F-statistic: 0.07161 on 1 and 98 DF,  p-value: 0.7896</code></pre>
+## Residual standard error: 28.41 on 98 degrees of freedom
+## Multiple R-squared:  0.05102,    Adjusted R-squared:  0.04133 
+## F-statistic: 5.269 on 1 and 98 DF,  p-value: 0.02385</code></pre>
 </div>
 </div>
 </div>
 <div id="welch" class="section level2">
 <h2><span class="header-section-number">5.2</span> Welch’s t-test</h2>
-<p>This is identical to the (Student’s) <a href="#t2">independent t-test</a> above except that Student’s assumes identical variances and <strong>Welch’s t-test</strong> does not. So the linear model is the same and the trick is in the variances, which I won’t go further into here.</p>
+<p>This is identical to the (Student’s) <a href="#t2">independent t-test</a> above except that Student’s assumes identical variances and <strong>Welch’s t-test</strong> does not. So the linear model is the same but we model one variance per group. We can do this using the <code>nlme</code> package (<a href="https://stats.stackexchange.com/questions/142685/equivalent-to-welchs-t-test-in-gls-framework">see more details here</a>):</p>
 <pre class="r"><code># Built-in
 a = t.test(y, y2, var.equal=FALSE)
 
 # As linear model with per-group variances
 b = nlme::gls(value ~ 1 + group_y2, weights = nlme::varIdent(form=~1|group), method=&quot;ML&quot;)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-accd39a4468ae76de8c1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-accd39a4468ae76de8c1">{"x":{"filter":"none","data":[["t.test","gls"],[0.3,0.3],[0.2,0.2],[0.573,0.5729],[-0.5657,-0.5657],[-0.9023,-0.893],[0.5023,0.493]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>mean_diff<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-53b434c497272bb7da0e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-53b434c497272bb7da0e">{"x":{"filter":"none","data":[["t.test","gls"],[-0.0952,-0.0952],[0.5952,0.5952],[0.0753,0.0753],[-1.798,-1.798],[-0.062,-0.0536],[1.2524,1.244]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>mean_diff<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  y and y2
-## t = -0.56569, df = 90.875, p-value = 0.573
+## t = -1.798, df = 94.966, p-value = 0.07535
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -0.9023034  0.5023034
+##  -1.25241218  0.06198041
 ## sample estimates:
-## mean of x mean of y 
-##       0.3       0.5 
+##   mean of x   mean of y 
+## -0.09521589  0.50000000 
 ## 
 ## Generalized least squares fit by maximum likelihood
 ##   Model: value ~ 1 + group_y2 
 ##   Data: NULL 
-##        AIC      BIC    logLik
-##   399.6287 410.0493 -195.8143
+##        AIC     BIC    logLik
+##   388.9273 399.348 -190.4636
 ## 
 ## Variance function:
 ##  Structure: Different standard deviations per stratum
 ##  Formula: ~1 | group 
 ##  Parameter estimates:
-##   y1   y2 
-## 1.00 0.75 
+##        y1        y2 
+## 1.0000000 0.8347122 
 ## 
 ## Coefficients:
-##             Value Std.Error   t-value p-value
-## (Intercept)   0.3 0.2828427 1.0606602  0.2915
-## group_y2      0.2 0.3535534 0.5656854  0.5729
+##                  Value Std.Error    t-value p-value
+## (Intercept) -0.0952159 0.2541379 -0.3746623  0.7087
+## group_y2     0.5952159 0.3310379  1.7980295  0.0753
 ## 
 ##  Correlation: 
 ##          (Intr)
-## group_y2 -0.8  
+## group_y2 -0.768
 ## 
 ## Standardized residuals:
 ##        Min         Q1        Med         Q3        Max 
-## -1.7784113 -0.7177541 -0.1430665  0.5635189  3.3178730 
+## -1.5789902 -0.6351823 -0.1639999  0.3735898  3.1413235 
 ## 
-## Residual standard error: 1.979899 
+## Residual standard error: 1.778965 
 ## Degrees of freedom: 100 total; 98 residual</code></pre>
 </div>
 </div>
@@ -1020,22 +1052,24 @@ b = nlme::gls(value ~ 1 + group_y2, weights = nlme::varIdent(form=~1|group), met
 <pre class="r"><code># Figure
 N = 15
 D_anova1 = data.frame(
-  y=c(rnorm_fixed(N, 0.5, 0.3), 
-      rnorm_fixed(N, 0, 0.3), 
-      rnorm_fixed(N, 1, 0.3), 
-      rnorm_fixed(N, 0.8, 0.3)), 
-  x=rep(0:3, each=15)
+  y = c(
+    rnorm_fixed(N, 0.5, 0.3),
+    rnorm_fixed(N, 0, 0.3),
+    rnorm_fixed(N, 1, 0.3),
+    rnorm_fixed(N, 0.8, 0.3)
+  ),
+  x = rep(0:3, each = 15)
 )
 ymeans = aggregate(y~x, D_anova1, mean)$y
 P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) + 
   stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y.., color=&#39;intercepts&#39;), lwd=2) + 
-  geom_segment(x=-10, xend=100, y=0.5, yend=0.5, lwd=2, aes(color=&#39;beta_0&#39;)) +
-  geom_segment(x=0, xend=1, y=ymeans[1], yend=ymeans[2], lwd=2, aes(color=&#39;betas&#39;)) +
-  geom_segment(x=1, xend=2, y=ymeans[1], yend=ymeans[3], lwd=2, aes(color=&#39;betas&#39;)) +
-  geom_segment(x=2, xend=3, y=ymeans[1], yend=ymeans[4], lwd=2, aes(color=&#39;betas&#39;)) +
+  geom_segment(x = -10, xend = 100, y = 0.5, yend = 0.5, lwd = 2, aes(color = &#39;beta_0&#39;)) +
+  geom_segment(x = 0, xend = 1, y = ymeans[1], yend = ymeans[2], lwd = 2, aes(color = &#39;betas&#39;)) +
+  geom_segment(x = 1, xend = 2, y = ymeans[1], yend = ymeans[3], lwd = 2, aes(color = &#39;betas&#39;)) +
+  geom_segment(x = 2, xend = 3, y = ymeans[1], yend = ymeans[4], lwd = 2, aes(color = &#39;betas&#39;)) +
   
   scale_color_manual(
-    name=NULL, values=c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), 
+    name = NULL, values = c(&quot;blue&quot;, &quot;red&quot;, &quot;darkblue&quot;), 
     labels=c(
       bquote(beta[0]*&quot; (group 1 mean)&quot;), 
       bquote(beta[1]*&quot;, &quot;*beta[2]*&quot;,  etc. (slopes/differences to &quot;*beta[0]*&quot;)&quot;),
@@ -1044,8 +1078,8 @@ P_anova1 = ggplot(D_anova1, aes(x=x, y=y)) +
   )
   
 
-theme_axis(P_anova1, xlim=c(-0.5, 4), legend.position=c(0.7, 0.1))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" /></p>
+theme_axis(P_anova1, xlim = c(-0.5, 4), legend.position = c(0.7, 0.1))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>A one-way ANOVA has a log-linear counterpart called <a href="#goodness">goodness-of-fit</a> test which we’ll return to. By the way, since we now regress on more than one <span class="math inline">\(x\)</span>, the one-way ANOVA is a <strong>multiple regression</strong> model.</p>
 <p>The <strong>Kruskal-Wallis</strong> test is simply a <strong>one-way ANOVA</strong> on the rank-transformed <span class="math inline">\(y\)</span> (<code>value</code>):</p>
@@ -1058,16 +1092,17 @@ theme_axis(P_anova1, xlim=c(-0.5, 4), legend.position=c(0.7, 0.1))</code></pre>
 <pre class="r"><code># Three variables in &quot;long&quot; format
 N = 20  # Number of samples per group
 D = data.frame(
-   value = c(rnorm_fixed(N, 0), rnorm_fixed(N, 1), rnorm_fixed(N, 0.5)), 
-   group = rep(c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;), each=N),
-   
-   # Explicitly add indicator/dummy variables
-   # Could also be done using model.matrix(~D$group)
-   #group_a = rep(c(1, 0, 0), each=N),  # This is the intercept. No need to code
-   group_b = rep(c(0, 1, 0), each=N),
-   group_c = rep(c(0, 0, 1), each=N))  # N of each level</code></pre>
-<div id="htmlwidget-70a39cca644e058980b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-70a39cca644e058980b8">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+  value = c(rnorm_fixed(N, 0), rnorm_fixed(N, 1), rnorm_fixed(N, 0.5)),
+  group = rep(c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;), each = N),
+  
+  # Explicitly add indicator/dummy variables
+  # Could also be done using model.matrix(~D$group)
+  #group_a = rep(c(1, 0, 0), each=N),  # This is the intercept. No need to code
+  group_b = rep(c(0, 1, 0), each = N),
+  group_c = rep(c(0, 0, 1), each = N)
+)  # N of each level</code></pre>
+<div id="htmlwidget-0b05f5a4b604340b9f1a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0b05f5a4b604340b9f1a">{"x":{"filter":"none","data":[[-1.2582,0.085,-1.9297,0.697,0.5866,0.3162,0.5462,0.0517,0.687,0.6063,1.2427,-0.3298,-2.3183,-0.3144,0.8915,0.9436,1.2993,-0.4533,-0.6691,-0.6804,1.1708,1.6654,0.57,0.6826,0.8478,1.3855,0.0358,1.9405,1.2034,-0.2256,1.3887,2.8879,0.6304,0.1821,0.8704,2.7433,-0.2989,0.0975,2.6295,-0.407,-0.2545,1.5793,0.3896,1.6978,-1.1314,-0.694,0.1669,2.3797,2.1468,-0.4953,0.6712,0.3739,0.6494,0.2036,0.0703,-0.0476,-0.0025,1.6243,1.3791,-0.7067],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>With group a’s intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row (scroll to he end). Thus data points in group b never affect the estimates in group c.</p>
 </div>
 <div id="r-code-one-way-anova" class="section level3">
@@ -1075,10 +1110,10 @@ D = data.frame(
 <p>OK, let’s see the identity between a dedicated <strong>ANOVA</strong> function (<code>car::Anova</code>) and the dummy-coded in-your-face linear model in <code>lm</code>.</p>
 <pre class="r"><code># Compare built-in and linear model
 a = car::Anova(aov(value ~ group, D))  # Dedicated ANOVA function
-b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model</code></pre>
+b = lm(value ~ 1 + group_b + group_c, data = D)  # As in-your-face linear model</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-1ab0d000b26193e8df53" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ab0d000b26193e8df53">{"x":{"filter":"none","data":[["Anova","lm"],[2,2],[57,57],[5,5],[0.00998,0.00998]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-accd39a4468ae76de8c1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-accd39a4468ae76de8c1">{"x":{"filter":"none","data":[["Anova","lm"],[2,2],[57,57],[5,-0.33651],[0.00998,0.73795]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
@@ -1094,11 +1129,11 @@ b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model</c
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.4402 -0.6427 -0.1393  0.8060  1.8574 
+## -2.3183 -0.6719 -0.1182  0.6895  1.8880 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept) 1.147e-16  2.236e-01   0.000  1.00000   
+## (Intercept) 1.720e-16  2.236e-01   0.000  1.00000   
 ## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
 ## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
@@ -1116,16 +1151,16 @@ b = lm(value ~ 1 + group_b + group_c, data=D)  # As in-your-face linear model</c
 <h3><span class="header-section-number">6.1.4</span> R code: Kruskal-Wallis</h3>
 <pre class="r"><code>a = kruskal.test(value ~ group, D)  # Built-in
 b = lm(rank(value) ~ 1 + group_b + group_c, D)  # As linear model
-c = car::Anova(aov(rank(value) ~ group, D))  # The same, using a dedicated ANOVA function. It just wraps lm.</code></pre>
+c = car::Anova(aov(rank(value) ~ group, D))  # The same model, using a dedicated ANOVA function. It just wraps lm.</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-17f92ca3804c39b73546" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-17f92ca3804c39b73546">{"x":{"filter":"none","data":[["kruskal.test","lm"],[2,2],[0.0355,0.0326]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-70a39cca644e058980b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-70a39cca644e058980b8">{"x":{"filter":"none","data":[["kruskal.test","lm"],[2,2],[0.0312,0.0283]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  value by group
-## Kruskal-Wallis chi-squared = 6.6777, df = 2, p-value = 0.03548
+## Kruskal-Wallis chi-squared = 6.9348, df = 2, p-value = 0.0312
 ## 
 ## 
 ## Call:
@@ -1133,26 +1168,26 @@ c = car::Anova(aov(rank(value) ~ group, D))  # The same, using a dedicated ANOVA
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -28.950 -12.213  -0.675  15.912  26.850 
+## -27.200 -13.950  -0.875  14.912  27.450 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   23.150      3.741   6.187 7.08e-08 ***
-## group_b       14.250      5.291   2.693  0.00928 ** 
-## group_c        7.800      5.291   1.474  0.14595    
+## (Intercept)   23.750      3.732   6.363 3.63e-08 ***
+## group_b       14.450      5.278   2.738  0.00824 ** 
+## group_c        5.800      5.278   1.099  0.27645    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 16.73 on 57 degrees of freedom
-## Multiple R-squared:  0.1132, Adjusted R-squared:  0.08206 
-## F-statistic: 3.637 on 2 and 57 DF,  p-value: 0.03261
+## Residual standard error: 16.69 on 57 degrees of freedom
+## Multiple R-squared:  0.1175, Adjusted R-squared:  0.08657 
+## F-statistic: 3.796 on 2 and 57 DF,  p-value: 0.02834
 ## 
 ## Anova Table (Type II tests)
 ## 
 ## Response: rank(value)
 ##            Sum Sq Df F value  Pr(&gt;F)  
-## group      2036.7  2  3.6374 0.03261 *
-## Residuals 15958.3 57                  
+## group      2115.1  2   3.796 0.02834 *
+## Residuals 15879.9 57                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -1172,9 +1207,9 @@ D$mood = c(&#39;happy&#39;, &#39;sad&#39;)
 
 # Dummy coding
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)  # 1 if mood==happy. 0 otherwise.
-D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)  # Same, but we won&#39;t be needing this</code></pre>
-<div id="htmlwidget-f1358fffeb3bd1d82ace" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f1358fffeb3bd1d82ace">{"x":{"filter":"none","data":[[1.2054,-0.3238,-2.2574,-0.3088,0.8638,0.9145,1.2604,-0.4439,-0.6537,-0.6647,0.3751,1.0547,-0.4506,-0.2959,-0.0689,0.67,-1.1847,1.4327,0.4198,-1.5439,1.3094,2.488,0.7133,0.361,0.902,2.3742,-0.0172,0.2945,2.2848,-0.1022,0.2534,1.7632,0.7837,1.8609,-0.4687,-0.1086,0.6003,2.4223,2.2305,0.0551,0.8815,0.5242,0.8554,0.3194,0.1591,0.0174,0.0715,2.0275,1.7328,-0.7752,0.6351,0.0606,0.0999,1.2877,0.4873,-0.7995,-1.9402,2.3574,0.7758,1.2222],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+#D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)  # Same, but we won&#39;t be needing this</code></pre>
+<div id="htmlwidget-1ab0d000b26193e8df53" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1ab0d000b26193e8df53">{"x":{"filter":"none","data":[[-1.2582,0.085,-1.9297,0.697,0.5866,0.3162,0.5462,0.0517,0.687,0.6063,1.2427,-0.3298,-2.3183,-0.3144,0.8915,0.9436,1.2993,-0.4533,-0.6691,-0.6804,1.1708,1.6654,0.57,0.6826,0.8478,1.3855,0.0358,1.9405,1.2034,-0.2256,1.3887,2.8879,0.6304,0.1821,0.8704,2.7433,-0.2989,0.0975,2.6295,-0.407,-0.2545,1.5793,0.3896,1.6978,-1.1314,-0.694,0.1669,2.3797,2.1468,-0.4953,0.6712,0.3739,0.6494,0.2036,0.0703,-0.0476,-0.0025,1.6243,1.3791,-0.7067],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p><span class="math inline">\(\beta_0\)</span> is now the happy guys from group a!</p>
 <div class="fold s">
 <pre class="r"><code># Add intercept line
@@ -1184,10 +1219,10 @@ D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)  # Same, but we won&#39;t be 
 means = lm(value ~ mood * group, D)$coefficients
 
 P_anova2 = ggplot(D, aes(x=group, y=value, color=mood)) + 
-  geom_segment(x=-10, xend=100, y=means[1], yend=0.5, col=&#39;blue&#39;, lwd=2) +
-  stat_summary(fun.y=mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..),  lwd=2)
-theme_axis(P_anova2, xlim=c(-0.5, 3.5)) + theme(axis.text.x = element_text())</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-49-1.png" width="576" style="display: block; margin: auto;" /></p>
+  geom_segment(x = -10, xend = 100, y = means[1], yend = 0.5, col = &#39;blue&#39;, lwd = 2) +
+  stat_summary(fun.y = mean, geom = &quot;errorbar&quot;, aes(ymax = ..y.., ymin = ..y..),  lwd = 2)
+theme_axis(P_anova2, xlim = c(-0.5, 3.5)) + theme(axis.text.x = element_text())</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="r-code-two-way-anova" class="section level3">
@@ -1202,17 +1237,17 @@ full = lm(value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + grou
 null = lm(value ~ 1 + group_b + group_c + mood_happy, D)  # Without interaction
 c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-87bf6d89bc45e0caea1f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-87bf6d89bc45e0caea1f">{"x":{"filter":"none","data":[["Anova mood:group","lm LRT"],[0.0459,0.0459],[2,2],[0.9552,0.9552],[0.0956,0.0956],[56.2468,56.2468]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-17f92ca3804c39b73546" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-17f92ca3804c39b73546">{"x":{"filter":"none","data":[["Anova mood:group","lm LRT"],[0.0001,0.0001],[2,2],[0.9999,0.9999],[0.0002,0.0002],[56.4813,56.4813]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: value
 ##            Sum Sq Df F value  Pr(&gt;F)  
-## mood        0.658  1  0.6314 0.43032  
-## group      10.000  2  4.8003 0.01206 *
-## mood:group  0.096  2  0.0459 0.95520  
-## Residuals  56.247 54                  
+## mood        0.519  1  0.4958 0.48438  
+## group      10.000  2  4.7803 0.01226 *
+## mood:group  0.000  2  0.0001 0.99993  
+## Residuals  56.481 54                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
@@ -1220,9 +1255,9 @@ c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 ## Model 1: value ~ 1 + group_b + group_c + mood_happy
 ## Model 2: value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + 
 ##     group_c:mood_happy
-##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     56 56.342                           
-## 2     54 56.247  2  0.095565 0.0459 0.9552</code></pre>
+##   Res.Df    RSS Df  Sum of Sq     F Pr(&gt;F)
+## 1     56 56.481                           
+## 2     54 56.481  2 0.00015625 1e-04 0.9999</code></pre>
 </div>
 <p>Below, I present approximate main effect models, though exact calculation of ANOVA main effects <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/">is more involved</a> if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.</p>
 <p>Look at the model summary statistics to find values comparable to the <code>Anova</code>-estimated main effects above.</p>
@@ -1231,8 +1266,8 @@ e = lm(value ~ 1 + group_b + group_c, D)
 
 # Main effect of mood.
 f = lm(value ~ 1 + mood_happy, D)</code></pre>
-<div id="htmlwidget-ec5b7c1d5b020167d8ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec5b7c1d5b020167d8ef">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[2,2,1,1],[4.80028,5,0.63141,0.57498],[0.01206,0.00998,0.43032,0.45136]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f1358fffeb3bd1d82ace" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f1358fffeb3bd1d82ace">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[2,2,1,1],[4.78035,5,0.49579,0.45241],[0.01226,0.00998,0.48438,0.50386]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ## Call:
@@ -1240,11 +1275,11 @@ f = lm(value ~ 1 + mood_happy, D)</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.4402 -0.6427 -0.1393  0.8060  1.8574 
+## -2.3183 -0.6719 -0.1182  0.6895  1.8880 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept) 1.147e-16  2.236e-01   0.000  1.00000   
+## (Intercept) 1.720e-16  2.236e-01   0.000  1.00000   
 ## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
 ## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
@@ -1260,18 +1295,18 @@ f = lm(value ~ 1 + mood_happy, D)</code></pre>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.65275 -0.70847  0.00213  0.63391  1.88950 
+## -2.72530 -0.67261  0.05145  0.79348  2.29498 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)   0.6047     0.1953   3.097  0.00301 **
-## mood_happy   -0.2094     0.2761  -0.758  0.45136   
+## (Intercept)   0.5930     0.1955   3.034  0.00361 **
+## mood_happy   -0.1859     0.2764  -0.673  0.50386   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.07 on 58 degrees of freedom
-## Multiple R-squared:  0.009816,   Adjusted R-squared:  -0.007256 
-## F-statistic: 0.575 on 1 and 58 DF,  p-value: 0.4514</code></pre>
+## Residual standard error: 1.071 on 58 degrees of freedom
+## Multiple R-squared:  0.00774,    Adjusted R-squared:  -0.009368 
+## F-statistic: 0.4524 on 1 and 58 DF,  p-value: 0.5039</code></pre>
 </div>
 </div>
 </div>
@@ -1281,7 +1316,7 @@ f = lm(value ~ 1 + mood_happy, D)</code></pre>
 <p><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_3 age\)</span></p>
 <p>… where <span class="math inline">\(x_i\)</span> are our usual dummy-coded indicator variables. <span class="math inline">\(\beta_0\)</span> is now the mean for the first group at <span class="math inline">\(age=0\)</span>. You can turn all ANOVAs into ANCOVAs this way, e.g. by adding <span class="math inline">\(\beta_N \cdot age\)</span> to our <strong>two-way ANOVA</strong> in the previous section. But let us go ahead with our one-way ANCOVA, starting by adding <span class="math inline">\(age\)</span> to our dataset:</p>
 <pre class="r"><code># Update data with a continuous covariate
-D$age = D$value + rnorm_fixed(nrow(D), sd=3)  # Correlated to value</code></pre>
+D$age = D$value + rnorm_fixed(nrow(D), sd = 3)  # Correlated to value</code></pre>
 <p>This is best visualized using colors for groups instead of x-position. The <span class="math inline">\(\beta\)</span>s are still the average <span class="math inline">\(y\)</span>-offset of the data points, only now we model each group using a slope instead of an intercept. In other words, the one-way ANOVA is sort of <a href="#t1">one-sample t-tests</a> model for each group (<span class="math inline">\(y = \beta_0\)</span>) while the <strong>one-way ANCOVA</strong> is sort of <a href="#correlation">Pearson correlation</a> model for each group (<span class="math inline">\(y_i = \beta_0 + \beta_i + \beta_1 \cdot age\)</span>):</p>
 <div class="fold s">
 <pre class="r"><code># For linear model plot
@@ -1293,7 +1328,7 @@ P_ancova = ggplot(D, aes(x=age, y=value, color=group, shape=group)) +
 
 # Theme it
 theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(axis.title=element_text())</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-57-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-56-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <p>And now some R code to run the one-way ANCOVA as a linear model:</p>
 <pre class="r"><code># Dedicated ANCOVA functions. The order of factors matter in pure-aov (type-I variance).
@@ -1301,7 +1336,7 @@ theme_axis(P_ancova, xlim=NULL, ylim=NULL, legend.position=c(0.8, 0.2)) + theme(
 a = car::Anova(aov(value ~ group + age, D))
 #a = aov(value ~ group + age, D)  # Predictor order matters. Not nice!
 
-# As dummy-coded linear model. 
+# As dummy-coded linear model.
 full = lm(value ~ 1 + group_b + group_c + age, D)
 
 # Testing main effect of age using Likelihood-ratio test
@@ -1312,36 +1347,34 @@ result_age = anova(null_age, full)
 null_group = lm(value ~ 1 + age, D)  # Full without group. Pearson correlation!
 result_group = anova(null_group, full)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-d6d6501cf4c5f1a37217" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d6d6501cf4c5f1a37217">{"x":{"filter":"none","data":[["age","age","group","group"],["Anova","lm","Anova","lm"],[16.3967,16.3967,6.4258,6.4258],[1,1,2,2],[0.0002,0.0002,0.0031,0.0031],[12.9096,12.9096,10.1184,10.1184],[44.0904,44.0904,44.0904,44.0904],[56,56,56,56]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n      <th>res.df<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-87bf6d89bc45e0caea1f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87bf6d89bc45e0caea1f">{"x":{"filter":"none","data":[["age","age","group","group"],["Anova","lm","Anova","lm"],[15.6752,15.6752,1.791,1.791],[1,1,2,2],[0.0002,0.0002,0.1762,0.1762],[12.4658,12.4658,2.8486,2.8486],[44.5342,44.5342,44.5342,44.5342],[56,56,56,56]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n      <th>res.df<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: value
 ##           Sum Sq Df F value    Pr(&gt;F)    
-## group     10.118  2  6.4258 0.0030738 ** 
-## age       12.910  1 16.3967 0.0001595 ***
-## Residuals 44.090 56                      
+## group      2.849  2   1.791 0.1762177    
+## age       12.466  1  15.675 0.0002144 ***
+## Residuals 44.534 56                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
 ## Model 1: value ~ 1 + group_b + group_c
 ## Model 2: value ~ 1 + group_b + group_c + age
-##   Res.Df   RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1     57 57.00                                  
-## 2     56 44.09  1     12.91 16.397 0.0001595 ***
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     57 57.000                                  
+## 2     56 44.534  1    12.466 15.675 0.0002144 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
 ## Model 1: value ~ 1 + age
 ## Model 2: value ~ 1 + group_b + group_c + age
-##   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
-## 1     58 54.209                                
-## 2     56 44.090  2    10.118 6.4258 0.003074 **
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+##   Res.Df    RSS Df Sum of Sq     F Pr(&gt;F)
+## 1     58 47.383                          
+## 2     56 44.534  2    2.8486 1.791 0.1762</code></pre>
 </div>
 <!--
 Is there a well-known "non-parametric" ANCOVA? No, but now that we understand it as a mix of a **Pearson correlation** and **t-tests**, you can get creative and make one up. If we rank the $y$ and the $x$ we get a **Spearman correlation** ($rank(y) ~ \beta_0 + rank(x)$) and at the same time the **Wilcoxon** ($rank(y) ~ 1):
@@ -1362,11 +1395,9 @@ anova(null, full)
 ## 
 ## Model 1: rank(value) ~ rank(age)
 ## Model 2: rank(value) ~ group + rank(age)
-##   Res.Df   RSS Df Sum of Sq      F  Pr(>F)  
-## 1     58 14870                              
-## 2     56 12768  2    2102.3 4.6105 0.01401 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
+## 1     58 13248                           
+## 2     56 12769  2    479.52 1.0515 0.3562
 ```
 
 ```r
@@ -1374,7 +1405,7 @@ sm::sm.ancova(x=D$age, y=D$value, group=D$group, display='none', model='equal')
 ```
 
 ```
-## Test of equality :  h =  1.08418    p-value =  0.3322
+## Test of equality :  h =  1.05354    p-value =  0.523
 ```
 -->
 </div>
@@ -1414,8 +1445,8 @@ D = data.frame(mood = c(&#39;happy&#39;, &#39;sad&#39;, &#39;meh&#39;),
 # Dummy coding for the linear model
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)
 D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)</code></pre>
-<div id="htmlwidget-60bdda8eeaa4563fd3e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-60bdda8eeaa4563fd3e1">{"x":{"filter":"none","data":[["happy","sad","meh"],[60,90,70],[1,0,0],[0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>counts<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ec5b7c1d5b020167d8ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec5b7c1d5b020167d8ef">{"x":{"filter":"none","data":[["happy","sad","meh"],[60,90,70],[1,0,0],[0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>counts<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="r-code-goodness-of-fit" class="section level3">
 <h3><span class="header-section-number">7.1.3</span> R code: Goodness of fit</h3>
@@ -1424,15 +1455,15 @@ D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)</code></pre>
 a = chisq.test(D$counts)
 
 # As log-linear model, comparing to an intercept-only model
-full = glm(counts ~ 1 + mood_happy + mood_sad, data=D, family=poisson())
-null = glm(counts ~ 1, data=D, family=poisson())
-b = anova(null, full, test=&#39;Rao&#39;)
+full = glm(counts ~ 1 + mood_happy + mood_sad, data = D, family = poisson())
+null = glm(counts ~ 1, data = D, family = poisson())
+b = anova(null, full, test = &#39;Rao&#39;)
 
 # Note: glm can also do the dummy coding for you:
-c = glm(counts ~ mood, data=D, family=poisson())</code></pre>
+c = glm(counts ~ mood, data = D, family = poisson())</code></pre>
 <p>Let’s look at the results:</p>
-<div id="htmlwidget-2df5675aded0e9696612" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2df5675aded0e9696612">{"x":{"filter":"none","data":[["chisq.test","glm LRT"],[6.3636,6.3636],[2,2],[0.0415,0.0415]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d6d6501cf4c5f1a37217" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d6d6501cf4c5f1a37217">{"x":{"filter":"none","data":[["chisq.test","glm LRT"],[6.3636,6.3636],[2,2],[0.0415,0.0415]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -1472,13 +1503,15 @@ c = glm(counts ~ mood, data=D, family=poisson())</code></pre>
 <h3><span class="header-section-number">7.2.2</span> Example data</h3>
 <p>Here we need some long data and we need it in table format for <code>chisq.test</code>:</p>
 <pre class="r"><code># Contingency data in long format for linear model
-D = data.frame(mood = c(&#39;happy&#39;, &#39;happy&#39;, &#39;meh&#39;, &#39;meh&#39;, &#39;sad&#39;, &#39;sad&#39;),
-               sex = c(&#39;male&#39;, &#39;female&#39;, &#39;male&#39;, &#39;female&#39;, &#39;male&#39;, &#39;female&#39;),
-               Freq = c(100, 70, 30, 32, 110, 120))
+D = data.frame(
+  mood = c(&#39;happy&#39;, &#39;happy&#39;, &#39;meh&#39;, &#39;meh&#39;, &#39;sad&#39;, &#39;sad&#39;),
+  sex = c(&#39;male&#39;, &#39;female&#39;, &#39;male&#39;, &#39;female&#39;, &#39;male&#39;, &#39;female&#39;),
+  Freq = c(100, 70, 30, 32, 110, 120)
+)
 
 # ... and as table for chisq.test
-D_table = D %&gt;% 
-  spread(key=mood, value=Freq) %&gt;%  # Mood to columns
+D_table = D %&gt;%
+  spread(key = mood, value = Freq) %&gt;%  # Mood to columns
   select(-sex) %&gt;%  # Remove sex column
   as.matrix()
 
@@ -1487,8 +1520,8 @@ D_table = D %&gt;%
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)
 D$mood_meh = ifelse(D$mood == &#39;meh&#39;, 1, 0)
 D$sex_male = ifelse(D$sex == &#39;male&#39;, 1, 0)</code></pre>
-<div id="htmlwidget-2e7e1fc6d3321085ef8e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2e7e1fc6d3321085ef8e">{"x":{"filter":"none","data":[["happy","happy","meh","meh","sad","sad"],["male","female","male","female","male","female"],[100,70,30,32,110,120],[1,1,0,0,0,0],[0,0,1,1,0,0],[1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>sex<\/th>\n      <th>Freq<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_meh<\/th>\n      <th>sex_male<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-60bdda8eeaa4563fd3e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-60bdda8eeaa4563fd3e1">{"x":{"filter":"none","data":[["happy","happy","meh","meh","sad","sad"],["male","female","male","female","male","female"],[100,70,30,32,110,120],[1,1,0,0,0,0],[0,0,1,1,0,0],[1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>sex<\/th>\n      <th>Freq<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_meh<\/th>\n      <th>sex_male<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="r-code-chi-square-test" class="section level3">
 <h3><span class="header-section-number">7.2.3</span> R code: Chi-square test</h3>
@@ -1497,18 +1530,18 @@ D$sex_male = ifelse(D$sex == &#39;male&#39;, 1, 0)</code></pre>
 a = chisq.test(D_table)
 
 # Using glm to do a log-linear model, we get identical results when testing the interaction term:
-full = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male + mood_happy*sex_male + mood_meh*sex_male, data=D, family=poisson())
-null = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male, data=D, family=poisson())
-b = anova(null, full, test=&#39;Rao&#39;)  # Could also use test=&#39;LRT&#39; or test=&#39;Chisq&#39;
+full = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male + mood_happy*sex_male + mood_meh*sex_male, data = D, family = poisson())
+null = glm(Freq ~ 1 + mood_happy + mood_meh + sex_male, data = D, family = poisson())
+b = anova(null, full, test = &#39;Rao&#39;)  # Could also use test=&#39;LRT&#39; or test=&#39;Chisq&#39;
 
 # Note: let glm do the dummy coding for you
-full = glm(Freq ~ mood * sex, family=poisson(), data=D)
-c = anova(full, test=&#39;Rao&#39;)
+full = glm(Freq ~ mood * sex, family = poisson(), data = D)
+c = anova(full, test = &#39;Rao&#39;)
 
 # Note: even simpler syntax using MASS:loglm (&quot;log-linear model&quot;)
 d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
-<div id="htmlwidget-33a25016cc63415bbb63" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-33a25016cc63415bbb63">{"x":{"filter":"none","data":[["chisq.test","glm","loglm"],[5.0999,5.0999,5.0999],[2,2,2],[0.0781,0.0781,0.0781]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2df5675aded0e9696612" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2df5675aded0e9696612">{"x":{"filter":"none","data":[["chisq.test","glm","loglm"],[5.0999,5.0999,5.0999],[2,2,2],[0.0781,0.0781,0.0781]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
@@ -1589,7 +1622,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <li><a href="https://www.uni-tuebingen.de/fileadmin/Uni_Tuebingen/SFB/SFB_833/A_Bereich/A1/Christoph_Scheepers_-_Statistikworkshop.pdf">These slides by Christoph Scheepers</a> on Chi-Square as log-linear models.</li>
 <li><a href="https://rpubs.com/palday/glm-test">This notebook by Philip M. Alday</a> on Chi-square, binomial, multinomial, and poisson tests as log-linear and logistic models. These “equivalences” are less exact than what I presented above, and were therefore not included here. They are still great for a conceptual understanding of these tests, though!</li>
 <li><a href="https://rpsychologist.com/r-guide-longitudinal-lme-lmer">This article by Kristoffer Magnusson</a> on RM-ANOVA and growth models using <code>lme4::lmer</code> mixed models.</li>
-<li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to “non-parametric”&quot; tests which ultimately pushed me over the edge to write up the present article.</li>
+<li><a href="https://seriousstats.wordpress.com/2012/02/14/friedman/">This post by Thom Baguley</a> on the Friedman test. That post was actually the one that inititated my exploration of linear equivalences to “non-parametric”" tests which ultimately pushed me over the edge to write up the present article.</li>
 </ul>
 </div>
 <div id="course" class="section level1">
@@ -1649,7 +1682,7 @@ d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
 <!--
 # Visualization of models (in progress)
 These will eventually be included under the respective headers and in the infographic.
-<img src="index_files/figure-html/unnamed-chunk-72-1.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-72-2.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-72-3.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-72-4.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-72-5.png" width="192" style="display: block; margin: auto;" /><img src="index_files/figure-html/unnamed-chunk-72-6.png" width="192" style="display: block; margin: auto;" />
+
 -->
 </div>
 
