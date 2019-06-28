@@ -85,7 +85,7 @@ print_df = function(D,
 ```
 
 
-This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric"" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
+This document is summarised in the table below. It shows the linear models underlying common parametric and "non-parametric" tests. Formulating all the tests in the same language highlights the many similarities between them. Get it [as an image](linear_tests_cheat_sheet.png) or [as a PDF](linear_tests_cheat_sheet.pdf).
 
 ***
 
@@ -102,6 +102,12 @@ This needless complexity multiplies when students try to rote learn the parametr
 For this reason, I think that teaching linear models first and foremost and *then* name-dropping the special cases along the way makes for an excellent teaching strategy, emphasizing *understanding* over rote learning. Since linear models are the same across frequentist, Bayesian, and permutation-based inferences, I'd argue that it's better to start with modeling than p-values, type-1 errors, Bayes factors, or other inferences.
 
 Concerning the teaching of *"non-parametric"* tests in intro-courses, I think that we can justify [lying-to-children](https://en.wikipedia.org/wiki/Lie-to-children) and teach "non-parametric"" tests as if they are merely ranked versions of the corresponding parametric tests. It is much better for students to think "ranks!" than to believe that you can magically throw away assumptions. Indeed, the Bayesian equivalents of "non-parametric"" tests implemented in [JASP](https://jasp-stats.org) [literally just do (latent) ranking](https://arxiv.org/abs/1712.06941) and that's it. For the frequentist "non-parametric"" tests considered here, this approach is highly accurate for N > 15.
+
+<center>
+![](https://www.picsellmedia.com/wp-content/uploads/2017/01/shutterstock_336913772.jpg)
+</center>
+
+<br />
 
 Use the menu to jump to your favourite section. There are links to lots of similar (though more scattered) stuff under [sources](#links) and [teaching materials](#course). I hope that you will join in suggesting improvements or submitting improvements yourself in [the Github repo to this page](https://github.com/lindeloev/tests-as-linear). Let's make it awesome!
 
