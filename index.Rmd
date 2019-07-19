@@ -222,7 +222,7 @@ As the name implies, the **Spearman rank correlation** is a **Pearson correlatio
 
 $rank(y) = \beta_0 + \beta_1 \cdot rank(x) \qquad \mathcal{H}_0: \beta_1 = 0$
 
-I'll introduce [ranks](#rank) in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulations/simulate_spearman.html).
+I'll introduce [ranks](#rank) in a minute. For now, notice that the correlation coefficient of the linear model is identical to a "real" Pearson correlation, but p-values are an approximation which is [appropriate for samples greater than N=10 and almost perfect when N > 20](simulations/simulate_spearman.html).
 
 Such a nice and non-mysterious equivalence that many students are left unaware of! Visualizing them side by side including data labels, we see this rank-transformation in action:
 
@@ -521,7 +521,7 @@ a = wilcox.test(y, y2, paired = TRUE)
 # Equivalent linear model:
 b = lm(signed_rank(y - y2) ~ 1)
 
-# Bonus: identical to one-sample t-test ong signed ranks
+# Bonus: identical to one-sample t-test on signed ranks
 c = t.test(signed_rank(y - y2))
 ```
 
