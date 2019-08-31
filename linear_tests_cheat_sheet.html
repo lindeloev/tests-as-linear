@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <style type="text/css">
+    body {
+      /* margin: 40px; */
+      font-family: Arial, Helvetica, 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif;
+      font-weight: normal;
+      font-size: 12px;
+    }
+
+    code {
+      font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
+    }
+
+    .svg-code {
+      font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
+    }
+
+    .header-wrapper {
+      /* width: 700px; */
+      display: grid;
+      grid-template-columns: 10fr 5fr 1fr;
+      grid-template-rows: 10fr 30fr 3fr;
+      grid-gap: 0px;
+    }
+
+    .header-small-box1 {
+      grid-column: 1/2;
+      grid-row: 1/4;
+    }
+
+    .header-small-box2 {
+      grid-column: 2/3;
+      grid-row-start: 2;
+      background-color: rgb(221, 221, 221);
+      /* align-items: center; */
+    }
+
+    .box {
+      padding: 3px;
+      border-style: solid;
+      border-width: 0.5px;
+      border-color: black;
+    }
+
+    .wrapper {
+      /* width: 700px; */
+      display: grid;
+      grid-template-columns: 1fr 5fr 8fr 8fr 3fr 13fr 3fr;
+      grid-gap: 0px;
+    }
+
+    .nobox {
+      border-color: white;
+    }
+
+    .box2 {
+      grid-column: 1/2;
+      grid-row: 2/6;
+      /* z-index: 10; */
+    }
+
+    .box3 {
+      grid-column: 1/2;
+      grid-row: 6/11;
+    }
+
+    .text-vertical {
+      writing-mode: sideways-lr;
+      -webkit-writing-mode: sideways-lr;
+      -ms-writing-mode: sideways-lr;
+      text-orientation: sideways;
+    }
+
+    .note {
+      font-size: smaller;
+      font-style: italic;
+    }
+
+    .colourful-row-1 {
+      display: contents;
+    }
+
+    .colourful-row-1>.box {
+      background: rgb(167, 227, 243);
+    }
+
+    .colourful-row-2 {
+      display: contents;
+    }
+
+    .colourful-row-2>.box {
+      background: rgb(255, 255, 166);
+    }
+
+    .colourful-row-3 {
+      display: contents;
+    }
+
+    .colourful-row-3>.box {
+      background: rgb(176, 227, 165);
+    }
+
+    .colourful-row-4 {
+      display: contents;
+    }
+
+    .colourful-row-4>.box {
+      background: rgb(223, 227, 165);
+    }
+
+    .colourful-row-5 {
+      display: contents;
+    }
+
+    .colourful-row-5>.box {
+      background: rgb(255, 169, 139);
+    }
+
+    .emp {
+      font-weight: bold;
+    }
+
+    .soft-emp {
+      font-style: italic;
+    }
+
+    .footer-wrapper {
+      /* width: 700px; */
+      display: grid;
+      grid-template-columns: 22fr 1fr 4fr 5fr;
+      grid-gap: 0px;
+    }
+
+    .footer-small-box1 {
+      grid-column: 1/2;
+    }
+
+    .footer-small-box2 {
+      grid-column: 3/4;
+    }
+
+    .footer-small-box3 {
+      grid-column: 4/5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-wrapper">
+    <div class="header-small-box1">
+      <h1>Common statistical tests are linear models</h1>
+      <p>Last updated: 28 June, 2019.Also check out the <a href="https://eigenfoo.xyz/tests-as-linear/">Python version</a>!</p>
+    </div>
+    <div class="header-small-box2">
+      <p>See worked examples and more details at the accompanying
+          notebook:<br><a
+          href="https://lindeloev.github.io/tests-as-linear">https://lindeloev.github.io/tests-as-linear</a></p>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="box nobox"></div>
+    <div class="box emp">Common name</div>
+    <div class="box emp">Built-in function R</div>
+    <div class="box emp">Equivalent linear model in R</div>
+    <div class="box emp">Exact?</div>
+    <div class="box emp">The linear model in words</div>
+    <div class="box emp">Icon</div>
+
+    <div class="box box2">
+      <svg width="30" height="300">
+        <text x="-50" y="150" transform="rotate(-90, 18, 150)" class="emp">Simple regression: <tspan class="svg-code">lm(y ~ 1 + x)
+          </tspan>
+        </text>
+      </svg>
+    </div>
+
+    <div class="colourful-row-1">
+      <div class="box"><span class="emp">y is independent of x</span><br>P: One-sample t-test<br>N: Wilcoxon signed-rank</div>
+      <div class="box"><code><br>t.test(y)<br>wilcox.test(y)</code></div>
+      <div class="box"><code><br>lm(y ~ 1)<br>lm(signed_rank(y) ~ 1)</code></div>
+      <div class="box"><br>✓<br><a href="https://lindeloev.github.io/tests-as-linear/simulations/simulate_wilcoxon.html">for N &gt; 14</a></div>
+      <div class="box"><br>One number (intercept, i.e., the mean) predicts y.<br>- (Same, but it predicts the <span class="soft-emp">signed rank</span> of y.)</div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p1.png" alt="p1" height="60" width="90"></div>
+    </div>
+
+    <div class="colourful-row-1">
+      <div class="box">P: Paired-sample t-test<br>N: Wilcoxon matched pairs</div>
+      <div class="box"><code>t.test(y1, y2, paired=TRUE)<br>wilcox.test(y1, y2, paired=TRUE)</code></div>
+      <div class="box"><code>lm(y2 - y1 ~ 1)<br>lm(signed_rank(y2 - y1) ~ 1)</code></div>
+      <div class="box">✓<br><a href="https://lindeloev.github.io/tests-as-linear/simulations/simulate_wilcoxon.html">for N &gt; 14</a></div>
+      <div class="box">One intercept predicts the pairwise y 2 -y 1 differences.<br>- (Same, but it predicts the <span class="soft-emp">signed rank</span> of y 2 -y 1 .)</div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p2_1.png" alt="p2_1" height="45" width="30"><img
+          src="./include/cheat_sheet_plots/p2_2.png" alt="p2_2" height="60" width="20"><img
+          src="./include/cheat_sheet_plots/p2_3.png" alt="p2_3" height="60" width="30"></div>
+    </div>
+
+    <div class="colourful-row-2">
+      <div class="box"><span class="emp">y ~ continuous x</span><br>P: Pearson correlation<br>N: Spearman correlation</div>
+      <div class="box"><code><br>cor.test(x, y, method='Pearson')<br>cor.test(x, y, method=Spearman')</code></div>
+      <div class="box"><code><br>lm(y ~ 1 + x)<br>lm(rank(y) ~ 1 + rank(x))</code></div>
+      <div class="box"><br>✓<br><a href="https://lindeloev.github.io/tests-as-linear/simulations/simulate_spearman.html">for N &gt; 10</a></div>
+      <div class="box"><br>One intercept plus x multiplied by a number (slope) predicts y.<br>- (Same, but with <span class="soft-emp">ranked</span> x and y)</div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p3.png" alt="p3" height="60" width="90"></div>
+    </div>
+
+    <div class="colourful-row-3">
+      <div class="box"><span class="emp">y ~ discrete x</span><br>P: Two-sample t-test<br>P: Welch’s t-test<br>N: Mann-Whitney U</div>
+      <div class="box">
+        <code><br>t.test(y1, y2, var.equal=TRUE)<br>t.test(y1, y2, var.equal=FALSE)<br>wilcox.test(y1, y2)</code>
+      </div>
+      <div class="box">
+        <code><br>lm(y ~ 1 + G2)<sup>A</sup><br>gls(y ~ 1 + G2, weights=...<sup>B</sup>)<sup>A</sup><br>lm(signed_rank(y) ~ 1 + G2)<sup>A</sup></code>
+      </div>
+      <div class="box"><br>✓<br>✓<br><a href="https://lindeloev.github.io/tests-as-linear/simulations/simulate_mannwhitney.html">for N &gt; 11</a></div>
+      <div class="box"><br>An intercept for group 1 (plus a difference if group 2) predicts y.<br>- (Same, but with one variance <span class="soft-emp">per group</span> instead of one common.)<br>- (Same, but it predicts the <span class="soft-emp">signed rank</span> of y.)）
+      </div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p4.png" alt="p4" height="60" width="90"></div>
+    </div>
+
+    <div class="box box3">
+      <svg width="30" height="300">
+        <text x="-120" y="150" transform="rotate(-90, 18, 150)" class="emp">Multiple regression: <tspan class="svg-code">lm(y~1+x1+x2+...)</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <div class="colourful-row-3">
+      <div class="box">P: One-way ANOVA<br>N: Kruskal-Wallis</div>
+      <div class="box"><code>aov(y ~ group)<br>kruskal.test(y ~ group)</code></div>
+      <div class="box">
+        <code>lm(y ~ 1 + G2 + G3 + .. + Gn)<sup>A</sup><br>lm(rank(y) ~ 1 + G2 + G3 + .. + Gn)<sup>A</sup></code></div>
+      <div class="box">✓<br><a href="https://lindeloev.github.io/tests-as-linear/simulations/simulate_kruskall.html">for N &gt; 11</a></div>
+      <div class="box">An intercept for group 1 (plus a difference if group ≠ 1) predicts y.<br>- (Same, but it predicts the <span class="soft-emp">rank</span> of y.)</div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p5.png" alt="p5" height="60" width="90"></div>
+    </div>
+
+    <div class="colourful-row-4">
+      <div class="box">P: One-way ANCOVA</div>
+      <div class="box"><code>aov(y ~ group + x)</code></div>
+      <div class="box"><code>lm(y ~ 1 + G2 + G3 + ... + Gn + x)<sup>A</sup></code></div>
+      <div class="box">✓</div>
+      <div class="box">- (Same, but plus a slope on x.)<br><span class='note'>Note: this is discrete AND continuous. ANCOVAs are ANOVAs with a continuous x.</span></div>
+      <div class="box"><img src="./include/cheat_sheet_plots/p6.png" alt="p6" height="60" width="90"></div>
+    </div>
+
+    <div class="colourful-row-5">
+      <div class="box">P: Two-way ANOVA</div>
+      <div class="box"><code>aov(y ~ group * sex)</code></div>
+      <div class="box"><code>lm(y ~ 1+G2+G3+...+Gn+
+      S2+S3+...+Sk+
+      G2*S2+G3*S3+...+Gn*Sk)</code></div>
+      <div class="box">✓</div>
+      <div class="box">Interaction term: changing sex changes the y ~ group parameters.<br>
+        <span class='note'>Note: G2 ... Gn is an <a href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics)">indicator (0 or 1)</a> for each non-intercept levels of the <span class="emp">group</span> variable. Similarly for S2 ... Sk for sex. The first line (with Gi ) is main effect of group, the second (with Si ) for sex and the third is the <span class="emp">group * sex</span> interaction. For two levels (e.g. male/female), line 2 would just be S2 and line 3 would be S2 multiplied with each Gi.
+        </span></div>
+      <div class="box"><span class="soft-emp">[Coming]</span></div>
+    </div>
+
+    <div class="colourful-row-5">
+      <div class="box"><span class="emp">Counts ~ discrete x</span><br>N: Chi-square test</div>
+      <div class="box"><code><br>chisq.test(groupXsex_table)</code></div>
+      <div class="box"><span class="emp">Equivalent log-linear model</span><br><code>glm(y ~ 1+G2+G3+...+Gn+
+      S2+S3+...+Sk+
+      G2*S2+G3*S3+...+Gn*Sk, family=...)<sup>A</sup></code></div>
+      <div class="box">✓</div>
+      <div class="box">Interaction term: (Same as Two-way ANOVA.)<br><span class='note'>Note: Run glm using the following arguments: <code>glm(model, family=poisson())</code>。<br>As linear-model, the Chi-square test is log(y_i) = log(N) + log(alpha_i) + log(beta_j) +
+          log(alpha_i beta_j)，where alpha_i and beta_j are proportions. See more info in <a
+          href="https://lindeloev.github.io/tests-as-linear">the accompanying notebook</a>.</span></div>
+      <div class="box">Same as Two-way ANOVA</div>
+    </div>
+
+    <div class="colourful-row-3">
+      <div class="box">N: Goodness of fit</div>
+      <div class="box"><code>chisq.test(y)</code></div>
+      <div class="box"><code>glm(y ~ 1 + G2 + G3 + ... + Gn, family=...)<sup>A</sup></code></div>
+      <div class="box">✓</div>
+      <div class="box">(Same as One-way ANOVA and see Chi-Square note.)</div>
+      <div class="box">1W-ANOVA</div>
+    </div>
+  </div>
+
+  <p>List of common parametric (P) non-parametric (N) tests and equivalent linear models. The notation <code>y ~ 1 + x</code> is R shorthand for y = 1·b + a·x which most of us learned in school. Models in similar colors are highly similar, but
+    really, notice how similar they all are across colors! For non-parametric models, the linear models are reasonable approximations for non-small sample sizes (see "Exact" column and click links to see simulations). Other less accurate approximations exist, e.g., Wilcoxon for the sign test and Goodness-of-fit for the binomial test. The signed rank function is <code>signed_rank = function(x) sign(x) * rank(abs(x))</code>. The variables <code>Gi</code> and <code>Si</code> are <a href="https://en.wikipedia.org/wiki/Dummy_variable_(statistics)">"dummy
+    coded" indicator variables (either 0 or 1)</a> exploiting the fact that when Δx = 1 between categories the difference equals the slope. Subscripts (e.g., <code>G2</code> or <code>y1</code>) indicate different columns in data. lm requires long-format data for all non-continuous models. All of this is exposed in greater detail and worked examples at <a href="https://lindeloev.github.io/tests-as-linear">https://lindeloev.github.io/tests-as-linear</a>.
+
+  <div class="footer-wrapper">
+    <div class="footer-small-box1">
+      <p><sup>A</sup>See the note to the two-way ANOVA for explanation of the notation.<br>
+        <sup>B</sup>Same model, but with one variance per group: <code>gls(value ~ 1 + G2, weights = varIdent(form = ~1|group), method="ML")</code>.
+      </p>
+    </div>
+    <div class="footer-small-box2">
+      <p>
+        <img src="./include/cheat_sheet_plots/cc-by.svg" alt="cc-by" />
+      </p>
+    </div>
+    <div class="footer-small-box3">
+      <p>Jonas Kristoffer Lindeløv<br><a href="https://lindeloev.net">https://lindeloev.net</a></p>
+    </div>
+  </div>
+
+</body>
+
+</html>
