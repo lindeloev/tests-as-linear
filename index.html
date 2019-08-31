@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -27,7 +28,7 @@
 <script src="index_files/highlightjs-9.12.0/highlight.js"></script>
 <script src="index_files/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="index_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="index_files/datatables-binding-0.6/datatables.js"></script>
+<script src="index_files/datatables-binding-0.8/datatables.js"></script>
 <link href="index_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="index_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="index_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
@@ -107,7 +108,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -181,48 +181,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -271,8 +232,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -323,7 +282,7 @@ div.tocify {
 <!-- From https://stackoverflow.com/a/37839683/1297830 -->
 <link rel="stylesheet" type="text/css" href="include/hideOutput.css">
 <script src="include/hideOutput.js"></script>
-<p>By Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>).<br /> Last updated: 28 June, 2019 (See <a href="https://github.com/lindeloev/tests-as-linear/commits/master">changelog</a>).<br /> Check out the <a href="https://eigenfoo.xyz/tests-as-linear/">Python version</a> and the <a href="https://twitter.com/jonaslindeloev/status/1110907133833502721">Twitter summary</a>.</p>
+<p>By Jonas Kristoffer Lindeløv (<a href="https://lindeloev.net">blog</a>, <a href="http://personprofil.aau.dk/117060">profile</a>).<br /> Last updated: 31 August, 2019 (See <a href="https://github.com/lindeloev/tests-as-linear/commits/master">changelog</a>).<br /> Check out the <a href="https://eigenfoo.xyz/tests-as-linear/">Python version</a> and the <a href="https://twitter.com/jonaslindeloev/status/1110907133833502721">Twitter summary</a>.</p>
 <!-- Social sharing. From simplesharebuttons.com -->
 <style type="text/css">
   #share-buttons img {
@@ -341,7 +300,7 @@ div.tocify {
 <p><a href="https://twitter.com/intent/tweet?text=Common%20statistical%20tests%20are%20linear%20models%20(or:%20how%20to%20teach%20stats)%20https%3A%2F%2Flindeloev.github.io%2Ftests-as-linear%20via%20%40jonaslindeloev" class="twitter-hashtag-button" data-size="large" data-related="jonaslindeloev" data-show-count="false">Share on Twitter</a>    <!-- Facebook --><a href="http://www.facebook.com/sharer.php?u=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a><!-- LinkedIn --><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a><!-- Digg --><a href="http://www.digg.com/submit?url=https://lindeloev.github.io/tests-as-linear/" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a><!-- Reddit --><a href="http://reddit.com/submit?url=https://lindeloev.github.io/tests-as-linear/&amp;title=Common statistical tests are linear models (or: how to teach stats)" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a><!-- Email --><a href="mailto:?Subject=Common statistical tests are linear models (or: how to teach stats)&amp;Body=https://lindeloev.github.io/tests-as-linear/"><img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" /></a></p>
 </div>
 <p><br /></p>
-<p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric” tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a>.</p>
+<p>This document is summarised in the table below. It shows the linear models underlying common parametric and “non-parametric” tests. Formulating all the tests in the same language highlights the many similarities between them. Get it <a href="linear_tests_cheat_sheet.png">as an image</a> or <a href="linear_tests_cheat_sheet.pdf">as a PDF</a> or <a href="linear_tests_cheat_sheet.html">as a web page</a>.</p>
 <hr />
 <p><a href="linear_tests_cheat_sheet.pdf"><img src="linear_tests_cheat_sheet.png" /></a></p>
 <hr />
@@ -486,8 +445,8 @@ P_spearman = ggplot(D_correlation, aes(x=rank(X1), y=rank(X2))) +
 <pre class="r"><code>a = cor.test(y, x, method = &quot;pearson&quot;) # Built-in
 b = lm(y ~ 1 + x) # Equivalent linear model: y = Beta0*1 + Beta1*x
 c = lm(scale(y) ~ 1 + scale(x))  # On scaled vars to recover r</code></pre>
-Results: <div id="htmlwidget-526ecd6fc2f0b7381ee6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-526ecd6fc2f0b7381ee6">{"x":{"filter":"none","data":[["cor.test","lm scaled","lm"],[0.738,0.738,0.738],[-0.3365,-0.3365,-0.3365],[-0.0485,-0.0485,-0.0872],[-0.3225,-0.3384,-0.6081],[0.233,0.2414,0.4337]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>r<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+Results: <div id="htmlwidget-2770309300d4eee48ade" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2770309300d4eee48ade">{"x":{"filter":"none","data":[["cor.test","lm scaled","lm"],[0.738,0.738,0.738],[-0.3365,-0.3365,-0.3365],[-0.0485,-0.0485,-0.0872],[-0.3225,-0.3384,-0.6081],[0.233,0.2414,0.4337]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>r<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
@@ -544,8 +503,8 @@ Results: <div id="htmlwidget-526ecd6fc2f0b7381ee6" style="width:100%;height:auto
 <pre class="r"><code># Spearman correlation
 a = cor.test(y, x, method = &quot;spearman&quot;) # Built-in
 b = lm(rank(y) ~ 1 + rank(x)) # Equivalent linear model</code></pre>
-Let’s look at the results: <div id="htmlwidget-0ed9471d24578b65b4fa" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0ed9471d24578b65b4fa">{"x":{"filter":"none","data":[["cor.test","lm"],[0.7072,0.708],[-0.0543,-0.0543]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rho<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+Let’s look at the results: <div id="htmlwidget-ec3f822c7ae920e3f540" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec3f822c7ae920e3f540">{"x":{"filter":"none","data":[["cor.test","lm"],[0.7072,0.708],[-0.0543,-0.0543]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rho<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
@@ -628,8 +587,8 @@ a = t.test(y)
 # Equivalent linear model: intercept-only
 b = lm(y ~ 1)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-58f61054e232de0dbaf9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-58f61054e232de0dbaf9">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0952,-0.0952],[0.7095,0.7095],[-0.3747,-0.3747],[49,49],[-0.6059,-0.6059],[0.4155,0.4155]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f06d5a47f7cab22f5926" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f06d5a47f7cab22f5926">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0952,-0.0952],[0.7095,0.7095],[-0.3747,-0.3747],[49,49],[-0.6059,-0.6059],[0.4155,0.4155]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  One Sample t-test
@@ -670,8 +629,8 @@ b = lm(signed_rank(y) ~ 1)  # See? Same model as above, just on signed ranks
 # Bonus: of course also works for one-sample t-test
 c = t.test(signed_rank(y))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-18ac5bd784205e06f9a7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-18ac5bd784205e06f9a7">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.213,0.2146,0.2146],[null,-5.18,-5.18]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-53cac2b5a19100b40e9d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-53cac2b5a19100b40e9d">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.213,0.2146,0.2146],[null,-5.18,-5.18]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon signed rank test with continuity correction
@@ -742,8 +701,8 @@ theme_axis(P_tpaired) + theme_axis(P_t1, legend.position = c(0.6, 0.1))</code></
 <pre class="r"><code>a = t.test(y, y2, paired = TRUE) # Built-in paired t-test
 b = lm(y - y2 ~ 1) # Equivalent linear model</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-635d1460ab26b7a06864" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-635d1460ab26b7a06864">{"x":{"filter":"none","data":[["t.test","lm"],[-0.5952,-0.5952],[0.0934,0.0934],[49,49],[-1.7108,-1.7108],[-1.2944,-1.2944],[0.104,0.104]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-04f7d8d710633141c191" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-04f7d8d710633141c191">{"x":{"filter":"none","data":[["t.test","lm"],[-0.5952,-0.5952],[0.0934,0.0934],[49,49],[-1.7108,-1.7108],[-1.2944,-1.2944],[0.104,0.104]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Paired t-test
@@ -786,8 +745,8 @@ b = lm(signed_rank(y - y2) ~ 1)
 # Bonus: identical to one-sample t-test ong signed ranks
 c = t.test(signed_rank(y - y2))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-c43cb8fa604a5da8e2b7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c43cb8fa604a5da8e2b7">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.0447,0.0429,0.0429],[null,-8.34,-8.34]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-425cef58e9452045d63f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-425cef58e9452045d63f">{"x":{"filter":"none","data":[["wilcox.test","lm","t.test"],[0.0447,0.0429,0.0429],[null,-8.34,-8.34]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>mean_rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon signed rank test with continuity correction
@@ -890,8 +849,8 @@ b = lm(value ~ 1 + group_y2)  # Using our hand-made dummy regressor
 # specification itself. Same result.
 c = lm(value ~ 1 + I(group == &#39;y2&#39;))</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-77cd519bd4f19792ec4e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-77cd519bd4f19792ec4e">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0872,-0.0872],[null,null],[0.738,null],[48,98],[-0.233,-0.0617],[0.3225,1.2521]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>difference<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a8c309953f8c002dc3f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a8c309953f8c002dc3f2">{"x":{"filter":"none","data":[["t.test","lm"],[-0.0872,-0.0872],[null,null],[0.738,null],[48,98],[-0.233,-0.0617],[0.3225,1.2521]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>difference<\/th>\n      <th>p.value<\/th>\n      <th>df<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Two Sample t-test
@@ -951,8 +910,8 @@ a = wilcox.test(y, y2)
 
 # As linear model with our dummy-coded group_y2:
 b = lm(rank(value) ~ 1 + group_y2)  # compare to linear model above</code></pre>
-<div id="htmlwidget-73383d6f3c53896f5ef8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-73383d6f3c53896f5ef8">{"x":{"filter":"none","data":[["wilcox.test","lm"],[0.0248,0.0238],[null,13.04]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a1d27286d7184db63493" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a1d27286d7184db63493">{"x":{"filter":"none","data":[["wilcox.test","lm"],[0.0248,0.0238],[null,13.04]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>p.value<\/th>\n      <th>rank_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
@@ -991,8 +950,8 @@ a = t.test(y, y2, var.equal=FALSE)
 # As linear model with per-group variances
 b = nlme::gls(value ~ 1 + group_y2, weights = nlme::varIdent(form=~1|group), method=&quot;ML&quot;)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-53b434c497272bb7da0e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-53b434c497272bb7da0e">{"x":{"filter":"none","data":[["t.test","gls"],[-0.0952,-0.0952],[0.5952,0.5952],[0.0753,0.0753],[-1.798,-1.798],[-0.062,-0.0536],[1.2524,1.244]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>mean_diff<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-13141ec77403f9884899" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-13141ec77403f9884899">{"x":{"filter":"none","data":[["t.test","gls"],[-0.0952,-0.0952],[0.5952,0.5952],[0.0753,0.0753],[-1.798,-1.798],[-0.062,-0.0536],[1.2524,1.244]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>mean_y<\/th>\n      <th>mean_diff<\/th>\n      <th>p.value<\/th>\n      <th>t<\/th>\n      <th>conf.low<\/th>\n      <th>conf.high<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Welch Two Sample t-test
@@ -1101,8 +1060,8 @@ D = data.frame(
   group_b = rep(c(0, 1, 0), each = N),
   group_c = rep(c(0, 0, 1), each = N)
 )  # N of each level</code></pre>
-<div id="htmlwidget-0b05f5a4b604340b9f1a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0b05f5a4b604340b9f1a">{"x":{"filter":"none","data":[[-1.2582,0.085,-1.9297,0.697,0.5866,0.3162,0.5462,0.0517,0.687,0.6063,1.2427,-0.3298,-2.3183,-0.3144,0.8915,0.9436,1.2993,-0.4533,-0.6691,-0.6804,1.1708,1.6654,0.57,0.6826,0.8478,1.3855,0.0358,1.9405,1.2034,-0.2256,1.3887,2.8879,0.6304,0.1821,0.8704,2.7433,-0.2989,0.0975,2.6295,-0.407,-0.2545,1.5793,0.3896,1.6978,-1.1314,-0.694,0.1669,2.3797,2.1468,-0.4953,0.6712,0.3739,0.6494,0.2036,0.0703,-0.0476,-0.0025,1.6243,1.3791,-0.7067],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a88f053f2732cc2e0b28" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a88f053f2732cc2e0b28">{"x":{"filter":"none","data":[[-0.326,0.1685,0.8539,1.4679,-0.4386,-0.5875,0.6481,-0.2615,2.32,0.9258,-1.0461,-1.6559,-1.1406,0.3472,-1.4306,-0.7991,0.0795,0.6795,0.4759,-0.2803,2.0215,2.0132,0.9215,2.3149,0.0628,2.2773,-0.0776,2.561,0.5049,-0.2382,0.8022,-0.3154,0.0651,-0.8882,1.8539,1.0016,1.226,1.4217,1.3601,1.1116,-0.1408,1.3192,-0.2965,2.4944,0.1241,0.0644,0.3484,0.6474,-1.0023,1.8131,0.8172,0.8068,0.6449,1.1154,0.0504,1.6308,-1.6811,1.3771,0.5276,-0.6605],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>With group a’s intercept omni-present, see how exactly one other parameter is added to predict <code>value</code> for group b and c in a given row (scroll to he end). Thus data points in group b never affect the estimates in group c.</p>
 </div>
 <div id="r-code-one-way-anova" class="section level3">
@@ -1112,8 +1071,8 @@ D = data.frame(
 a = car::Anova(aov(value ~ group, D))  # Dedicated ANOVA function
 b = lm(value ~ 1 + group_b + group_c, data = D)  # As in-your-face linear model</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-accd39a4468ae76de8c1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-accd39a4468ae76de8c1">{"x":{"filter":"none","data":[["Anova","lm"],[2,2],[57,57],[5,-0.33651],[0.00998,0.73795]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d84c2c56e5a7ab8230c2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d84c2c56e5a7ab8230c2">{"x":{"filter":"none","data":[["Anova","lm"],[2,2],[57,57],[5,-0.33651],[0.00998,0.73795]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>df.residual<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
@@ -1128,12 +1087,12 @@ b = lm(value ~ 1 + group_b + group_c, data = D)  # As in-your-face linear model<
 ## lm(formula = value ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.3183 -0.6719 -0.1182  0.6895  1.8880 
+##      Min       1Q   Median       3Q      Max 
+## -2.18113 -0.67974  0.05351  0.71444  2.32002 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept) 1.720e-16  2.236e-01   0.000  1.00000   
+## (Intercept) 2.867e-16  2.236e-01   0.000  1.00000   
 ## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
 ## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
@@ -1153,41 +1112,41 @@ b = lm(value ~ 1 + group_b + group_c, data = D)  # As in-your-face linear model<
 b = lm(rank(value) ~ 1 + group_b + group_c, D)  # As linear model
 c = car::Anova(aov(rank(value) ~ group, D))  # The same model, using a dedicated ANOVA function. It just wraps lm.</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-70a39cca644e058980b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-70a39cca644e058980b8">{"x":{"filter":"none","data":[["kruskal.test","lm"],[2,2],[0.0312,0.0283]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8061767ca16dfb1004f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8061767ca16dfb1004f2">{"x":{"filter":"none","data":[["kruskal.test","lm"],[2,2],[0.0158,0.0133]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  value by group
-## Kruskal-Wallis chi-squared = 6.9348, df = 2, p-value = 0.0312
+## Kruskal-Wallis chi-squared = 8.2928, df = 2, p-value = 0.01582
 ## 
 ## 
 ## Call:
 ## lm(formula = rank(value) ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -27.200 -13.950  -0.875  14.912  27.450 
+##    Min     1Q Median     3Q    Max 
+## -31.35 -13.14   1.60  13.64  35.55 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   23.750      3.732   6.363 3.63e-08 ***
-## group_b       14.450      5.278   2.738  0.00824 ** 
-## group_c        5.800      5.278   1.099  0.27645    
+## (Intercept)   22.450      3.683   6.095    1e-07 ***
+## group_b       15.900      5.209   3.052  0.00344 ** 
+## group_c        8.250      5.209   1.584  0.11877    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 16.69 on 57 degrees of freedom
-## Multiple R-squared:  0.1175, Adjusted R-squared:  0.08657 
-## F-statistic: 3.796 on 2 and 57 DF,  p-value: 0.02834
+## Residual standard error: 16.47 on 57 degrees of freedom
+## Multiple R-squared:  0.1406, Adjusted R-squared:  0.1104 
+## F-statistic: 4.661 on 2 and 57 DF,  p-value: 0.01334
 ## 
 ## Anova Table (Type II tests)
 ## 
 ## Response: rank(value)
 ##            Sum Sq Df F value  Pr(&gt;F)  
-## group      2115.1  2   3.796 0.02834 *
-## Residuals 15879.9 57                  
+## group      2529.3  2   4.661 0.01334 *
+## Residuals 15465.7 57                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -1208,8 +1167,8 @@ D$mood = c(&#39;happy&#39;, &#39;sad&#39;)
 # Dummy coding
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)  # 1 if mood==happy. 0 otherwise.
 #D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)  # Same, but we won&#39;t be needing this</code></pre>
-<div id="htmlwidget-1ab0d000b26193e8df53" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ab0d000b26193e8df53">{"x":{"filter":"none","data":[[-1.2582,0.085,-1.9297,0.697,0.5866,0.3162,0.5462,0.0517,0.687,0.6063,1.2427,-0.3298,-2.3183,-0.3144,0.8915,0.9436,1.2993,-0.4533,-0.6691,-0.6804,1.1708,1.6654,0.57,0.6826,0.8478,1.3855,0.0358,1.9405,1.2034,-0.2256,1.3887,2.8879,0.6304,0.1821,0.8704,2.7433,-0.2989,0.0975,2.6295,-0.407,-0.2545,1.5793,0.3896,1.6978,-1.1314,-0.694,0.1669,2.3797,2.1468,-0.4953,0.6712,0.3739,0.6494,0.2036,0.0703,-0.0476,-0.0025,1.6243,1.3791,-0.7067],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ea4c34c89d4bb3dac799" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ea4c34c89d4bb3dac799">{"x":{"filter":"none","data":[[-0.326,0.1685,0.8539,1.4679,-0.4386,-0.5875,0.6481,-0.2615,2.32,0.9258,-1.0461,-1.6559,-1.1406,0.3472,-1.4306,-0.7991,0.0795,0.6795,0.4759,-0.2803,2.0215,2.0132,0.9215,2.3149,0.0628,2.2773,-0.0776,2.561,0.5049,-0.2382,0.8022,-0.3154,0.0651,-0.8882,1.8539,1.0016,1.226,1.4217,1.3601,1.1116,-0.1408,1.3192,-0.2965,2.4944,0.1241,0.0644,0.3484,0.6474,-1.0023,1.8131,0.8172,0.8068,0.6449,1.1154,0.0504,1.6308,-1.6811,1.3771,0.5276,-0.6605],["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","b","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c","c"],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad","happy","sad"],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>value<\/th>\n      <th>group<\/th>\n      <th>group_b<\/th>\n      <th>group_c<\/th>\n      <th>mood<\/th>\n      <th>mood_happy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":true,"bInfo":true,"paging":true,"columnDefs":[{"className":"dt-right","targets":[0,2,3,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p><span class="math inline">\(\beta_0\)</span> is now the happy guys from group a!</p>
 <div class="fold s">
 <pre class="r"><code># Add intercept line
@@ -1237,17 +1196,17 @@ full = lm(value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + grou
 null = lm(value ~ 1 + group_b + group_c + mood_happy, D)  # Without interaction
 c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-17f92ca3804c39b73546" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-17f92ca3804c39b73546">{"x":{"filter":"none","data":[["Anova mood:group","lm LRT"],[0.0001,0.0001],[2,2],[0.9999,0.9999],[0.0002,0.0002],[56.4813,56.4813]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-737159abe51b7f412fad" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-737159abe51b7f412fad">{"x":{"filter":"none","data":[["Anova mood:group","lm LRT"],[1.8534,1.8534],[2,2],[0.1665,0.1665],[3.4591,3.4591],[50.3926,50.3926]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: value
-##            Sum Sq Df F value  Pr(&gt;F)  
-## mood        0.519  1  0.4958 0.48438  
-## group      10.000  2  4.7803 0.01226 *
-## mood:group  0.000  2  0.0001 0.99993  
-## Residuals  56.481 54                  
+##            Sum Sq Df F value   Pr(&gt;F)   
+## mood        3.148  1  3.3737 0.071751 . 
+## group      10.000  2  5.3579 0.007539 **
+## mood:group  3.459  2  1.8534 0.166541   
+## Residuals  50.393 54                    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
@@ -1255,9 +1214,9 @@ c = anova(null, full)  # whoop whoop, same F, p, and Dfs</code></pre>
 ## Model 1: value ~ 1 + group_b + group_c + mood_happy
 ## Model 2: value ~ 1 + group_b + group_c + mood_happy + group_b:mood_happy + 
 ##     group_c:mood_happy
-##   Res.Df    RSS Df  Sum of Sq     F Pr(&gt;F)
-## 1     56 56.481                           
-## 2     54 56.481  2 0.00015625 1e-04 0.9999</code></pre>
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     56 53.852                           
+## 2     54 50.393  2    3.4591 1.8534 0.1665</code></pre>
 </div>
 <p>Below, I present approximate main effect models, though exact calculation of ANOVA main effects <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-get-anova-simple-main-effects-with-dummy-coding/">is more involved</a> if it is to be accurate and furthermore depend on whether type-II or type-III sum of squares are used for inference.</p>
 <p>Look at the model summary statistics to find values comparable to the <code>Anova</code>-estimated main effects above.</p>
@@ -1266,20 +1225,20 @@ e = lm(value ~ 1 + group_b + group_c, D)
 
 # Main effect of mood.
 f = lm(value ~ 1 + mood_happy, D)</code></pre>
-<div id="htmlwidget-f1358fffeb3bd1d82ace" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f1358fffeb3bd1d82ace">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[2,2,1,1],[4.78035,5,0.49579,0.45241],[0.01226,0.00998,0.48438,0.50386]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0460e6f7c41440a16714" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0460e6f7c41440a16714">{"x":{"filter":"none","data":[["group","group","mood","mood"],["Anova","lm","Anova","lm"],[2,2,1,1],[5.35793,5,3.37371,2.8598],[0.00754,0.00998,0.07175,0.09619]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>df<\/th>\n      <th>F<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ## Call:
 ## lm(formula = value ~ 1 + group_b + group_c, data = D)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.3183 -0.6719 -0.1182  0.6895  1.8880 
+##      Min       1Q   Median       3Q      Max 
+## -2.18113 -0.67974  0.05351  0.71444  2.32002 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept) 1.720e-16  2.236e-01   0.000  1.00000   
+## (Intercept) 2.867e-16  2.236e-01   0.000  1.00000   
 ## group_b     1.000e+00  3.162e-01   3.162  0.00251 **
 ## group_c     5.000e-01  3.162e-01   1.581  0.11938   
 ## ---
@@ -1295,18 +1254,18 @@ f = lm(value ~ 1 + mood_happy, D)</code></pre>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.72530 -0.67261  0.05145  0.79348  2.29498 
+## -2.38495 -0.67592  0.07761  0.64865  2.04909 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)   0.5930     0.1955   3.034  0.00361 **
-## mood_happy   -0.1859     0.2764  -0.673  0.50386   
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   0.7291     0.1916   3.806 0.000343 ***
+## mood_happy   -0.4581     0.2709  -1.691 0.096186 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.071 on 58 degrees of freedom
-## Multiple R-squared:  0.00774,    Adjusted R-squared:  -0.009368 
-## F-statistic: 0.4524 on 1 and 58 DF,  p-value: 0.5039</code></pre>
+## Residual standard error: 1.049 on 58 degrees of freedom
+## Multiple R-squared:  0.04699,    Adjusted R-squared:  0.03056 
+## F-statistic:  2.86 on 1 and 58 DF,  p-value: 0.09619</code></pre>
 </div>
 </div>
 </div>
@@ -1347,34 +1306,36 @@ result_age = anova(null_age, full)
 null_group = lm(value ~ 1 + age, D)  # Full without group. Pearson correlation!
 result_group = anova(null_group, full)</code></pre>
 <p>Results:</p>
-<div id="htmlwidget-87bf6d89bc45e0caea1f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-87bf6d89bc45e0caea1f">{"x":{"filter":"none","data":[["age","age","group","group"],["Anova","lm","Anova","lm"],[15.6752,15.6752,1.791,1.791],[1,1,2,2],[0.0002,0.0002,0.1762,0.1762],[12.4658,12.4658,2.8486,2.8486],[44.5342,44.5342,44.5342,44.5342],[56,56,56,56]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n      <th>res.df<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-394928ba93d5608fbef0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-394928ba93d5608fbef0">{"x":{"filter":"none","data":[["age","age","group","group"],["Anova","lm","Anova","lm"],[8.995,8.995,3.3186,3.3186],[1,1,2,2],[0.004,0.004,0.0434,0.0434],[7.8886,7.8886,5.8207,5.8207],[49.1114,49.1114,49.1114,49.1114],[56,56,56,56]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>model<\/th>\n      <th>F<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n      <th>sumsq<\/th>\n      <th>res.sumsq<\/th>\n      <th>res.df<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: value
-##           Sum Sq Df F value    Pr(&gt;F)    
-## group      2.849  2   1.791 0.1762177    
-## age       12.466  1  15.675 0.0002144 ***
-## Residuals 44.534 56                      
+##           Sum Sq Df F value   Pr(&gt;F)   
+## group      5.821  2  3.3186 0.043448 * 
+## age        7.889  1  8.9950 0.004034 **
+## Residuals 49.111 56                    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
 ## Model 1: value ~ 1 + group_b + group_c
 ## Model 2: value ~ 1 + group_b + group_c + age
-##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1     57 57.000                                  
-## 2     56 44.534  1    12.466 15.675 0.0002144 ***
+##   Res.Df    RSS Df Sum of Sq     F   Pr(&gt;F)   
+## 1     57 57.000                               
+## 2     56 49.111  1    7.8886 8.995 0.004034 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## Analysis of Variance Table
 ## 
 ## Model 1: value ~ 1 + age
 ## Model 2: value ~ 1 + group_b + group_c + age
-##   Res.Df    RSS Df Sum of Sq     F Pr(&gt;F)
-## 1     58 47.383                          
-## 2     56 44.534  2    2.8486 1.791 0.1762</code></pre>
+##   Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1     58 54.932                              
+## 2     56 49.111  2    5.8207 3.3186 0.04345 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <!--
 Is there a well-known "non-parametric" ANCOVA? No, but now that we understand it as a mix of a **Pearson correlation** and **t-tests**, you can get creative and make one up. If we rank the $y$ and the $x$ we get a **Spearman correlation** ($rank(y) ~ \beta_0 + rank(x)$) and at the same time the **Wilcoxon** ($rank(y) ~ 1):
@@ -1395,9 +1356,11 @@ anova(null, full)
 ## 
 ## Model 1: rank(value) ~ rank(age)
 ## Model 2: rank(value) ~ group + rank(age)
-##   Res.Df   RSS Df Sum of Sq      F Pr(>F)
-## 1     58 13248                           
-## 2     56 12769  2    479.52 1.0515 0.3562
+##   Res.Df   RSS Df Sum of Sq      F Pr(>F)  
+## 1     58 14676                             
+## 2     56 13268  2    1408.5 2.9726 0.0593 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 ```r
@@ -1405,7 +1368,7 @@ sm::sm.ancova(x=D$age, y=D$value, group=D$group, display='none', model='equal')
 ```
 
 ```
-## Test of equality :  h =  1.05354    p-value =  0.523
+## Test of equality :  h =  1.00453    p-value =  0.1411
 ```
 -->
 </div>
@@ -1445,8 +1408,8 @@ D = data.frame(mood = c(&#39;happy&#39;, &#39;sad&#39;, &#39;meh&#39;),
 # Dummy coding for the linear model
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)
 D$mood_sad = ifelse(D$mood == &#39;sad&#39;, 1, 0)</code></pre>
-<div id="htmlwidget-ec5b7c1d5b020167d8ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec5b7c1d5b020167d8ef">{"x":{"filter":"none","data":[["happy","sad","meh"],[60,90,70],[1,0,0],[0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>counts<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3371abadadb504ba1413" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3371abadadb504ba1413">{"x":{"filter":"none","data":[["happy","sad","meh"],[60,90,70],[1,0,0],[0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>counts<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_sad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="r-code-goodness-of-fit" class="section level3">
 <h3><span class="header-section-number">7.1.3</span> R code: Goodness of fit</h3>
@@ -1462,8 +1425,8 @@ b = anova(null, full, test = &#39;Rao&#39;)
 # Note: glm can also do the dummy coding for you:
 c = glm(counts ~ mood, data = D, family = poisson())</code></pre>
 <p>Let’s look at the results:</p>
-<div id="htmlwidget-d6d6501cf4c5f1a37217" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d6d6501cf4c5f1a37217">{"x":{"filter":"none","data":[["chisq.test","glm LRT"],[6.3636,6.3636],[2,2],[0.0415,0.0415]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d38a66feb03129f94410" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d38a66feb03129f94410">{"x":{"filter":"none","data":[["chisq.test","glm LRT"],[6.3636,6.3636],[2,2],[0.0415,0.0415]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -1520,8 +1483,8 @@ D_table = D %&gt;%
 D$mood_happy = ifelse(D$mood == &#39;happy&#39;, 1, 0)
 D$mood_meh = ifelse(D$mood == &#39;meh&#39;, 1, 0)
 D$sex_male = ifelse(D$sex == &#39;male&#39;, 1, 0)</code></pre>
-<div id="htmlwidget-60bdda8eeaa4563fd3e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-60bdda8eeaa4563fd3e1">{"x":{"filter":"none","data":[["happy","happy","meh","meh","sad","sad"],["male","female","male","female","male","female"],[100,70,30,32,110,120],[1,1,0,0,0,0],[0,0,1,1,0,0],[1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>sex<\/th>\n      <th>Freq<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_meh<\/th>\n      <th>sex_male<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2c000993e7ae8e6e127e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c000993e7ae8e6e127e">{"x":{"filter":"none","data":[["happy","happy","meh","meh","sad","sad"],["male","female","male","female","male","female"],[100,70,30,32,110,120],[1,1,0,0,0,0],[0,0,1,1,0,0],[1,0,1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>mood<\/th>\n      <th>sex<\/th>\n      <th>Freq<\/th>\n      <th>mood_happy<\/th>\n      <th>mood_meh<\/th>\n      <th>sex_male<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="r-code-chi-square-test" class="section level3">
 <h3><span class="header-section-number">7.2.3</span> R code: Chi-square test</h3>
@@ -1540,8 +1503,8 @@ c = anova(full, test = &#39;Rao&#39;)
 
 # Note: even simpler syntax using MASS:loglm (&quot;log-linear model&quot;)
 d = MASS::loglm(Freq ~ mood + sex, D)</code></pre>
-<div id="htmlwidget-2df5675aded0e9696612" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2df5675aded0e9696612">{"x":{"filter":"none","data":[["chisq.test","glm","loglm"],[5.0999,5.0999,5.0999],[2,2,2],[0.0781,0.0781,0.0781]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8802b623f1d64e97ed43" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8802b623f1d64e97ed43">{"x":{"filter":"none","data":[["chisq.test","glm","loglm"],[5.0999,5.0999,5.0999],[2,2,2],[0.0781,0.0781,0.0781]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>model<\/th>\n      <th>Chisq<\/th>\n      <th>df<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"lengthChange":false,"ordering":false,"autoWidth":true,"bPaginate":false,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="fold o">
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
@@ -1704,6 +1667,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
