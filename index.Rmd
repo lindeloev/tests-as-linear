@@ -814,8 +814,8 @@ df = data.frame(
   model = c('Anova', 'lm'),
   df = c(a$Df[1], glance(b)$df - 1),  # -1? https://github.com/tidymodels/broom/issues/273
   df.residual = c(a$Df[2], b$df.residual),
-  F = c(a$`F value`[1], bt$statistic),
-  p.value = c(a$`Pr(>F)`[1], bt$p.value)
+  F = c(a$`F value`[1], b$statistic),
+  p.value = c(a$`Pr(>F)`[1], b$p.value)
 )
 print_df(df, 5)
 ```
